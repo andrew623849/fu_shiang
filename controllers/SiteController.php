@@ -120,6 +120,7 @@ class SiteController extends Controller
         $material = show_material('all');
         $clinic = show_clinic('all');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'start_time'=>$_POST['Toothcase']['start_time'],'end_time'=>$_POST['Toothcase']['end_time']]);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
