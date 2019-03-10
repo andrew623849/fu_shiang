@@ -12,4 +12,9 @@ function v_d($var){
 	var_dump($var);
 	echo '</pre>';
 	die;
+}}
+function show($var){
+	echo $var;
+	exit();
 }
+

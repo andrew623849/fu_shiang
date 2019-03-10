@@ -31,3 +31,11 @@ function show_clinic($var){
         return [$clinic_model,$clinic_info];
 	}
 }
+
+function price_case($arr){
+	$material_model = new material();
+	$material_info = $material_model->find()->where(["id"=>$arr['material_id']])->asArray()->one();
+	$tooth_num = count(explode(" ",$arr['tooth']));
+	$price_case = $material_info['price'] * $tooth_num;
+	return $price_case;
+}

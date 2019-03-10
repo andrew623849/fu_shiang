@@ -45,12 +45,7 @@ class SiteController extends Controller
     }
      public function actionIndex()
     {
-        $searchModel = new toothcaseSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index');
     }
 
     /**
@@ -62,7 +57,7 @@ class SiteController extends Controller
         $clinic_id =Yii::$app->request->queryParams;
         if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
         $searchModel = new toothcaseSearch();
-        $dataProvider = $searchModel->search($clinic_id['toothcaseSearch']['clinic_id']);
+        $dataProvider = $searchModel->search($clinic_id);
         $clinic = show_clinic('all');
         return $this->render('toothcase', [
             'dataProvider' => $dataProvider,
@@ -95,13 +90,11 @@ class SiteController extends Controller
      */
     public function actionCreate()
     {
-
         $material = show_material('all');
         $model = new toothcase();
         $clinic = show_clinic('all');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            v_d($_POST['Toothcase']['material_id']);
-            //$price_update = Customer:: find()->where(['id'->])
+            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'start_time'=>$_POST['Toothcase']['start_time'],'end_time'=>$_POST['Toothcase']['end_time']]);
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('create', [
