@@ -63,12 +63,11 @@ class SiteController extends Controller
         if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
         $searchModel = new toothcaseSearch();
         $dataProvider = $searchModel->search($clinic_id['toothcaseSearch']['clinic_id']);
-        $clinic_model = new Clinic();
-        $clinic_info=$clinic_model->find()->all(); 
+        $clinic = show_clinic('all');
         return $this->render('toothcase', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'clinic_info'=>$clinic_info,
+            'clinic_info'=>$clinic['1'],
         ]);
     }
 
@@ -79,18 +78,13 @@ class SiteController extends Controller
      */
     public function actionView($id)
     {   
-        $models = new toothcase();
-        $clinic_model = new Clinic();
-        $material_model = new material();
-        $id_max = $models->find()->max('id');
-        $id = $models->find()->where(["id"=>$id])->asArray()->one();
-        $clinic_info = $clinic_model->find()->where(["id"=>$id['clinic_id']])->asArray()->one();
-        $material_info = $material_model->find()->where(["id"=>$id['material_id']])->asArray()->one();
+        $clinic = show_clinic($id);
+        $material = show_material($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'clinic_info'=>$clinic_info,
-            'material_info' =>$material_info,
-            'id_max' => $id_max,
+            'clinic_info'=>$clinic['1'],
+            'material_info' =>$material['1'],
+            'id_max' => $material['2'],
         ]);
     }
 
@@ -101,23 +95,21 @@ class SiteController extends Controller
      */
     public function actionCreate()
     {
+
+        $material = show_material('all');
         $model = new toothcase();
-        $material_model = new material();
-        $clinic_model = new Clinic();
-        $clinic_info=$clinic_model->find()->all(); 
-        $material_info=$material_model->find()->all();
+        $clinic = show_clinic('all');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            var_dump($_POST);
-            die;
+            v_d($_POST['Toothcase']['material_id']);
             //$price_update = Customer:: find()->where(['id'->])
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('create', [
             'model' => $model,
-            'clinic_model' => $clinic_model,
-            'clinic_info'=>$clinic_info,
-            'material_model'=>$material_model,
-            'material_info'=>$material_info,
+            'clinic_model' => $clinic['0'],
+            'clinic_info'=>$clinic['1'],
+            'material_model'=>$material['0'],
+            'material_info'=>$material['1'],
         ]);
     }
 
@@ -131,20 +123,19 @@ class SiteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $material_model = new material();
-        $clinic_model=new Clinic();
-        $clinic_info=$clinic_model->find()->all();
-        $material_info=$material_model->find()->all();
+
+        $material = show_material('all');
+        $clinic = show_clinic('all');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
-            'clinic_model' => $clinic_model,
-            'clinic_info'=>$clinic_info,
-            'material_model'=>$material_info,
-            'material_info'=>$material_info,
+            'clinic_model' => $clinic['0'],
+            'clinic_info'=>$clinic['1'],
+            'material_model'=>$material['0'],
+            'material_info'=>$material['1'],
         ]);
     }
 
