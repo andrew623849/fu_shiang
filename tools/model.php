@@ -6,7 +6,7 @@ use app\models\toothcase;
 function show_material($var){
 	if($var == 'all'){
 		$material_model = new material();
-		$material_info = $material_model->find()->all();
+		$material_info = $material_model->find()->asArray()->all();
 	return [$material_model,$material_info];
 	}else{
 		$models = new toothcase();
@@ -21,7 +21,7 @@ function show_material($var){
 function show_clinic($var){
 	if($var == 'all'){
 	    $clinic_model = new Clinic();
-	    $clinic_info=$clinic_model->find()->all(); 
+	    $clinic_info=$clinic_model->find()->asArray()->all(); 
 		return [$clinic_model,$clinic_info];
 	}else{
 		$models = new toothcase();

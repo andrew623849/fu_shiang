@@ -39,7 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => '首頁', 'url' => ['/site/index']],
-            ['label' => '病例', 'url' => ['/site/toothcase']],
+            ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
             ['label' => '聯絡', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => '登入', 'url' => ['/site/login']]

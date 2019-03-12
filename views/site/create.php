@@ -9,7 +9,7 @@ $clinic_id=$request->get('toothcaseSearch');
 $clinic=ArrayHelper::map($clinic_info,'id','clinic');
 $clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
 $this->title = '新增病例';
-$this->params['breadcrumbs'][] = ['label' => '病例', 'url' => ['toothcase']];
+$this->params['breadcrumbs'][] = ['label' => '病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>'1']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="toothcase-create">

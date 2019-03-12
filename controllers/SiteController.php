@@ -44,8 +44,17 @@ class SiteController extends Controller
         ];
     }
      public function actionIndex()
-    {
-        return $this->render('index');
+    {   $date =date('Y-m-d');
+        $date = '2019-03-11';
+        $model = new toothcase;
+        $model = $model->find()->where(["end_time"=>$date])->all();
+        $clinic = show_clinic('all');
+        $material = show_material('all');
+        return $this->render('index', [
+            'model' => $model,
+            'clinic_info'=>$clinic['1'],
+            'material_info' =>$material['1'],
+        ]);
     }
 
     /**
@@ -117,8 +126,8 @@ class SiteController extends Controller
     {
         $model = $this->findModel($id);
 
-        $material = show_material('all');
-        $clinic = show_clinic('all');
+        $material = show_material($id);
+        $clinic = show_clinic($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'start_time'=>$_POST['Toothcase']['start_time'],'end_time'=>$_POST['Toothcase']['end_time']]);
             return $this->redirect(['view', 'id' => $model->id]);

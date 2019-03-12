@@ -1,53 +1,32 @@
 <?php
-
+use yii\helpers\Html;
+use yii\widgets\DetailView;
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\toothcaseSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Yii Application';
+$this->title = $model['0']->end_time.'要送的CASE';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>歡迎</h1>
+<h1><?= Html::encode($this->title) ?></h1>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+<?php for($i = 0;$i < count($model);$i ++){ 
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+    $models = $model[$i];?>
+    <div class="col-sm-4">
+    <?= DetailView::widget([
+        'model' => $models,
+        'attributes' => [
+            ['label'=>'診所','value'=>$clinic_info[($models->clinic_id-1)]['clinic']],
+            ['label'=>'收件日','value'=>$models->start_time],
+            ['label'=>'交件日','value'=>$models->end_time],
+            ['label'=>'病人姓名','value'=>$models->name],
+            ['label'=>'材料','value'=>$material_info[($models->material_id)-1]['material']],
+            ['label'=>'齒位','value'=>$models->tooth],
+            ['label'=>'齒色','value'=>$models->tooth_color],
+            ['label'=>'備註','value'=>$models->remark],
+            ['label'=>'金額','value'=>$models->price],
+        ],
+    ]) ?>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
-</div>
+<?php }?>

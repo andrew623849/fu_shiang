@@ -4,12 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
-$request = Yii::$app->request;
-$clinic_id=$request->get('toothcaseSearch');
-$clinic=ArrayHelper::map($clinic_info,'id','clinic');
-$clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
-$this->title = $clinic[$clinic_id['clinic_id']].'(更新資料)';
-$this->params['breadcrumbs'][] = ['label' => $clinic[$clinic_id['clinic_id']].'病例', 'url' => ['toothcase']];
+$this->title = $clinic_info['clinic'].'(更新資料)';
+$this->params['breadcrumbs'][] = ['label' => $clinic_info['clinic'].'病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>$model['clinic_id']]];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = '更新資料';
 ?>
