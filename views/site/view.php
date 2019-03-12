@@ -10,7 +10,7 @@ $this->params['breadcrumbs'][] = $model->name;
 \yii\web\YiiAsset::register($this);
 $last_id = ($model->id - 1);
 if($last_id == 0){
-    $last_id = 1;
+    $last_id = $id_max;
 }
 
 $next_id = ($model->id + 1);
