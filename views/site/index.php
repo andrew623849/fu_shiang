@@ -5,11 +5,19 @@ use yii\widgets\DetailView;
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $model['0']->end_time.'要送的CASE';
+$this->title = $date.'要送的CASE';
+$last_id = ($id - 1);
+$next_id = ($id + 1);
+if($last_id == -1){
+    $last_id = $last_id - 1;
+}
+if($next_id == -1){
+    $next_id = $next_id + 1;
+}
 ?>
-
+<?= Html::a('上一天', ['index', 'id' => $last_id], ['class' => 'btn btn-link']) ?>
+<?= Html::a('下一天', ['index', 'id' => $next_id], ['class' => 'btn btn-link']) ?>
 <h1><?= Html::encode($this->title) ?></h1>
-
 <?php for($i = 0;$i < count($model);$i ++){ 
 
     $models = $model[$i];?>
@@ -30,3 +38,4 @@ $this->title = $model['0']->end_time.'要送的CASE';
     ]) ?>
     </div>
 <?php }?>
+

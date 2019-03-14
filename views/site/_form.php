@@ -6,13 +6,22 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
 <div class="toothcase-form">
     <?php $form = ActiveForm::begin(); ?>
-    <?php if($url == 'create'){ ?>
-        <div class="form-group col-sm-5"><?= $form->field($model, 'start_time')->label("*收件日")->textInput(['value' => date('Y-m-d')]) ?></div>
-        <div class="form-group col-sm-5"><?= $form->field($model, 'end_time')->label("*交件日")->textInput(['value' => date('Y-m')])->hint('請記得填寫完整日期',['style' => 'color:red;'])?></div>
+    <?php if($url == 'create'){
+     $model ->clinic_id = $clinic_this;
+     $i=-7;
+     while ($i<=37){ 
+        $d = strtotime(date('Y-m-d')) + ($i + 1) * 85800;
+        $date_time = date("Y-m-d",$d);
+        $date[] = $date_time;
+        $i ++;
+    }?>
+        <div class="form-group col-sm-5"><?= $form->field($model, 'start_time')->label("*收件日")->dropDownList($date,['style'=>'border:1px solid ;'])?></div>
+        <div class="form-group col-sm-5"><?= $form->field($model, 'end_time')->label("*交件日")->dropDownList($date,['style'=>'border:1px solid ;'])->hint('請記得填寫完整日期',['style' => 'color:red;'])?></div>
         <div class="form-group col-sm-2"><?= $form->field($model,'clinic_id')->label("*診所")->dropDownList(ArrayHelper::map($clinic_info,'id','clinic'),['style'=>'border:1px solid ;'])?></div>
     <?php }else{ ?> 
         <div class="form-group col-sm-5"><?= $form->field($model, 'start_time')->label("*收件日")->textInput() ?></div>

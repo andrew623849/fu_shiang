@@ -43,15 +43,18 @@ class SiteController extends Controller
             ],
         ];
     }
-     public function actionIndex()
-    {   $date =date('Y-m-d');
-        $date = '2019-03-11';
+     public function actionIndex($id=0)
+    {   
+        $date = date('Y-m-d');
+        $date = today_to($date,$id);
         $model = new toothcase;
         $model = $model->find()->where(["end_time"=>$date])->all();
         $clinic = show_clinic('all');
         $material = show_material('all');
         return $this->render('index', [
+            'id'=>$id,
             'model' => $model,
+            'date' => $date,
             'clinic_info'=>$clinic['1'],
             'material_info' =>$material['1'],
         ]);
@@ -97,7 +100,7 @@ class SiteController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($clinic_this = 1)
     {
         $material = show_material('all');
         $model = new toothcase();
@@ -112,6 +115,7 @@ class SiteController extends Controller
             'clinic_info'=>$clinic['1'],
             'material_model'=>$material['0'],
             'material_info'=>$material['1'],
+            'clinic_this' =>$clinic_this,
         ]);
     }
 
@@ -125,7 +129,7 @@ class SiteController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $material_info = show_material('all');
         $material = show_material($id);
         $clinic = show_clinic($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -138,7 +142,7 @@ class SiteController extends Controller
             'clinic_model' => $clinic['0'],
             'clinic_info'=>$clinic['1'],
             'material_model'=>$material['0'],
-            'material_info'=>$material['1'],
+            'material_info'=>$material_info['1'],
         ]);
     }
 

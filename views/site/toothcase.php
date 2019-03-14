@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php  echo $this->render('_search', ['clinic_info' => $clinic_info,'model' => $searchModel,'clinic'=>$clinic_id['clinic_id']]); ?>
 <div class="toothcase-index">
     <p>
-        <?= Html::a('新增病例', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增病例', ['create','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
     </p>
     <h1><?= Html::encode($this->title) ?></h1>
 

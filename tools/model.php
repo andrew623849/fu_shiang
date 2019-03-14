@@ -39,3 +39,8 @@ function price_case($arr){
 	$price_case = $material_info['price'] * $tooth_num;
 	return $price_case;
 }
+
+function today_to($date,$var){
+	$d = strtotime($date) + ($var + 1) * 85800;
+	return date("Y-m-d",$d);
+}
