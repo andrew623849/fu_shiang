@@ -78,6 +78,14 @@ class SiteController extends Controller
         ]);
     }
 
+        public function actionPdf()
+    {
+
+        return $this->render('pdf', [
+
+        ]);
+    }
+
     /**
      * Displays a single toothcase model.s
      * @return mixed
