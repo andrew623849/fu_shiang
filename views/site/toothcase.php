@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="toothcase-index">
     <p>
         <?= Html::a('新增病例', ['create','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('輸出PDF帳單', ['pdf','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
     </p>
     <h1><?= Html::encode($this->title) ?></h1>
 

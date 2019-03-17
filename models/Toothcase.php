@@ -16,6 +16,7 @@ use Yii;
  * @property string $tooth 齒位
  * @property string $tooth_color 齒色
  * @property int $price
+ * @property int $other_price
  * @property string $remark 備註
  *
  * @property Clinic $clinic
@@ -37,9 +38,9 @@ class Toothcase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'price'], 'required'],
+            [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'price', 'other_price'], 'required'],
             [['start_time', 'end_time'], 'safe'],
-            [['clinic_id', 'material_id', 'price'], 'integer'],
+            [['clinic_id', 'material_id', 'price', 'other_price'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['tooth', 'tooth_color'], 'string', 'max' => 50],
             [['remark'], 'string', 'max' => 500],
@@ -54,16 +55,17 @@ class Toothcase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => '病人編號',
-            'start_time' => '收件日',
-            'end_time' => '交件日',
-            'clinic_id' => '診所',
-            'name' => '病人姓名',
-            'material_id' => '材料',
-            'tooth' => '齒位',
-            'tooth_color' => '齒色',
-            'price' => '價錢',
-            'remark' => '備註',
+            'id' => 'ID',
+            'start_time' => 'Start Time',
+            'end_time' => 'End Time',
+            'clinic_id' => 'Clinic ID',
+            'name' => 'Name',
+            'material_id' => 'Material ID',
+            'tooth' => 'Tooth',
+            'tooth_color' => 'Tooth Color',
+            'price' => 'Price',
+            'other_price' => 'Other Price',
+            'remark' => 'Remark',
         ];
     }
 

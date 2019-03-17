@@ -80,9 +80,10 @@ class SiteController extends Controller
 
         public function actionPdf()
     {
-
+        $clinic_id =Yii::$app->request->queryParams;
+        $clinic = show_clinic($clinic_id);
         return $this->render('pdf', [
-
+            'clinic' => $clinic,
         ]);
     }
 
