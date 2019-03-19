@@ -13,6 +13,8 @@ use app\models\clinic;
 use app\models\material;
 use app\models\adminsheet;
 use app\models\toothcaseSearch;
+use kartik\mpdf\Pdf;
+
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -98,13 +100,42 @@ class SiteController extends Controller
         ]);
     }
 
-        public function actionPdf()
+        public function actionPdf($clinic_this)
     {   $this->layout = false; 
-        $clinic_id =Yii::$app->request->queryParams;
-        $clinic = show_clinic($clinic_id);
-        return $this->render('pdf', [
-            'clinic' => $clinic,
+        //設置kartik \ mpdf \ Pdf組件
+        $pdf = new Pdf([
+            //設置為僅使用核心字體
+            'mode' => Pdf::MODE_UTF8,
+            // A4 paper format
+            'format' => Pdf::FORMAT_A4,
+            // 縱向
+            'orientation' => Pdf :: ORIENT_PORTRAIT,
+            //流式傳輸到內嵌瀏覽器
+            'destination' => Pdf::DEST_BROWSER,
+            // your html content input
+            'content' => '<h1>富祥牙技所</h1>',
+            // format content from your own css file if needed or use the
+            // enhanced bootstrap css built by Krajee for mPDF formatting
+            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
+            // any css to be embedded if required
+            'cssInline' => '.kv-heading-1{font-size:24px}',
+            // set mPDF properties on the fly
+            'options' => [
+                'title' => '中文',
+                'autoLangToFont' => true,    //这几个配置加上可以显示中文
+                'autoScriptToLang' => true,  //这几个配置加上可以显示中文
+                'autoVietnamese' => true,    //这几个配置加上可以显示中文
+                'autoArabic' => true,        //这几个配置加上可以显示中文
+            ],
+            // call mPDF methods on the fly
+            'methods' => [
+                'SetHeader' => [$clinic_this],
+                'SetFooter' => ['{PAGENO}'],
+            ]
         ]);
+        
+        //根據目標設置返回pdf輸出
+        return $pdf->render(); 
     }
 
     /**
