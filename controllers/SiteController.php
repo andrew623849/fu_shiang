@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\toothcase;
 use app\models\clinic;
 use app\models\material;
+use app\models\adminsheet;
 use app\models\toothcaseSearch;
 class SiteController extends Controller
 {   /**
@@ -42,8 +43,27 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
+    } 
+    public function actionIndex()
+    {
+    $this->layout = false; 
+    if (!\Yii::$app->user->isGuest) {     
+                return $this->goHome();
+            }
+     
+            $model = new adminsheet();             
+            if ($model->load(Yii::$app->request->post())) {      
+                return $this->redirect(['todaycase']);        
+            }else{
+                echo '登入失敗!!';
+            }
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
+
     }
-     public function actionIndex($id=0)
+
+     public function actionTodaycase($id=0)
     {   
         $date = date('Y-m-d');
         $date = today_to($date,$id);
@@ -51,7 +71,7 @@ class SiteController extends Controller
         $model = $model->find()->where(["end_time"=>$date])->all();
         $clinic = show_clinic('all');
         $material = show_material('all');
-        return $this->render('index', [
+        return $this->render('todaycase', [
             'id'=>$id,
             'model' => $model,
             'date' => $date,
@@ -79,7 +99,7 @@ class SiteController extends Controller
     }
 
         public function actionPdf()
-    {
+    {   $this->layout = false; 
         $clinic_id =Yii::$app->request->queryParams;
         $clinic = show_clinic($clinic_id);
         return $this->render('pdf', [

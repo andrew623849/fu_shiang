@@ -10,6 +10,7 @@ use Yii;
  * @property int $id 病人編號
  * @property string $start_time 收件日
  * @property string $end_time 交件日
+ * @property string $try_time
  * @property int $clinic_id
  * @property string $name 病人姓名
  * @property int $material_id 材料
@@ -39,7 +40,7 @@ class Toothcase extends \yii\db\ActiveRecord
     {
         return [
             [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'price', 'other_price'], 'required'],
-            [['start_time', 'end_time'], 'safe'],
+            [['start_time', 'end_time', 'try_time'], 'safe'],
             [['clinic_id', 'material_id', 'price', 'other_price'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['tooth', 'tooth_color'], 'string', 'max' => 50],
@@ -58,6 +59,7 @@ class Toothcase extends \yii\db\ActiveRecord
             'id' => 'ID',
             'start_time' => 'Start Time',
             'end_time' => 'End Time',
+            'try_time' => 'Try Time',
             'clinic_id' => 'Clinic ID',
             'name' => 'Name',
             'material_id' => 'Material ID',

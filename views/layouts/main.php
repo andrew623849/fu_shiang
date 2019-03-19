@@ -30,7 +30,7 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => '富翔牙體技術所',
-        'brandUrl' => ['/site/index'],
+        'brandUrl' => ['/site/todaycase'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -38,11 +38,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => '首頁', 'url' => ['/site/index']],
+            ['label' => '首頁', 'url' => ['/site/todaycase']],
             ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
             ['label' => '聯絡', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => '登入', 'url' => ['/site/login']]
+                ['label' => '登出', 'url' => ['/site/index']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
