@@ -14,7 +14,7 @@ use app\models\material;
 use app\models\adminsheet;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
-
+use Mpdf\Mpdf;
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -101,7 +101,9 @@ class SiteController extends Controller
     }
 
         public function actionPdf($clinic_this)
-    {   $this->layout = false; 
+    {  
+        $this->layout = false; 
+        $clinic = show_clinic($clinic_this);
         //設置kartik \ mpdf \ Pdf組件
         $pdf = new Pdf([
             //設置為僅使用核心字體
@@ -112,8 +114,9 @@ class SiteController extends Controller
             'orientation' => Pdf :: ORIENT_PORTRAIT,
             //流式傳輸到內嵌瀏覽器
             'destination' => Pdf::DEST_BROWSER,
+            
             // your html content input
-            'content' => '<h1>富祥牙技所</h1>',
+            'content' => '',
             // format content from your own css file if needed or use the
             // enhanced bootstrap css built by Krajee for mPDF formatting
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
@@ -129,7 +132,7 @@ class SiteController extends Controller
             ],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader' => [$clinic_this],
+                'SetHeader' => ['|富翔牙體技術所|'.$clinic[1]['clinic'].'診所<br>'.date('Y-m')],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
