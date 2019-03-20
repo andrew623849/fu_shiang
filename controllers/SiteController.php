@@ -105,6 +105,7 @@ class SiteController extends Controller
         $this->layout = false; 
         $clinic = show_clinic($clinic_this);
         //設置kartik \ mpdf \ Pdf組件
+        $defaultFontSize = 10;
         $pdf = new Pdf([
             //設置為僅使用核心字體
             'mode' => Pdf::MODE_UTF8,
@@ -132,7 +133,7 @@ class SiteController extends Controller
             ],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader' => ['|富翔牙體技術所|'.$clinic[1]['clinic'].'診所<br>'.date('Y-m')],
+                'SetHeader' => ['|富翔牙體技術所|'.$clinic[1]['clinic'].'診所<br>'.date('Y-m'),'O', false,10],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);

@@ -12503,11 +12503,11 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 		$this->SetHTMLFooter($this->pageHTMLfooters[$name], $side);
 	}
 
-	function SetHeader($Harray = [], $side = '', $write = false)
+	function SetHeader($Harray = [], $side = '', $write = false, $fontsize)
 	{
 		$oddhtml = '';
 		$evenhtml = '';
-
+		$this->defaultheaderfontsize = $fontsize;
 		if (is_string($Harray)) {
 
 			if (strlen($Harray) === 0) {

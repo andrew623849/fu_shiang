@@ -57,17 +57,17 @@ class Toothcase extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'start_time' => 'Start Time',
-            'end_time' => 'End Time',
-            'try_time' => 'Try Time',
-            'clinic_id' => 'Clinic ID',
-            'name' => 'Name',
-            'material_id' => 'Material ID',
-            'tooth' => 'Tooth',
-            'tooth_color' => 'Tooth Color',
-            'price' => 'Price',
-            'other_price' => 'Other Price',
-            'remark' => 'Remark',
+            'start_time' => '收件日',
+            'end_time' => '交件日',
+            'try_time' => '試戴日',
+            'clinic_id' => '診所',
+            'name' => '病人姓名',
+            'material_id' => '材料',
+            'tooth' => '齒位',
+            'tooth_color' => '齒色',
+            'price' => '費用',
+            'other_price' => '其他費用',
+            'remark' => '備註',
         ];
     }
 
