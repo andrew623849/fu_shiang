@@ -14,7 +14,7 @@ use app\models\material;
 use app\models\adminsheet;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
-use Mpdf\Mpdf;
+
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -97,15 +97,23 @@ class SiteController extends Controller
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'clinic_info'=>$clinic['1'],
+            'clinic_id '=>$clinic_id,
         ]);
     }
 
-        public function actionPdf($clinic_this)
+        public function actionPdf($clinic_this=0)
     {  
-        $this->layout = false; 
+        $this->layout = false;
+        $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
         $clinic = show_clinic($clinic_this);
+        $material = show_material('all');
+        $model = new toothcase();
+        $models = $model->find()->where(['and',['like','end_time',$_POST['month']],['=','clinic_id',$clinic_this]])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
+        $content = $this->renderPartial('pdf',[
+            'model'=>$models,
+            'material'=>$material[1],
+        ]);
         //設置kartik \ mpdf \ Pdf組件
-        $defaultFontSize = 10;
         $pdf = new Pdf([
             //設置為僅使用核心字體
             'mode' => Pdf::MODE_UTF8,
@@ -117,7 +125,7 @@ class SiteController extends Controller
             'destination' => Pdf::DEST_BROWSER,
             
             // your html content input
-            'content' => '',
+            'content' => $content,
             // format content from your own css file if needed or use the
             // enhanced bootstrap css built by Krajee for mPDF formatting
             'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
@@ -133,7 +141,7 @@ class SiteController extends Controller
             ],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader' => ['|富翔牙體技術所|'.$clinic[1]['clinic'].'診所<br>'.date('Y-m'),'O', false,10],
+                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m'),'O', false,10],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
@@ -149,11 +157,11 @@ class SiteController extends Controller
      */
     public function actionView($id)
     {   
-        $clinic = show_clinic($id);
+        $clinic = show_clinic('all');
         $material = show_material($id);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'clinic_info'=>$clinic['1'],
+            'clinic'=>$clinic['1'],
             'material_info' =>$material['1'],
             'id_max' => $material['2'],
         ]);
