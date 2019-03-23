@@ -87,9 +87,10 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionToothcase()
-    {
-        $clinic_id =Yii::$app->request->queryParams;
-        if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
+    {   if(isset($_POST['toothcaseSearch']['clinic_id']))
+            $clinic_id =$_POST['toothcaseSearch']['clinic_id'];
+        else
+            $clinic_id = 1;
         $searchModel = new toothcaseSearch();
         $dataProvider = $searchModel->search($clinic_id);
         $clinic = show_clinic('all');
@@ -97,7 +98,7 @@ class SiteController extends Controller
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'clinic_info'=>$clinic['1'],
-            'clinic_id '=>$clinic_id,
+            'clinic_id'=>$clinic_id,
         ]);
     }
 
