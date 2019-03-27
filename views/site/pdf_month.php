@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
         'method' => 'post',
     ]); ?>
     <div class="container" style="padding: 0px;">
-            <input type = "month" name = "month" value = <?= date('Y-m') ?>>
+            <input type = "date" name = "date" value = <?= date('Y-m-d') ?>>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-success']) ?>
         <div  style="margin-left: -15px;display:none" >
             <?= $form->field($model,'clinic_id')->label("診所")->dropDownList(ArrayHelper::map($clinic_info,'id','clinic'),['value' => !empty($clinic) ? $clinic : 1],['style'=>'border:1px solid ;'])?>
