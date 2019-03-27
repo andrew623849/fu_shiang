@@ -3,8 +3,8 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
-$this->title = $clinic[$model['clinic_id']]['clinic'].':病人資料';
-$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']]['clinic'].'病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>$model['clinic_id']]];
+$this->title = $clinic[$model['clinic_id']-1]['clinic'].':病人資料';
+$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']-1]['clinic'].'病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
 \yii\web\YiiAsset::register($this);
 $last_id = ($model->id - 1);
