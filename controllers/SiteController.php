@@ -14,7 +14,7 @@ use app\models\material;
 use app\models\adminsheet;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
-
+use Mpdf\Mpdf;
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -87,10 +87,9 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionToothcase()
-    {   if(isset($_POST['toothcaseSearch']['clinic_id']))
-            $clinic_id =$_POST['toothcaseSearch']['clinic_id'];
-        else
-            $clinic_id = 1;
+    {   
+        $clinic_id=Yii::$app->request->queryParams;
+        if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
         $searchModel = new toothcaseSearch();
         $dataProvider = $searchModel->search($clinic_id);
         $clinic = show_clinic('all');
@@ -105,11 +104,12 @@ class SiteController extends Controller
         public function actionPdf($clinic_this=0)
     {  
         $this->layout = false;
+        $month = date('Y-m',strtotime($_POST['date']));
         $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
         $clinic = show_clinic($clinic_this);
         $material = show_material('all');
         $model = new toothcase();
-        $models = $model->find()->where(['and',['like','end_time',$_POST['month']],['=','clinic_id',$clinic_this]])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
+        $models = $model->find()->where(['and',['like','end_time',$month],['=','clinic_id',$clinic_this],['<=','end_time',$_POST['date']]])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
         $content = $this->renderPartial('pdf',[
             'model'=>$models,
             'material'=>$material[1],
@@ -124,7 +124,7 @@ class SiteController extends Controller
             'orientation' => Pdf :: ORIENT_PORTRAIT,
             //流式傳輸到內嵌瀏覽器
             'destination' => Pdf::DEST_BROWSER,
-            
+            'marginTop' =>20,
             // your html content input
             'content' => $content,
             // format content from your own css file if needed or use the

@@ -12,7 +12,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin([
         'action' => ['toothcase'],
-        'method' => 'post',
+        'method' => 'get',
     ]); ?>
     <div class="container" style="padding: 0px;">
         <div class="col-sm-4" ><?= $form->field($model,'clinic_id')->label("診所")->dropDownList(ArrayHelper::map($clinic_info,'id','clinic'),['value' => !empty($clinic) ? $clinic : 1],['style'=>'border:1px solid ;'])?></div>
