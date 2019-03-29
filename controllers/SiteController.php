@@ -229,7 +229,8 @@ class SiteController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->db->createCommand('ALTER TABLE toothcase DROP id')->query();
+        Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
         return $this->redirect(['toothcase']);
     }
     /**
