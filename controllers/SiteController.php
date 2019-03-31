@@ -104,12 +104,11 @@ class SiteController extends Controller
         public function actionPdf($clinic_this=0)
     {  
         $this->layout = false;
-        $month = date('Y-m',strtotime($_POST['date']));
         $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
         $clinic = show_clinic($clinic_this);
         $material = show_material('all');
         $model = new toothcase();
-        $models = $model->find()->where(['and',['like','end_time',$month],['=','clinic_id',$clinic_this],['<=','end_time',$_POST['date']]])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
+        $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']]])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
         $content = $this->renderPartial('pdf',[
             'model'=>$models,
             'material'=>$material[1],
@@ -142,7 +141,7 @@ class SiteController extends Controller
             ],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m'),'O', false,10],
+                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,10],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
