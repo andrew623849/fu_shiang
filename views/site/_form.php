@@ -13,8 +13,8 @@ use yii\helpers\ArrayHelper;
     <?php $form = ActiveForm::begin(); ?>
     <?php if($url == 'create'){
      $model ->clinic_id = $clinic_this;
-     $i=-7;
-     while ($i<=37){ 
+     $i=-35;
+     while ($i<=35){ 
         $d = strtotime(date('Y-m-d')) + ($i + 1) * 85800;
         $date_time = date("Y-m-d",$d);
         $date[$date_time] = $date_time;
