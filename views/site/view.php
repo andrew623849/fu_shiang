@@ -31,7 +31,7 @@ if($next_id > $id_max){
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('新增病例', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('新增病例',['create','clinic_this' => $model['clinic_id']], ['class' => 'btn btn-success']) ?>
     </p>
 <div class="col-sm-1" style="margin-top: 130px; ">
     <?= Html::a('<', ['view', 'id' => $last_id], ['class' => 'btn btn-link']) ?>
