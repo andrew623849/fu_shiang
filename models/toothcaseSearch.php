@@ -45,6 +45,7 @@ class toothcaseSearch extends toothcase
         
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=>['defaultOrder'=>['end_time'=>SORT_DESC]],
         ]);
 
         $this->load($params);
