@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "toothcase".
  *
- * @property int $id 病人編號
+ * @property int $id
  * @property string $start_time 收件日
  * @property string $end_time 交件日
  * @property string $try_time
@@ -18,6 +18,7 @@ use Yii;
  * @property string $tooth_color 齒色
  * @property int $price
  * @property int $other_price
+ * @property int $checkout 已結帳:1未結帳:0
  * @property string $remark 備註
  *
  * @property Clinic $clinic
@@ -41,7 +42,7 @@ class Toothcase extends \yii\db\ActiveRecord
         return [
             [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'price', 'other_price'], 'required'],
             [['start_time', 'end_time', 'try_time'], 'safe'],
-            [['clinic_id', 'material_id', 'price', 'other_price'], 'integer'],
+            [['clinic_id', 'material_id', 'price', 'other_price', 'checkout'], 'integer'],
             [['name'], 'string', 'max' => 20],
             [['tooth', 'tooth_color'], 'string', 'max' => 50],
             [['remark'], 'string', 'max' => 500],
@@ -68,6 +69,7 @@ class Toothcase extends \yii\db\ActiveRecord
             'price' => '費用',
             'other_price' => '其他費用',
             'remark' => '備註',
+            'checkout' => 'Checkout',
         ];
     }
 
