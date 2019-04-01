@@ -178,7 +178,7 @@ class SiteController extends Controller
         $model = new toothcase();
         $clinic = show_clinic('all');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'start_time'=>$_POST['Toothcase']['start_time'],'end_time'=>$_POST['Toothcase']['end_time']]);
+            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
             return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->render('create', [
@@ -205,7 +205,7 @@ class SiteController extends Controller
         $material = show_material($id);
         $clinic = show_clinic($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'start_time'=>$_POST['Toothcase']['start_time'],'end_time'=>$_POST['Toothcase']['end_time']]);
+            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
