@@ -43,7 +43,7 @@ foreach($model as $key=>$val){
         <tbody>
             <?php
             foreach($model as $key=>$val){
-                $material_val = $material[$val['material_id']];
+                $material_val = $material[$val['material_id']-1];
             ?>
             <tr>
                 <td><?= $key+1 ?></td>
