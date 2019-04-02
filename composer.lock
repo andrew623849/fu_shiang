@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a83d7f352aa37d6e9c3c0bd4d01a3111",
+    "content-hash": "f0946e38f3d55d6ac1b49d0f82e03f64",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -25,6 +25,45 @@
             "type": "bower-asset",
             "license": [
                 "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/c3",
+            "version": "v0.6.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/c3js/c3.git",
+                "reference": "8a27a9734f4183350534d3bd25fab351253e2bc5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/c3js/c3/zipball/8a27a9734f4183350534d3bd25fab351253e2bc5",
+                "reference": "8a27a9734f4183350534d3bd25fab351253e2bc5"
+            },
+            "require": {
+                "bower-asset/d3": ">=5.0.0,<6.0.0"
+            },
+            "type": "bower-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "bower-asset/d3",
+            "version": "v5.9.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mbostock-bower/d3-bower.git",
+                "reference": "8232806c822ebdf58ff61b594954f18f19253380"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mbostock-bower/d3-bower/zipball/8232806c822ebdf58ff61b594954f18f19253380",
+                "reference": "8232806c822ebdf58ff61b594954f18f19253380"
+            },
+            "type": "bower-asset",
+            "license": [
+                "BSD-3-Clause"
             ]
         },
         {
@@ -689,17 +728,68 @@
             "time": "2018-07-31T09:26:32+00:00"
         },
         {
-            "name": "yiisoft/yii2",
-            "version": "2.0.16.1",
+            "name": "yii2mod/yii2-c3-chart",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "089198cced57c4b8c9545ddc56001a1bd114b2dd"
+                "url": "https://github.com/yii2mod/yii2-c3-chart.git",
+                "reference": "75720eb5bca7a64a2c8b81cc2ce2902894e424be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/089198cced57c4b8c9545ddc56001a1bd114b2dd",
-                "reference": "089198cced57c4b8c9545ddc56001a1bd114b2dd",
+                "url": "https://api.github.com/repos/yii2mod/yii2-c3-chart/zipball/75720eb5bca7a64a2c8b81cc2ce2902894e424be",
+                "reference": "75720eb5bca7a64a2c8b81cc2ce2902894e424be",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/c3": "*",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-bootstrap": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\c3\\chart\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Chepurnoy",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Yii2 wrapper for D3-based reusable chart library",
+            "keywords": [
+                "yii2",
+                "yii2 c3 chart",
+                "yii2 c3.js"
+            ],
+            "time": "2017-03-07T16:49:10+00:00"
+        },
+        {
+            "name": "yiisoft/yii2",
+            "version": "2.0.17",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-framework.git",
+                "reference": "b56159228c3b4990e38cf41ddd69af27ab015bea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/b56159228c3b4990e38cf41ddd69af27ab015bea",
+                "reference": "b56159228c3b4990e38cf41ddd69af27ab015bea",
                 "shasum": ""
             },
             "require": {
@@ -786,7 +876,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2019-02-28T07:03:06+00:00"
+            "time": "2019-03-22T21:26:26+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
