@@ -110,7 +110,7 @@ class SiteController extends Controller
         $model = new toothcase();
         $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
         if($_POST['checkout'] == 1){
-            toothcase::updateAll(['checkout'=>$_POST['checkout']],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
+            toothcase::updateAll(['checkout'=>$_POST['checkout'],'checkout_date'=>$_POST['checkout_date']],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
         }
         $content = $this->renderPartial('pdf',[
             'model'=>$models,

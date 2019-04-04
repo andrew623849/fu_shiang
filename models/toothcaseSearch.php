@@ -42,12 +42,10 @@ class toothcaseSearch extends toothcase
     {
         $query = toothcase::find()->where(['clinic_id'=> $params]);
         // add conditions that should always apply here
-        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort'=>['defaultOrder'=>['end_time'=>SORT_DESC]],
         ]);
-
         $this->load($params);
 
         if (!$this->validate()) {
