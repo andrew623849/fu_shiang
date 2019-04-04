@@ -15,6 +15,7 @@ use app\models\adminsheet;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
 use Mpdf\Mpdf;
+use app\models\outlay;
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -151,6 +152,22 @@ class SiteController extends Controller
         
         //根據目標設置返回pdf輸出
         return $pdf->render(); 
+    }
+    public function actionReport()
+    {
+        $model = new toothcase();
+        $models = $model->find()->where(['and',['=','checkout',1],['like','end_time',date('Y')]])->asArray()->all();
+        $model_outlay = new outlay();
+        $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
+        $clinic = show_clinic('all');
+        $material = show_material('all');
+        return $this->render('report', [
+            'clinic'=>$clinic['1'],
+            'material'=>$material['1'],
+            'models'=>$models,
+            'models_outlay'=>$models_outlay,
+
+        ]);
     }
 
     /**

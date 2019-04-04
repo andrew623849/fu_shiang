@@ -40,7 +40,8 @@ AppAsset::register($this);
         'items' => [
             ['label' => '首頁', 'url' => ['/site/todaycase']],
             ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
-            ['label' => '聯絡', 'url' => ['/site/contact']],
+            ['label' => '支出', 'url' => ['/outlay/index']],
+            ['label' => '報表', 'url' => ['/site/report']],
             Yii::$app->user->isGuest ? (
                 ['label' => '登出', 'url' => ['/site/index']]
             ) : (
@@ -76,7 +77,7 @@ AppAsset::register($this);
     <div class="container">
         <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">admin:黃柏禎</p>
     </div>
 </footer>
 

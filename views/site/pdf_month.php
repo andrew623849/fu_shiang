@@ -21,6 +21,7 @@ echo Dialog::widget([
                 'label' => '不結帳',
                 'action'=>new JsExpression("function(dialog){
                      $('.checkout').val('0');
+                     $('.checkout_date').val('');
                      $('.pdfOK').click();
                     }")   
             ],
@@ -47,6 +48,7 @@ echo Dialog::widget([
     <div class="container" style="padding: 0px;">
             <input type = "date" name = "start_date" value = <?= date('Y-m') ?>-01>
             <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
+            <input class = "hidden checkout_date" type = "date" name = "checkout_date" value = <?= date('Y-m-d') ?>>
             <input class = "hidden checkout" type = "text" name = "checkout" >
             <button type="button" id="btn-pdf" class="btn btn-warning">結帳</button>
                         <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-success hidden pdfOK']) ?>
