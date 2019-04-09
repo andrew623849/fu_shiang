@@ -39,8 +39,8 @@ class toothcaseSearch extends toothcase
      * @return ActiveDataProvider
      */
     public function search($params)
-    {
-        $query = toothcase::find()->where(['clinic_id'=> $params]);
+    {  
+        $query = toothcase::find()->where(['clinic_id'=> $params['toothcaseSearch']]);
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
