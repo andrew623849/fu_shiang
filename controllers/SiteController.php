@@ -109,7 +109,7 @@ class SiteController extends Controller
         $clinic = show_clinic($clinic_this);
         $material = show_material('all');
         $model = new toothcase();
-        $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['end_time'=>SORT_ASC])->asArray()->all();
+        $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['end_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
         if($_POST['checkout'] == 1){
             toothcase::updateAll(['checkout'=>$_POST['checkout'],'checkout_date'=>$_POST['checkout_date']],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
         }
@@ -145,7 +145,7 @@ class SiteController extends Controller
             ],
             // call mPDF methods on the fly
             'methods' => [
-                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,10],
+                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
                 'SetFooter' => ['{PAGENO}'],
             ]
         ]);
