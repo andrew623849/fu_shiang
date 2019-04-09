@@ -51,7 +51,7 @@ foreach($model as $key=>$val){
                 <td><?= $val['name'] ?></td>
                 <td><?= $val['tooth'] ?></td>
                 <td><?= $val['tooth_color'] ?></td>
-                <td><?= $material_val['material'] ?></td>
+                <td><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
                 <td><?= $val['price'] ?></td>
                 <td><?= $val['remark'] ?></td>
             </tr>
