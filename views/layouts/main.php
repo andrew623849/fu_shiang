@@ -30,7 +30,7 @@ AppAsset::register($this);
     <?php
     NavBar::begin([
         'brandLabel' => '富翔牙體技術所',
-        'brandUrl' => ['/site/todaycase'],
+        'brandUrl' => ['/site/person'],
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
