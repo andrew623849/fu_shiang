@@ -38,7 +38,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => '首頁', 'url' => ['/site/todaycase']],
+            ['label' => '交件', 'url' => ['/site/todaycase']],
             ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
             ['label' => '支出', 'url' => ['/outlay/index']],
             ['label' => '報表', 'url' => ['/site/report']],
@@ -63,7 +63,7 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'homeLink' => [
             'label' => '首頁',
-            'url' => ['site/index'],
+            'url' => ['site/person'],
             'class' => 'myhome'
         ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
