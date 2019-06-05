@@ -43,19 +43,28 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                /*'<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',*/
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];
-
-if (YII_ENV_DEV) {
+if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+   $myip = $_SERVER['HTTP_CLIENT_IP'];
+}else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+   $myip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+}else{
+   $myip= $_SERVER['REMOTE_ADDR'];
+}
+if ($myip == '127.0.0.1') {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [
