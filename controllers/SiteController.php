@@ -129,69 +129,83 @@ class SiteController extends Controller
     }
 
     public function actionPdf($clinic_this=0){  
-        $this->layout = false;
-        $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
-        $clinic = show_clinic($clinic_this);
-        $material = show_material('all');
-        $model = new toothcase();
-        $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
-        if($_POST['checkout'] == 1){
-            toothcase::updateAll(['checkout'=>'1'],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
+        if(Yii::$app->session['login']){
+            $this->layout = false;
+            $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
+            $clinic = show_clinic($clinic_this);
+            $material = show_material('all');
+            $model = new toothcase();
+            $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
+            if($_POST['checkout'] == 1){
+                toothcase::updateAll(['checkout'=>'1'],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
+            }
+            $content = $this->renderPartial('pdf',[
+                'model'=>$models,
+                'material'=>$material[1],
+            ]);
+            //設置kartik \ mpdf \ Pdf組件
+            $pdf = new Pdf([
+                //設置為僅使用核心字體
+                'mode' => Pdf::MODE_UTF8,
+                // A4 paper format
+                'format' => Pdf::FORMAT_A4,
+                // 縱向
+                'orientation' => Pdf :: ORIENT_PORTRAIT,
+                //流式傳輸到內嵌瀏覽器
+                'destination' => Pdf::DEST_BROWSER,
+                'marginTop' =>20,
+                // your html content input
+                'content' => $content,
+                // format content from your own css file if needed or use the
+                // enhanced bootstrap css built by Krajee for mPDF formatting
+                'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
+                // any css to be embedded if required
+                'cssInline' => '.kv-heading-1{font-size:24px}',
+                // set mPDF properties on the fly
+                'options' => [
+                    'title' => '中文',
+                    'autoLangToFont' => true,    //这几个配置加上可以显示中文
+                    'autoScriptToLang' => true,  //这几个配置加上可以显示中文
+                    'autoVietnamese' => true,    //这几个配置加上可以显示中文
+                    'autoArabic' => true,        //这几个配置加上可以显示中文
+                ],
+                // call mPDF methods on the fly
+                'methods' => [
+                    'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
+                    'SetFooter' => ['{PAGENO}'],
+                ]
+            ]);
+            
+            //根據目標設置返回pdf輸出
+            return $pdf->render(); 
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
         }
-        $content = $this->renderPartial('pdf',[
-            'model'=>$models,
-            'material'=>$material[1],
-        ]);
-        //設置kartik \ mpdf \ Pdf組件
-        $pdf = new Pdf([
-            //設置為僅使用核心字體
-            'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
-            'format' => Pdf::FORMAT_A4,
-            // 縱向
-            'orientation' => Pdf :: ORIENT_PORTRAIT,
-            //流式傳輸到內嵌瀏覽器
-            'destination' => Pdf::DEST_BROWSER,
-            'marginTop' =>20,
-            // your html content input
-            'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
-            'cssInline' => '.kv-heading-1{font-size:24px}',
-            // set mPDF properties on the fly
-            'options' => [
-                'title' => '中文',
-                'autoLangToFont' => true,    //这几个配置加上可以显示中文
-                'autoScriptToLang' => true,  //这几个配置加上可以显示中文
-                'autoVietnamese' => true,    //这几个配置加上可以显示中文
-                'autoArabic' => true,        //这几个配置加上可以显示中文
-            ],
-            // call mPDF methods on the fly
-            'methods' => [
-                'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
-                'SetFooter' => ['{PAGENO}'],
-            ]
-        ]);
-        
-        //根據目標設置返回pdf輸出
-        return $pdf->render(); 
     }
     public function actionReport(){
-        $model = new toothcase();
-        $models = $model->find()->where(['and',['=','checkout',1],['like','end_time',date('Y')]])->asArray()->all();
-        $model_outlay = new outlay();
-        $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
-        $clinic = show_clinic('all');
-        $material = show_material('all');
-        return $this->render('report', [
-            'clinic'=>$clinic['1'],
-            'material'=>$material['1'],
-            'models'=>$models,
-            'models_outlay'=>$models_outlay,
+        if(Yii::$app->session['login']){
+            $model = new toothcase();
+            $models = $model->find()->where(['and',['=','checkout',1],['like','end_time',date('Y')]])->asArray()->all();
+            $model_outlay = new outlay();
+            $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
+            $clinic = show_clinic('all');
+            $material = show_material('all');
+            return $this->render('report', [
+                'clinic'=>$clinic['1'],
+                'material'=>$material['1'],
+                'models'=>$models,
+                'models_outlay'=>$models_outlay,
 
-        ]);
+            ]);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -200,14 +214,21 @@ class SiteController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id){   
-        $clinic = show_clinic('all');
-        $material = show_material($id);
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'clinic'=>$clinic['1'],
-            'material_info' =>$material['1'],
-            'id_max' => $material['2'],
-        ]);
+        if(Yii::$app->session['login']){
+            $clinic = show_clinic('all');
+            $material = show_material($id);
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'clinic'=>$clinic['1'],
+                'material_info' =>$material['1'],
+                'id_max' => $material['2'],
+            ]);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -216,21 +237,28 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionCreate($clinic_this = 1){
-        $material = show_material('all');
-        $model = new toothcase();
-        $clinic = show_clinic('all');
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
-            return $this->redirect(['view', 'id' => $model->id]);
+        if(Yii::$app->session['login']){
+            $material = show_material('all');
+            $model = new toothcase();
+            $clinic = show_clinic('all');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            return $this->render('create', [
+                'model' => $model,
+                'clinic_model' => $clinic['0'],
+                'clinic_info'=>$clinic['1'],
+                'material_model'=>$material['0'],
+                'material_info'=>$material['1'],
+                'clinic_this' =>$clinic_this,
+            ]);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
         }
-        return $this->render('create', [
-            'model' => $model,
-            'clinic_model' => $clinic['0'],
-            'clinic_info'=>$clinic['1'],
-            'material_model'=>$material['0'],
-            'material_info'=>$material['1'],
-            'clinic_this' =>$clinic_this,
-        ]);
     }
 
     /**
@@ -241,22 +269,29 @@ class SiteController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id){
-        $model = $this->findModel($id);
-        $material_info = show_material('all');
-        $material = show_material($id);
-        $clinic = show_clinic($id);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+        if(Yii::$app->session['login']){
+            $model = $this->findModel($id);
+            $material_info = show_material('all');
+            $material = show_material($id);
+            $clinic = show_clinic($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        return $this->render('update', [
-            'model' => $model,
-            'clinic_model' => $clinic['0'],
-            'clinic_info'=>$clinic['1'],
-            'material_model'=>$material['0'],
-            'material_info'=>$material_info['1'],
-        ]);
+            return $this->render('update', [
+                'model' => $model,
+                'clinic_model' => $clinic['0'],
+                'clinic_info'=>$clinic['1'],
+                'material_model'=>$material['0'],
+                'material_info'=>$material_info['1'],
+            ]);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -267,10 +302,17 @@ class SiteController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id){
-        $this->findModel($id)->delete();
-        Yii::$app->db->createCommand('ALTER TABLE toothcase DROP id')->query();
-        Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
-        return $this->redirect(['toothcase']);
+        if(Yii::$app->session['login']){
+            $this->findModel($id)->delete();
+            Yii::$app->db->createCommand('ALTER TABLE toothcase DROP id')->query();
+            Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
+            return $this->redirect(['toothcase']);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('index', [      
+                'model' => $model,
+            ]);
+        }
     }
     /**
      * Finds the toothcase model based on its primary key value.

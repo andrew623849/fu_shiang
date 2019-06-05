@@ -8,6 +8,7 @@ use app\models\OutlaySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\adminsheet;
 
 /**
  * OutlayController implements the CRUD actions for Outlay model.
@@ -35,13 +36,20 @@ class OutlayController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new OutlaySearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(Yii::$app->session['login']){
+            $searchModel = new OutlaySearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            $model = new adminsheet();           
+            return $this->render('..\site\index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**

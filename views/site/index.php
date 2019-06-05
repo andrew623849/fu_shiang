@@ -8,7 +8,9 @@ use yii\widgets\ActiveForm;
 ?>
 <div class="site-login">
     <h1>牙技所管理系統登入</h1>
-    <div><?= $message?></div>
+    <?php if(isset($message) &&  $message!=""){
+       echo '<div class="alert alert-danger">'.$message.'</div>';
+     } ?>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'options' => ['class' => 'form-horizontal'],
