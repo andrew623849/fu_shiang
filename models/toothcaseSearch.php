@@ -44,7 +44,7 @@ class toothcaseSearch extends toothcase
         // add conditions that should always apply here
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=>['defaultOrder'=>['end_time'=>SORT_DESC]],
+            'sort'=>['defaultOrder'=>['start_time'=>SORT_DESC]],
         ]);
         $this->load($params);
 
@@ -53,19 +53,9 @@ class toothcaseSearch extends toothcase
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'start_time' => $this->start_time,
-            'material_id' => $this->material_id,
-        ]);
-
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'tooth', $this->tooth])
-            ->andFilterWhere(['like', 'tooth_color', $this->tooth_color])
-            ->andFilterWhere(['like', 'remark', $this->remark])
-            ->andFilterWhere(['like', 'end_time', $this->end_time]);
+            ->andFilterWhere(['like', 'start_time', $this->start_time]);
 
         return $dataProvider;
     }
