@@ -80,18 +80,18 @@ class SiteController extends Controller
         }
     
     }
-    public function actionTodaycase($id=0){   
+    public function actionTodaycase(){   
         if(Yii::$app->session['login']){
             $date = date('Y-m-d');
-            $date = today_to($date,$id);
+            $date7 = date('Y-m-d',strtotime("+1 week"));
             $model = new toothcase;
-            $model = $model->find()->where(["end_time"=>$date])->all();
+            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date7]])->orderBy(['end_time'=>SORT_ASC])->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
             return $this->render('todaycase', [
-                'id'=>$id,
                 'model' => $model,
                 'date' => $date,
+                'date7' =>$date7,
                 'clinic_info'=>$clinic['1'],
                 'material_info' =>$material['1'],
             ]);

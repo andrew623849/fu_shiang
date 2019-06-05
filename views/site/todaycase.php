@@ -5,24 +5,19 @@ use yii\widgets\DetailView;
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $date.'要送的CASE';
-$last_id = ($id - 1);
-$next_id = ($id + 1);
-if($last_id == -1){
-    $last_id = $last_id - 1;
-}
-if($next_id == -1){
-    $next_id = $next_id + 1;
-}
+$this->title = $date.'~'.$date7.'要送的CASE';
 ?>
-<?= Html::a('上一天', ['todaycase', 'id' => $last_id], ['class' => 'btn btn-link']) ?>
-<?= Html::a('下一天', ['todaycase', 'id' => $next_id], ['class' => 'btn btn-link']) ?>
 <h1><?= Html::encode($this->title) ?></h1>
 <?php for($i = 0;$i < count($model);$i ++){ 
-
-    $models = $model[$i];?>
+    $models = $model[$i];
+    if($models['end_time'] <= date('Y-m-d',strtotime('+3 day'))){
+        $options= "border:3px red solid";
+    }else{
+        $options = "";
+    }
+    ?>
     <div class="col-sm-4">
-    <?= DetailView::widget([
+    <?php echo DetailView::widget([
         'model' => $models,
         'attributes' => [
             ['label'=>'診所','value'=>$clinic_info[($models->clinic_id-1)]['clinic']],
@@ -35,6 +30,7 @@ if($next_id == -1){
             ['label'=>'備註','value'=>$models->remark],
             ['label'=>'金額','value'=>$models->price],
         ],
+        'options'=>['class' => 'table table-striped table-bordered detail-view','style'=>$options],
     ]) ?>
     </div>
 <?php }?>

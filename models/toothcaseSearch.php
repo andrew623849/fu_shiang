@@ -55,6 +55,8 @@ class toothcaseSearch extends toothcase
         }
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'tooth', $this->tooth])
+            ->andFilterWhere(['like', 'tooth_color', $this->tooth_color])
+            ->andFilterWhere(['like', 'remark', $this->remark])
             ->andFilterWhere(['like', 'start_time', $this->start_time]);
 
         return $dataProvider;
