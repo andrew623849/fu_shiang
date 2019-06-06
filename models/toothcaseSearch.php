@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\toothcase;
+use app\models\Toothcase;
 
 /**
  * toothcaseSearch represents the model behind the search form of `app\models\toothcase`.
  */
-class toothcaseSearch extends toothcase
+class toothcaseSearch extends Toothcase
 {
     /**
      * {@inheritdoc}

@@ -1,17 +1,17 @@
 <?php
-use app\models\material;
-use app\models\clinic;
-use app\models\toothcase;
+use app\models\Material;
+use app\models\Clinic;
+use app\models\Toothcase;
 
 //資料表要取得材料名稱要用的
 function show_material($var){
 	if($var == 'all'){
-		$material_model = new material();
+		$material_model = new Material();
 		$material_info = $material_model->find()->asArray()->all();
 	return [$material_model,$material_info];
 	}else{
-		$models = new toothcase();
-		$material_model = new material();
+		$models = new Toothcase();
+		$material_model = new Material();
 		$id_max = $models->find()->max('id');
 		$id = $models->find()->where(["id"=>$var])->asArray()->one();
 		$material_info = $material_model->find()->where(["id"=>$id['material_id']])->asArray()->one();
@@ -32,7 +32,7 @@ function show_clinic($var){
 }
 //算case價錢
 function price_case($arr){
-	$material_model = new material();
+	$material_model = new Material();
 	$material_info = $material_model->find()->where(["id"=>$arr['material_id']])->asArray()->one();
 	$tooth_num = count(explode(" ",$arr['tooth']));
 	$price_case = $material_info['price'] * $tooth_num + $arr['other_price'];

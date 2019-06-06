@@ -8,14 +8,14 @@ use yii\web\Controller;
 use yii\web\Response;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\toothcase;
-use app\models\clinic;
-use app\models\material;
-use app\models\adminsheet;
+use app\models\Toothcase;
+use app\models\Clinic;
+use app\models\Material;
+use app\models\AdminSheet;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
 use Mpdf\Mpdf;
-use app\models\outlay;
+use app\models\Outlay;
 class SiteController extends Controller
 {   /**
      * {@inheritdoc}
@@ -51,7 +51,7 @@ class SiteController extends Controller
     // $this->layout = false; 
         Yii::$app->session['login'] = 0;
         Yii::$app->session['user'] = "";
-        $model = new adminsheet();
+        $model = new AdminSheet();
         $message =  "";
         if(isset($_POST["admin"]) && isset($_POST["password"])){
             $model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]]])->one();
@@ -84,7 +84,7 @@ class SiteController extends Controller
         if(Yii::$app->session['login']){
             $date = date('Y-m-d');
             $date7 = date('Y-m-d',strtotime("+1 week"));
-            $model = new toothcase;
+            $model = new Toothcase;
             $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date7]])->orderBy(['end_time'=>SORT_ASC])->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
@@ -96,7 +96,7 @@ class SiteController extends Controller
                 'material_info' =>$material['1'],
             ]);
         }else{
-            $model = new adminsheet();       
+            $model = new AdminSheet();       
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -121,7 +121,7 @@ class SiteController extends Controller
                 'clinic_id'=>$clinic_id,
             ]);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -134,7 +134,7 @@ class SiteController extends Controller
             $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
             $clinic = show_clinic($clinic_this);
             $material = show_material('all');
-            $model = new toothcase();
+            $model = new Toothcase();
             $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
             if($_POST['checkout'] == 1){
                 toothcase::updateAll(['checkout'=>'1'],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
@@ -179,7 +179,7 @@ class SiteController extends Controller
             //根據目標設置返回pdf輸出
             return $pdf->render(); 
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -187,9 +187,9 @@ class SiteController extends Controller
     }
     public function actionReport(){
         if(Yii::$app->session['login']){
-            $model = new toothcase();
+            $model = new Toothcase();
             $models = $model->find()->where(['and',['=','checkout',1],['like','end_time',date('Y')]])->asArray()->all();
-            $model_outlay = new outlay();
+            $model_outlay = new Outlay();
             $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
@@ -201,7 +201,7 @@ class SiteController extends Controller
 
             ]);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -224,7 +224,7 @@ class SiteController extends Controller
                 'id_max' => $material['2'],
             ]);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -239,7 +239,7 @@ class SiteController extends Controller
     public function actionCreate($clinic_this = 1){
         if(Yii::$app->session['login']){
             $material = show_material('all');
-            $model = new toothcase();
+            $model = new Toothcase();
             $clinic = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
@@ -254,7 +254,7 @@ class SiteController extends Controller
                 'clinic_this' =>$clinic_this,
             ]);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -287,7 +287,7 @@ class SiteController extends Controller
                 'material_info'=>$material_info['1'],
             ]);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);
@@ -308,7 +308,7 @@ class SiteController extends Controller
             Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
             return $this->redirect(['toothcase']);
         }else{
-            $model = new adminsheet();           
+            $model = new AdminSheet();           
             return $this->render('index', [      
                 'model' => $model,
             ]);

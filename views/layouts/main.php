@@ -11,6 +11,11 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+ if(Yii::$app->session['login']){
+    $login='登出';
+}else{
+    $login='登入';
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -42,18 +47,7 @@ AppAsset::register($this);
             ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
             ['label' => '支出', 'url' => ['/outlay/index']],
             ['label' => '報表', 'url' => ['/site/report']],
-            Yii::$app->user->isGuest ? (
-                ['label' => '登出', 'url' => ['/site/index']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            ['label' => $login, 'url' => ['/site/index']]
         ],
     ]);
     NavBar::end();
