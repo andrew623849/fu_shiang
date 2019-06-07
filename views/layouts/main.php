@@ -11,11 +11,7 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
- if(Yii::$app->session['login']){
-    $login='登出';
-}else{
-    $login='登入';
-}
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -40,16 +36,42 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => '交件', 'url' => ['/site/todaycase']],
-            ['label' => '病例', 'url' => ['/site/toothcase','toothcaseSearch[clinic_id]'=>'1']],
-            ['label' => '支出', 'url' => ['/outlay/index']],
-            ['label' => '報表', 'url' => ['/site/report']],
-            ['label' => $login, 'url' => ['/site/index']]
-        ],
-    ]);
+    $clinic = show_clinic('all');
+    $clinic_items = "";
+    foreach($clinic[1] as $val){
+        $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+    }
+    if(Yii::$app->session['login']){
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => '交件', 'url' => ['/site/todaycase']],
+                ['label' => '病例', 'url' => ['#'],
+                    'items'=> [
+                        $clinic_items
+                    ],
+                ],
+                ['label' => '支出', 'url' => ['/outlay/index']],
+                ['label' => '報表', 'url' => ['/site/report']],
+                ['label' => '公司內部管理','url' => ['#'],
+                    'items'=> [
+                        ['label'=>'員工','url'=> ['/site/company']],
+                        ['label'=>'診所','url'=> ['＃']]
+                    ],
+                ],
+                ['label' => '登出', 'url' => ['/site/index']]
+            ],
+        ]);
+    }else{
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => '介紹', 'url' => ['#']],
+                ['label' => '登入', 'url' => ['/site/index']]
+            ],
+        ]);
+    }
+
     NavBar::end();
     ?>
 
