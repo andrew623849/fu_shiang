@@ -33,9 +33,5 @@ $job_arr =['老闆','經理','高級牙技師','初級牙技師']
         <img>
     </div>
 </div>
-<div>
-    <?php if($user_arr[2] < 1){
-                echo Html::a('新增員工', ['person_new'], ['class' => 'btn btn-success']);
-    }?>
-</div>
+
 
