@@ -14,7 +14,6 @@ $clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
 $this->title = $clinic[$clinic_id['clinic_id']].'病例';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php  echo $this->render('_search', ['clinic_info' => $clinic_info,'model' => $searchModel,'clinic'=>$clinic_id['clinic_id']]); ?>
 <div style="margin-left:15px"  > 
 <?php  echo $this->render('pdf_month', ['clinic_info' => $clinic_info,'model' => $searchModel,'clinic'=>$clinic_id]); ?>
 </div>
