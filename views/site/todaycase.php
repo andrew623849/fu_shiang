@@ -11,7 +11,9 @@ $this->title = $date.'~'.$date7.'要送的CASE';
 <?php for($i = 0;$i < count($model);$i ++){ 
     $models = $model[$i];
     if($models['end_time'] <= date('Y-m-d',strtotime('+3 day'))){
-        $options= "border:3px red solid";
+        $options= "border:3px blue solid";
+    }elseif($models['end_time'] <= date('Y-m-d')){
+        $options = "border:3px red solid";
     }else{
         $options = "";
     }
