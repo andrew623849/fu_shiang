@@ -274,6 +274,7 @@ class SiteController extends Controller
             $material_info = show_material('all');
             $material = show_material($id);
             $clinic = show_clinic($id);
+            $clinic_info = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -281,9 +282,9 @@ class SiteController extends Controller
 
             return $this->render('update', [
                 'model' => $model,
-                'clinic_model' => $clinic['0'],
-                'clinic_info'=>$clinic['1'],
-                'material_model'=>$material['0'],
+                'clinic_model' => $clinic['1'],
+                'clinic_info'=>$clinic_info['1'],
+                'material_model'=>$material['1'],
                 'material_info'=>$material_info['1'],
             ]);
         }else{

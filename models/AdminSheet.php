@@ -7,15 +7,21 @@ use Yii;
 /**
  * This is the model class for table "admin_sheet".
  *
- * @property string $name
- * @property int $admin
- * @property int $password
+ * @property int $id
+ * @property string $em_num
+ * @property string $admin
+ * @property string $password
  * @property string $build_time
- * @property int $use_year
- * @property string $use_name
- * @property string $use_phone
- * @property string $use_email
- * @property int $use_pay
+ * @property int $job
+ * @property string $user_name
+ * @property string $user_phone
+ * @property string $user_email
+ * @property int $user_pay
+ * @property string $user_f_na
+ * @property string $user_f_ph
+ * @property string $user_exp
+ * @property string $user_grade
+ * @property string $remark
  */
 class AdminSheet extends \yii\db\ActiveRecord
 {
@@ -33,10 +39,11 @@ class AdminSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'admin', 'password', 'build_time', 'use_year', 'use_name', 'use_phone', 'use_email', 'use_pay'], 'required'],
-            [['admin', 'password', 'use_year', 'use_pay'], 'integer'],
+            [['em_num', 'admin', 'password', 'build_time', 'job', 'user_name', 'user_phone', 'user_email', 'user_pay', 'user_f_na', 'user_f_ph', 'user_exp', 'user_grade', 'remark'], 'required'],
             [['build_time'], 'safe'],
-            [['name', 'use_name', 'use_phone', 'use_email'], 'string', 'max' => 64],
+            [['job', 'user_pay'], 'integer'],
+            [['em_num', 'user_f_na', 'user_f_ph', 'user_exp', 'user_grade', 'remark'], 'string', 'max' => 100],
+            [['admin', 'password', 'user_name', 'user_phone', 'user_email'], 'string', 'max' => 64],
         ];
     }
 
@@ -46,15 +53,21 @@ class AdminSheet extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'name' => 'Name',
-            'admin' => 'Admin',
-            'password' => 'Password',
-            'build_time' => 'Build Time',
-            'use_year' => 'Use Year',
-            'use_name' => 'Use Name',
-            'use_phone' => 'Use Phone',
-            'use_email' => 'Use Email',
-            'use_pay' => 'Use Pay',
+            'id' => '編號',
+            'em_num' => '員工編號',
+            'admin' => '帳號',
+            'password' => '密碼',
+            'build_time' => '建立時間',
+            'job' => '職位',
+            'user_name' => '員工姓名',
+            'user_phone' => '員工電話',
+            'user_email' => '員工信箱',
+            'user_pay' => '員工薪資',
+            'user_f_na' => '聯絡人',
+            'user_f_ph' => '聯絡人電話',
+            'user_exp' => '經歷',
+            'user_grade' => '學歷',
+            'remark' => '備註',
         ];
     }
 }

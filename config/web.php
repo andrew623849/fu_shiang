@@ -4,6 +4,9 @@ $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    'charset' => 'utf-8',
+    'language' => 'zh-CN',
+    'timeZone' => 'Asia/Taipei',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -43,16 +46,16 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                '<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
-            ],
-        ],*/
+        
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'showScriptName' => false,
+        //     'rules' => [
+        //         '<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
+        //         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+        //         '<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
+        //     ],
+        // ],
         
     ],
     'params' => $params,

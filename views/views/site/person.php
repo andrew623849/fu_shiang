@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $user_arr = Yii::$app->session['user'];
 $this->title = $user_arr[3];
+$job_arr =['老闆','經理','高級牙技師','初級牙技師']
 ?>
 <div>
     <h1><?= Html::encode($this->title) ?></h1>
@@ -14,7 +15,7 @@ $this->title = $user_arr[3];
         'model'=>$user_arr,
         'attributes' => [
             ['label'=>'員工編號','value'=>$user_arr[0]],
-            ['label'=>'職稱','value'=>level_name($user_arr[2])],
+            ['label'=>'職稱','value'=>$job_arr[$user_arr[2]]],
             ['label'=>'聯絡方式','value'=>$user_arr[4]],
             ['label'=>'緊急聯絡人','value'=>$user_arr[7]],
             ['label'=>'緊急聯絡人聯絡方式','value'=>$user_arr[8]],

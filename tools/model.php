@@ -25,9 +25,12 @@ function show_clinic($var){
 	    $clinic_info=$clinic_model->find()->asArray()->all(); 
 		return [$clinic_model,$clinic_info];
 	}else{
+		$models = new Toothcase();
         $clinic_model = new Clinic();
-        $clinic_info = $clinic_model->find()->where(["id"=>$var])->asArray()->one();
-        return [$clinic_model,$clinic_info];
+        $id_max = $models->find()->max('id');
+        $id = $models->find()->where(["id"=>$var])->asArray()->one();
+        $clinic_info = $clinic_model->find()->where(["id"=>$id['clinic_id']])->asArray()->one();
+        return [$clinic_model,$clinic_info,$id_max];
 	}
 }
 //算case價錢
@@ -162,4 +165,8 @@ function outlay($models_outlay){
 		}
 	}
 	return $price_out;
+}
+function level_name($id){
+	$job_arr =['老闆','經理','高級牙技師','初級牙技師'];
+	return $job_arr[$id];
 }

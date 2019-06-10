@@ -9,6 +9,10 @@ use Yii;
  *
  * @property int $id
  * @property string $clinic
+ * @property int $phone
+ * @property string $adress
+ * @property string $email
+ * @property int $deleted
  *
  * @property Toothcase[] $toothcases
  */
@@ -29,8 +33,9 @@ class Clinic extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'clinic'], 'required'],
-            [['id'], 'integer'],
+            [['id', 'phone', 'deleted'], 'integer'],
             [['clinic'], 'string', 'max' => 50],
+            [['adress', 'email'], 'string', 'max' => 100],
             [['id'], 'unique'],
         ];
     }
@@ -41,8 +46,12 @@ class Clinic extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'clinic' => 'Clinic',
+            'id' => '編號',
+            'clinic' => '診所名稱',
+            'phone' => '診所電話',
+            'adress' => '診所地址',
+            'email' => '診所信箱',
+            'deleted' => 'Deleted',
         ];
     }
 
