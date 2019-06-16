@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'admin',
             // 'password',
             // 'build_time',
-            // 'job',
+            'job',
             'user_name',
             'user_phone',
             'user_email:email',

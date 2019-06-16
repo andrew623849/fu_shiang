@@ -85,7 +85,7 @@ class SiteController extends Controller
             $date = date('Y-m-d');
             $date7 = date('Y-m-d',strtotime("+1 week"));
             $model = new Toothcase;
-            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date7]])->orderBy(['end_time'=>SORT_ASC])->all();
+            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date7]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
             return $this->render('todaycase', [
@@ -221,7 +221,9 @@ class SiteController extends Controller
                 'model' => $this->findModel($id),
                 'clinic'=>$clinic['1'],
                 'material_info' =>$material['1'],
-                'id_max' => $material['2'],
+                'material_info1' =>$material['2'],
+                'material_info2' =>$material['3'],
+                'id_max' => $material['4'],
             ]);
         }else{
             $model = new AdminSheet();           
@@ -242,7 +244,7 @@ class SiteController extends Controller
             $model = new Toothcase();
             $clinic = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth']]);
+                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'tooth_1'=>$_POST['Toothcase']['tooth_1'],'tooth_2'=>$_POST['Toothcase']['tooth_2']]);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             return $this->render('create', [

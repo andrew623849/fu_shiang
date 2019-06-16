@@ -15,7 +15,9 @@ function show_material($var){
 		$id_max = $models->find()->max('id');
 		$id = $models->find()->where(["id"=>$var])->asArray()->one();
 		$material_info = $material_model->find()->where(["id"=>$id['material_id']])->asArray()->one();
-		return [$material_model,$material_info,$id_max];
+		$material_info1 = $material_model->find()->where(["id"=>$id['material_id_1']])->asArray()->one();
+		$material_info2 = $material_model->find()->where(["id"=>$id['material_id_2']])->asArray()->one();
+		return [$material_model,$material_info,$material_info1,$material_info2,$id_max];
 	};
 }
 //資料表要取得診所名稱要用的
@@ -37,10 +39,30 @@ function show_clinic($var){
 function price_case($arr){
 	$material_model = new Material();
 	$material_info = $material_model->find()->where(["id"=>$arr['material_id']])->asArray()->one();
-	$tooth_num = count(explode(" ",$arr['tooth']));
-	$price_case = $material_info['price'] * $tooth_num + $arr['other_price'];
+	$material_info1 = $material_model->find()->where(["id"=>$arr['material_id_1']])->asArray()->one();
+	$material_info2 = $material_model->find()->where(["id"=>$arr['material_id_2']])->asArray()->one();
+	$tooth_num = count(explode(",",$arr['tooth']));
+	$tooth_num1 = count(explode(",",$arr['tooth_1']));
+	$tooth_num2 = count(explode(",",$arr['tooth_2']));
+	// v_d([$material_info['price'],$tooth_num,$material_info1['price'],$tooth_num1,$material_info2['price'],$tooth_num2]);
+	$price_case = $material_info['price'] * $tooth_num + 
+				  $material_info1['price'] * $tooth_num1 + 
+				  $material_info2['price'] * $tooth_num2 + 
+				  $arr['other_price'] +
+				  $arr['other_price_1'] +
+				  $arr['other_price_2'];
 	return $price_case;
 }
+//算材料X數量價錢
+function price_mm($string,$id){
+	$material_model = new Material();
+	$material_info = $material_model->find()->where(["id"=>$id])->asArray()->one();
+	$tooth_num = count(explode(",",$string));
+	 // v_d([$material_info['price'],$tooth_num]);
+	$price_case = $material_info['price'] * $tooth_num;
+	return $price_case;
+}
+
 //找此日期($date)後的第$var天的日期
 function today_to($date,$var){
 	$d = strtotime($date) + ($var + 1) * 85800;
@@ -167,6 +189,11 @@ function outlay($models_outlay){
 	return $price_out;
 }
 function level_name($id){
+	$id = (string)$id;
 	$job_arr =['老闆','經理','高級牙技師','初級牙技師'];
-	return $job_arr[$id];
+	if($id == 'all'){
+		return $job_arr;
+	}else{
+		return $job_arr[$id];
+	}
 }

@@ -37,7 +37,6 @@ class AdminsheetController extends Controller
     {
         $searchModel = new AdminSheetSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

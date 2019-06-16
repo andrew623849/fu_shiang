@@ -45,12 +45,19 @@ if($next_id > $id_max){
             ['label'=>'收件日','value'=>$model->start_time],
             ['label'=>'試戴日','value'=>$model->try_time],
             ['label'=>'病人姓名','value'=>$model->name],
-            ['label'=>'材料','value'=>$material_info['material']],
+            ['label'=>'材料1','value'=>$material_info['material']],
             ['label'=>'齒位','value'=>$model->tooth],
             ['label'=>'齒色','value'=>$model->tooth_color],
+            ['label'=>'材料2','value'=>$material_info1['material']],
+            ['label'=>'齒位','value'=>$model->tooth_1],
+            ['label'=>'齒色','value'=>$model->tooth_color_1],
+            ['label'=>'材料3','value'=>$material_info2['material']],
+            ['label'=>'齒位','value'=>$model->tooth_2],
+            ['label'=>'齒色','value'=>$model->tooth_color_2],
             ['label'=>'備註','value'=>$model->remark],
             ['label'=>'金額','value'=>$model->price],
         ],
+        'template' => '<tr><th>{label}</th><td>{value}</td></tr>',
     ]) ?>
 </div>
 <div class="col-sm-1">

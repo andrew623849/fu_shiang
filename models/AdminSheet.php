@@ -70,4 +70,9 @@ class AdminSheet extends \yii\db\ActiveRecord
             'remark' => '備註',
         ];
     }
+
+    public function getJob()
+    {
+        return $this->hasOne($job_arr('all'), ['id' => 'key']);
+    }
 }
