@@ -21,7 +21,8 @@
         "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-dialog": "*",
         "yii2mod/yii2-c3-chart": "*",
-        "unclead/yii2-multiple-input": "~2.0"
+        "unclead/yii2-multiple-input": "~2.0",
+        "2amigos/yii2-date-picker-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
