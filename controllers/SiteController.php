@@ -58,7 +58,7 @@ class SiteController extends Controller
             if($model != null){
                 Yii::$app->session['login'] = 1;
                 if(Yii::$app->session['login']){
-                    Yii::$app->session['user'] = [$model['em_num'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_exp'],$model['user_grade'],$model['remark']];
+                    Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_exp'],$model['user_grade'],$model['remark']];
                     return $this->render('person'); 
                 }
             }elseif($_POST["admin"] == ""){
