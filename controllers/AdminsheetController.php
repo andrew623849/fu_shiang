@@ -17,6 +17,7 @@ class AdminsheetController extends Controller
     /**
      * {@inheritdoc}
      */
+    
     public function behaviors()
     {
         return [
@@ -33,14 +34,22 @@ class AdminsheetController extends Controller
      * Lists all AdminSheet models.
      * @return mixed
      */
+
     public function actionIndex()
     {
-        $searchModel = new AdminSheetSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+         if(Yii::$app->session['login']){
+            $searchModel = new AdminSheetSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -51,9 +60,16 @@ class AdminsheetController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if(Yii::$app->session['login']){
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -63,15 +79,22 @@ class AdminsheetController extends Controller
      */
     public function actionCreate()
     {
-        $model = new AdminSheet();
+        if(Yii::$app->session['login']){
+            $model = new AdminSheet();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -83,15 +106,21 @@ class AdminsheetController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if(Yii::$app->session['login']){
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -103,9 +132,15 @@ class AdminsheetController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if(Yii::$app->session['login']){
+            AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$id]);
+            return $this->redirect(['index']);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
+        }
     }
 
     /**
@@ -117,10 +152,16 @@ class AdminsheetController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = AdminSheet::findOne($id)) !== null) {
-            return $model;
+        if(Yii::$app->session['login']){
+            if (($model = AdminSheet::findOne($id)) !== null) {
+                return $model;
+            }
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
         }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
