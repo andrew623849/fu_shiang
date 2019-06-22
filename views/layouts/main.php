@@ -32,7 +32,7 @@ AppAsset::register($this);
     $clinic = show_clinic('all');
     $clinic_items = "";
     foreach($clinic[1] as $val){
-        $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+        $clinic_items .= "<li><a href='toothcase?toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
     }
     if(Yii::$app->session['login']){
         NavBar::begin([
