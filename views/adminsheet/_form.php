@@ -33,8 +33,10 @@ $sale[1] = '女';
     <div class="form-group col-sm-12"><?= $form->field($model, 'user_exp')->label("經歷")->textarea(['rows' => '3']) ?></div>
     <div class="form-group col-sm-12"><?= $form->field($model, 'user_grade')->label("學歷")->textarea(['rows' => '3']) ?></div>
     <div class="form-group col-sm-12"><?= $form->field($model, 'remark')->label("備註")->textarea(['rows' => '3']) ?></div>
+    <?php if($url == 'create'){?>
 	<div class="form-group col-sm-12"> <?= $form->field($model, 'build_time')->label("")->hiddenInput(['value' => date('Y-m-d')]) ?></div>
 	<hr />
+    <?php }?>
 	<h3>員工資料</h3>
 	<?php if($url == 'create' or $url == 'pupdate'){?>
     <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'admin')->label("*帳號")->textInput(['maxlength' => true]) ?></div>
