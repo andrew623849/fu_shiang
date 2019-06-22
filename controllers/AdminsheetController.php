@@ -123,6 +123,25 @@ class AdminsheetController extends Controller
         }
     }
 
+        public function actionPupdate($id)
+    {
+        if(Yii::$app->session['login']){
+            $model = $this->findModel($id);
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('pupdate', [
+                'model' => $model,
+            ]);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
+        }
+    }
+
     /**
      * Deletes an existing AdminSheet model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

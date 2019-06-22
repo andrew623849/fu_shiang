@@ -9,7 +9,7 @@ $user_arr = Yii::$app->session['user'];
 $this->title = $user_arr[3];
 ?>
 <div>
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?>  <?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr[0]], ['class' => 'btn btn-success']) ?></h1>
     <?= DetailView::widget([
         'model'=>$user_arr,
         'attributes' => [
