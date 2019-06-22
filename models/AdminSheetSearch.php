@@ -64,8 +64,7 @@ class AdminsheetSearch extends AdminSheet
             'user_pay' => $this->user_pay,
         ]);
 
-        $query->andFilterWhere(['like', 'em_num', $this->em_num])
-            ->andFilterWhere(['like', 'user_name', $this->user_name])
+        $query->andFilterWhere(['like', 'user_name', $this->user_name])
             ->andFilterWhere(['like', 'user_phone', $this->user_phone])
             ->andFilterWhere(['like', 'user_email', $this->user_email]);
 
