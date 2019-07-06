@@ -128,7 +128,8 @@ class AdminsheetController extends Controller
         if(Yii::$app->session['login']){
             $model = $this->findModel($id);
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['/site/index', 'id' => $message->"修改個人資料成功，請重新登入"]);
+                Yii::$app->session['login'] = 0;
+                return $this->render('/site/index', ['message'=>"修改個人資料成功，請重新登入"]);
             }
 
             return $this->render('pupdate', [

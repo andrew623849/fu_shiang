@@ -14,7 +14,7 @@ $sale[1] = '女';
 	<h3>基本資料</h3>
     <?php $form = ActiveForm::begin(); ?>
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_name')->label("*姓名")->textInput(['maxlength' => true]) ?></div>
-    <div class="form-group col-sm-4" ><?= $form->field($model, 'user_sale')->label("*性別")->dropDownList($sale,['value' => date('Y-m-d')],['style'=>'border:1px solid ;'])?></div>
+    <div class="form-group col-sm-4" ><?= $form->field($model, 'user_sale')->label("*性別")->dropDownList($sale,['style'=>'border:1px solid ;'])?></div>
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_br')->label("*出生年/月/日")->widget(DatePicker::classname(), [
     		'inline'=>false,
     		'language' => 'us',
@@ -48,7 +48,7 @@ $sale[1] = '女';
     <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'job')->label("*職位")->textInput(['maxlength' => true]) ?></div>
     <?php }?>
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('送出', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 

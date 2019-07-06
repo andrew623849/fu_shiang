@@ -172,8 +172,7 @@ class SiteController extends Controller
                 // call mPDF methods on the fly
                 'methods' => [
                     'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
-                    'SetFooter' => ['{PAGENO}'],
-                ]
+                    'SetFooter' => ['{PAGENO}']]
             ]);
             
             //根據目標設置返回pdf輸出
