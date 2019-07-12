@@ -64,7 +64,7 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"><?= $val['tooth'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color'] ?></td>
                 <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
-                <td style="border-color:black;"><?= $val['price'] ?></td>
+                <td style="border-color:black;"><?= price_mm($val['tooth'],$val['material_id']) + $val['other_price'] ?></td>
                 <td style="border-color:black;" <?= $td_colspan ?>><?= $val['remark']?></td>
             </tr>
             <?php if($val['material_id_1'] != 0){
@@ -76,8 +76,8 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"></td>
                 <td style="border-color:black;"><?= $val['tooth_1'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color_1'] ?></td>
-                <td style="border-color:black;"></td>
-                <td style="border-color:black;"><?= price_mm($val['tooth_1'],$val['material_id_1'] + $val['other_price_1']) ?></td>
+                <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
+                <td style="border-color:black;"><?= price_mm($val['tooth_1'],$val['material_id_1']) + $val['other_price_1'] ?></td>
             </tr>
         <?php
             }
@@ -91,20 +91,20 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"></td>
                 <td style="border-color:black;"><?= $val['tooth_1'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color_1'] ?></td>
-                <td style="border-color:black;"></td>
-                <td style="border-color:black;"><?= price_mm($val['tooth_2'],$val['material_id_2'] + $val['other_price_2']) ?></td>
+                <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
+                <td style="border-color:black;"><?= price_mm($val['tooth_2'],$val['material_id_2']) + $val['other_price_2'] ?></td>
             </tr>
         <?php
             }
-            if(($key % 14 == 0 || $key == (count($model)-1)) && $key != 0){
+            if((($key+1) % 15 == 0 || $key == (count($model)-1)) && $key != 0){
        ?>
             <tr>
-                <td style="border-color:black;text-align: right;background-color: #D3D3D3;" colspan="7" ><?= '第'.($fkey + 1).'筆 - 第'.($key + 1) ?>筆的金額:</td>
+                <td style="border-color:black;text-align: right;background-color: #D3D3D3;" colspan="7" ><?= '第'.($fkey + 1).'筆 - 第'.($key+1) ?>筆的金額:</td>
                 <td style="border-color:black;background-color: #D3D3D3;"><?= $fpay ?></td>
             </tr>
        <?php 
                 $fpay = 0;
-                $fkey = $key;
+                $fkey = ($key+1);
             }
         }?>
         </tbody>

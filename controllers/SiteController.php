@@ -137,7 +137,7 @@ class SiteController extends Controller
             $model = new Toothcase();
             $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
             if($_POST['checkout'] == 1){
-                toothcase::updateAll(['checkout'=>'1'],['and',['=','clinic_id',$clinic_this],['<=','end_time',$_POST['end_date']],['>=','end_time',$_POST['start_date']],['=','checkout','0']]);
+                toothcase::updateAll([['checkout'=>'1'],['checkout_date'=>date('Y-m',strtotime($_POST['end_date']))]],['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']]);
             }
             $content = $this->renderPartial('pdf',[
                 'model'=>$models,
@@ -187,7 +187,7 @@ class SiteController extends Controller
     public function actionReport(){
         if(Yii::$app->session['login']){
             $model = new Toothcase();
-            $models = $model->find()->where(['and',['=','checkout',1],['like','end_time',date('Y')]])->asArray()->all();
+            $models = $model->find()->where(['and',['=','checkout',1],['like','start_time',date('Y')]])->asArray()->all();
             $model_outlay = new Outlay();
             $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
             $clinic = show_clinic('all');

@@ -34,6 +34,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'value'=>'material.material',
             'label'=>'材料',
              ],
+             'tooth_1',
+            [
+            'attribute'=>'Material',
+            'value'=>'material_1.material',
+            'label'=>'材料2',
+             ],
+             'tooth_2',
+            [
+            'attribute'=>'Material',
+            'value'=>'material_2.material',
+            'label'=>'材料3',
+             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

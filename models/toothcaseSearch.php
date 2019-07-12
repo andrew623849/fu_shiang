@@ -17,7 +17,7 @@ class toothcaseSearch extends Toothcase
     public function rules()
     {
         return [
-            [['id', 'material_id'], 'integer'],
+            [['id', 'material_id', 'material_id_1', 'material_id_2'], 'integer'],
             [['start_time', 'end_time', 'name', 'tooth', 'tooth_color', 'remark','price'], 'safe'],
         ];
     }
