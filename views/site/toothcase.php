@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
+
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -25,8 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            ['class' => 'yii\grid\CheckboxColumn'],
             ['class' => 'yii\grid\SerialColumn'],
-            'start_time',
+            ['attribute' => 'start_time',
+            'format' => ['date', "php:Y-m-d"],
+            'headerOptions' => ['width' => '20%'],
+            'filter' => DateRangePicker::widget([ 'name' => 'BorrowRepaymentSearch[start_time]',
+            'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'], 'convertFormat' => true,
+            'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
+            ],
             'name',
             'tooth',
             [

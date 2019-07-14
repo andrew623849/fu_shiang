@@ -1,7 +1,7 @@
 <?php
 
 namespace app\models;
-
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Toothcase;
@@ -52,6 +52,10 @@ class toothcaseSearch extends Toothcase
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+        if (Yii::$app->request->get('BorrowRepaymentSearch')){
+            $query->andFilterCompare('start_time', explode('~', Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])[0], '>=');//起始時間
+            $query->andFilterCompare('start_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])[1]) + 86400), '<');//結束時間}
         }
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'tooth', $this->tooth])
