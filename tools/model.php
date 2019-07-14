@@ -2,13 +2,14 @@
 use app\models\Material;
 use app\models\Clinic;
 use app\models\Toothcase;
+use app\models\Level;
 
 //資料表要取得材料名稱要用的
 function show_material($var){
-	if($var == 'all'){
+	if((string)$var == 'all'){
 		$material_model = new Material();
 		$material_info = $material_model->find()->asArray()->all();
-	return [$material_model,$material_info];
+		return [$material_model,$material_info];
 	}else{
 		$models = new Toothcase();
 		$material_model = new Material();
@@ -22,7 +23,7 @@ function show_material($var){
 }
 //資料表要取得診所名稱要用的
 function show_clinic($var){
-	if($var == 'all'){
+	if((string)$var == 'all'){
 	    $clinic_model = new Clinic();
 	    $clinic_info=$clinic_model->find()->asArray()->all(); 
 		return [$clinic_model,$clinic_info];
@@ -33,6 +34,18 @@ function show_clinic($var){
         $id = $models->find()->where(["id"=>$var])->asArray()->one();
         $clinic_info = $clinic_model->find()->where(["id"=>$id['clinic_id']])->asArray()->one();
         return [$clinic_model,$clinic_info,$id_max];
+	}
+}
+//資料表要取得職稱名稱要用的
+function show_level($var){
+	if((string)$var == 'all'){
+	    $clinic_model = new Level();
+	    $clinic_info=$clinic_model->find()->asArray()->all(); 
+		return [$clinic_model,$clinic_info];
+	}else{
+		$models = new Level();
+        $id = $models->find()->where(["id"=>$var])->asArray()->one();
+        return $id['job_name'];
 	}
 }
 //算case價錢

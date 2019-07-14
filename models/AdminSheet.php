@@ -28,6 +28,8 @@ use Yii;
  * @property int $deleted
  * @property string $deleted_time
  * @property int $dleted_id
+ *
+ * @property Level $job0
  */
 class AdminSheet extends \yii\db\ActiveRecord
 {
@@ -50,6 +52,7 @@ class AdminSheet extends \yii\db\ActiveRecord
             [['job', 'user_sale', 'user_pay', 'deleted', 'dleted_id'], 'integer'],
             [['admin', 'password', 'user_name', 'user_phone', 'user_email'], 'string', 'max' => 64],
             [['user_line', 'user_f_na', 'user_f_ph', 'user_f_rel', 'user_exp', 'user_grade', 'remark'], 'string', 'max' => 100],
+            [['job'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['job' => 'id']],
         ];
     }
 
@@ -79,5 +82,13 @@ class AdminSheet extends \yii\db\ActiveRecord
             'user_line' => 'LINE ID',
             'user_f_rel' => '聯絡人關係',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getLevel()
+    {
+        return $this->hasOne(Level::className(), ['id' => 'job']);
     }
 }

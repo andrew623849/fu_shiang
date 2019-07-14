@@ -31,8 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'build_time',
-            'job',
-            'user_name',
+            ['label'=>'職稱','value'=>show_level($model['job'])],
             'user_phone',
             'user_email:email',
             'user_pay',

@@ -40,9 +40,11 @@ class AdminsheetController extends Controller
          if(Yii::$app->session['login']){
             $searchModel = new AdminSheetSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider_l = $searchModel->search2(Yii::$app->request->queryParams);
             return $this->render('index', [
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
+                'dataProvider_l' => $dataProvider_l,
             ]);
         }else{
             $model = new AdminSheet();           
