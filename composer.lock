@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "490e6e6b8f63bfc623a8c1e64139e915",
+    "content-hash": "96824f2d84e7f491ea30d6d5aa92c13f",
     "packages": [
         {
             "name": "2amigos/yii2-date-picker-widget",
@@ -93,12 +93,12 @@
             "version": "v1.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/uxsolutions/bootstrap-datepicker.git",
+                "url": "git@github.com:eternicode/bootstrap-datepicker.git",
                 "reference": "d364be5b066b38f3675a5a1dc174ce1ab1f3360e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/uxsolutions/bootstrap-datepicker/zipball/d364be5b066b38f3675a5a1dc174ce1ab1f3360e",
+                "url": "https://api.github.com/repos/eternicode/bootstrap-datepicker/zipball/d364be5b066b38f3675a5a1dc174ce1ab1f3360e",
                 "reference": "d364be5b066b38f3675a5a1dc174ce1ab1f3360e"
             },
             "require": {
@@ -329,6 +329,60 @@
                 "html"
             ],
             "time": "2018-02-23T01:58:20+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-date-range",
+            "version": "v1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-date-range.git",
+                "reference": "c8ed362fb201d17a1b84d4de3a4c7b0be8e0d7c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/c8ed362fb201d17a1b84d4de3a4c7b0be8e0d7c1",
+                "reference": "c8ed362fb201d17a1b84d4de3a4c7b0be8e0d7c1",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\daterange\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An advanced Yii 2 date range picker input for based on bootstrap-daterangepicker plugin.",
+            "homepage": "https://github.com/kartik-v/yii2-date-range",
+            "keywords": [
+                "bootstrap",
+                "bootstrap 3",
+                "date",
+                "date-range",
+                "extension",
+                "range",
+                "time",
+                "widget",
+                "yii2"
+            ],
+            "time": "2019-05-17T12:35:38+00:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
