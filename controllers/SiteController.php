@@ -131,14 +131,14 @@ class SiteController extends Controller
     public function actionPdf($clinic_this=0){  
         if(Yii::$app->session['login']){
             $this->layout = false;
-            $clinic_this = $_POST['toothcaseSearch']['clinic_id']; 
-            $clinic = show_clinic($clinic_this);
+            $clinic_this = $_POST['clinic_id']; 
+            $clinic = show_clinic($_POST['clinic_id']);
             $material = show_material('all');
             $model = new Toothcase();
-            $models = $model->find()->where(['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
-            if($_POST['checkout'] == 1){
-                toothcase::updateAll([['checkout'=>'1'],['checkout_date'=>date('Y-m',strtotime($_POST['end_date']))]],['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']]);
-            }
+            $models = $model->find()->where(['in','id',explode(',',$_POST['keys'])])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
+            // if($_POST['checkout'] == 1){
+            //     toothcase::updateAll([['checkout'=>'1'],['checkout_date'=>date('Y-m',strtotime($_POST['end_date']))]],['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']]);
+            // }
             $content = $this->renderPartial('pdf',[
                 'model'=>$models,
                 'material'=>$material[1],
@@ -171,7 +171,7 @@ class SiteController extends Controller
                 ],
                 // call mPDF methods on the fly
                 'methods' => [
-                    'SetHeader' => ['富翔牙體技術所||'.$clinic[1]['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
+                    'SetHeader' => ['富翔牙體技術所||'.$clinic['clinic'].'診所<br>'.date('Y-m',strtotime($_POST['end_date'])),'O', false,15],
                     'SetFooter' => ['{PAGENO}']]
             ]);
             
@@ -187,7 +187,7 @@ class SiteController extends Controller
     public function actionReport(){
         if(Yii::$app->session['login']){
             $model = new Toothcase();
-            $models = $model->find()->where(['and',['=','checkout',1],['like','start_time',date('Y')]])->asArray()->all();
+            $models = $model->find()->where(['like','start_time',date('Y')])->asArray()->all();
             $model_outlay = new Outlay();
             $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
             $clinic = show_clinic('all');

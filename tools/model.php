@@ -28,12 +28,9 @@ function show_clinic($var){
 	    $clinic_info=$clinic_model->find()->asArray()->all(); 
 		return [$clinic_model,$clinic_info];
 	}else{
-		$models = new Toothcase();
         $clinic_model = new Clinic();
-        $id_max = $models->find()->max('id');
-        $id = $models->find()->where(["id"=>$var])->asArray()->one();
-        $clinic_info = $clinic_model->find()->where(["id"=>$id['clinic_id']])->asArray()->one();
-        return [$clinic_model,$clinic_info,$id_max];
+        $id = $clinic_model->find()->where(["id"=>$var])->asArray()->one();
+        return $id;
 	}
 }
 //資料表要取得職稱名稱要用的
