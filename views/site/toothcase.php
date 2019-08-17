@@ -1,3 +1,4 @@
+
 <?php
 
 use yii\helpers\Html;
@@ -5,7 +6,8 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
-
+use yii\widgets\Pjax;
+use app\models\Material;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\toothcaseSearch */
@@ -17,48 +19,117 @@ $clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
 $this->title = $clinic[$clinic_id['clinic_id']].'病例';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div style="margin-left:15px"  > 
-<?php  echo $this->render('pdf_month', ['clinic_info' => $clinic_info,'model' => $searchModel,'clinic'=>$clinic_id]); ?>
-</div>
 <div class="toothcase-index">
-
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::a('新增病例',['create','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
+
+    <?php Pjax::begin(); ?>
+    <?php $form = ActiveForm::begin([
+            'action' => ['site/pdf'],
+            'method' => 'post',
+        ]); ?>
+            <div  style="margin-left: -15px;display:none" >
+                <input id='pdf_case' name='keys'>
+               <input name='clinic_id' value="<?= $clinic_id['clinic_id']?>">
+               <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
+            </div>
+            <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
+        <?php ActiveForm::end(); ?>
+
     <?= GridView::widget([
+        'options'=>['id'=>'toothcase_grid'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\CheckboxColumn'],
+            ['class' => 'yii\grid\CheckboxColumn',
+            'name' => 'id',
+            ],
             ['class' => 'yii\grid\SerialColumn'],
             ['attribute' => 'start_time',
             'format' => ['date', "php:Y-m-d"],
             'headerOptions' => ['width' => '20%'],
             'filter' => DateRangePicker::widget([ 'name' => 'BorrowRepaymentSearch[start_time]',
-            'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'], 'convertFormat' => true,
-            'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
+                                                  'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'],
+                                                  'convertFormat' => true,
+                                                  'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
             ],
-            'name',
-            'tooth',
+             [
+                'attribute'=>'name',
+                'value'=>function($data){
+                    return $data->checkout == 1 ? $data->name.'(已結款)' : $data->name;
+                }
+            ],
             [
             'attribute'=>'Material',
-            'value'=>'material.material',
+            'format' => 'raw',
+            'value'=>function($data){
+                $material_name = Material::find()->asArray()->all();
+                return $material_name[$data->material_id]["material"].'('.$data->tooth.')<br>'.($data->material_id_1 == 0?'':$material_name[$data->material_id_1]["material"].'('.$data->tooth_1.')<br>').($data->material_id_2 == 0?'':$material_name[$data->material_id_2]["material"].'('.$data->tooth_2.')');
+            },
             'label'=>'材料',
              ],
-             'tooth_1',
-            [
-            'attribute'=>'Material',
-            'value'=>'material_1.material',
-            'label'=>'材料2',
-             ],
-             'tooth_2',
-            [
-            'attribute'=>'Material',
-            'value'=>'material_2.material',
-            'label'=>'材料3',
-             ],
+             'remark',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <?php
+$js =<<< JS
+if(typeof(keys) == 'undefined'){
+    var keys =[];
+}else{
+    var type = 1; 
+    $('input:checkbox[name="id[]"]').each(function(i) {
+        if($.inArray(this.value, keys) != '-1'){
+            $(this).prop("checked", true);
+        }else{
+            type = 0;
+        }
+        if(type){
+            $('.select-on-check-all').prop("checked", true);
+        }
+    }); 
+}
+$('.select-on-check-all').click(function(){
+    if($('.select-on-check-all').prop("checked")){
+        $('input:checkbox[name="id[]"]').each(function() { 
+            if($.inArray(this.value, keys) == '-1'){
+                $(this).prop("checked", true);
+                keys.push($(this).val());
+            }
+        });
+    }else{
+        $('input:checkbox[name="id[]"]').each(function() { 
+            if($.inArray(this.value, keys) != '-1'){
+                removeByValue(keys, this.value);
+            }
+        });
+    }
+});
+
+$('input:checkbox[name="id[]"]').click(function(){
+    if($.inArray(this.value, keys) != '-1'){
+        removeByValue(keys, this.value);
+    }else{
+        keys.push(this.value);
+    }
+});
+
+$('.pdf_case').click(function() {
+    keys.join(",");
+    $("#pdf_case").val(keys);
+    keys = [];
+});
+function removeByValue(arr, val) {
+  for(var i=0; i<arr.length; i++) {
+    if(arr[i] == val) {
+      arr.splice(i, 1);
+      break;
+    }
+  }
+}
+JS;
+$this->registerJs($js);?>
+<?php Pjax::end(); ?>
     <p>
         <?= Html::a('新增病例', ['create'], ['class' => 'btn btn-success']) ?>
     </p>

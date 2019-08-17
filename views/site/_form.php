@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\web\JsExpression;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
@@ -21,15 +22,32 @@ use yii\web\JsExpression;
         $date_time = date("Y-m-d",$d);
         $date[$date_time] = $date_time;
         $i ++;
-    }?>
-        <div class="form-group col-sm-4"><?= $form->field($model, 'start_time')->label("*收件日")->dropDownList($date,['value' => date('Y-m-d')],['style'=>'border:1px solid ;'])?></div>
-        <div class="form-group col-sm-4"><?= $form->field($model, 'end_time')->label("*交件日")->dropDownList($date,['value' => date('Y-m-d')],['style'=>'border:1px solid ;'])?></div>
-        <div class="form-group col-sm-4"><?= $form->field($model, 'try_time')->label("*試戴日")->textInput() ?></div>
-    <?php }else{ ?> 
-        <div class="form-group col-sm-4"><?= $form->field($model, 'start_time')->label("*收件日")->textInput() ?></div>
-        <div class="form-group col-sm-4"><?= $form->field($model, 'end_time')->label("*交件日")->textInput()?></div>
-        <div class="form-group col-sm-4"><?= $form->field($model, 'try_time')->label("*試戴日")->textInput() ?></div>
-    <?php } ?>
+    }
+}?>
+        <div class="form-group col-sm-4"><?= $form->field($model, 'start_time')->label("*收件日")->widget(DatePicker::classname(), [
+            'inline'=>false,
+            'language' => 'us',
+            'clientOptions'=>[
+                'autoclose'=>true,
+                'format' => 'yyyy-mm-dd'
+            ]
+    ]); ?></div>
+        <div class="form-group col-sm-4"><?= $form->field($model, 'end_time')->label("*交件日")->widget(DatePicker::classname(), [
+            'inline'=>false,
+            'language' => 'us',
+            'clientOptions'=>[
+                'autoclose'=>true,
+                'format' => 'yyyy-mm-dd'
+            ]
+    ]); ?></div>
+        <div class="form-group col-sm-4"><?= $form->field($model, 'try_time')->label("*試戴日")->widget(DatePicker::classname(), [
+            'inline'=>false,
+            'language' => 'us',
+            'clientOptions'=>[
+                'autoclose'=>true,
+                'format' => 'yyyy-mm-dd'
+            ]
+    ]); ?></div>
     <div class="form-group col-sm-6" style="height:99px;"><?= $form->field($model, 'name')->label("*病人姓名")->textInput(['maxlength' => true]) ?></div>
     <div class="form-group col-sm-6" style="height:99px;"><?= $form->field($model,'clinic_id')->label("*診所")->dropDownList(ArrayHelper::map($clinic_info,'id','clinic'),['style'=>'border:1px solid ;'])?></div>
     <div class="form-group col-sm-12" style="background-color:#E8E8E8;">
@@ -84,7 +102,6 @@ $js =<<< JS
             $('#m_del_btn_1').hide();
             $('#m_add_btn').hide();
         }
-        console.log(v);    
         v++;
     });
     $('#m_del_btn_1').click(function(){
@@ -94,7 +111,6 @@ $js =<<< JS
         $('#toothcase-tooth_color_1').val('');
         $('#toothcase-tooth_color_1').val('');
         v = 0;
-        console.log(v);    
     });
     $('#m_del_btn_2').click(function(){
         $('.material_id_2').hide();
@@ -105,7 +121,6 @@ $js =<<< JS
         $('#toothcase-tooth_color_2').val('');
         $('#toothcase-tooth_color_2').val('');
         v = 1;
-        console.log(v);
     });
 JS;
 $this->registerJs($js);

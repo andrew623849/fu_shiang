@@ -53,7 +53,7 @@ class toothcaseSearch extends Toothcase
             // $query->where('0=1');
             return $dataProvider;
         }
-        if (Yii::$app->request->get('BorrowRepaymentSearch')){
+        if (!empty(Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])){
             $query->andFilterCompare('start_time', explode('~', Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])[0], '>=');//起始時間
             $query->andFilterCompare('start_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])[1]) + 86400), '<');//結束時間}
         }

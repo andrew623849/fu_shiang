@@ -30,7 +30,7 @@ $report_models['1'][] = $price_out;
         ],
         'axis' => [
             'x' => [
-                'label' => '材料',
+                'label' => '月份',
                 'type' => 'category',
             ],
             'y' => [
