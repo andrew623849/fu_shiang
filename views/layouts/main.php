@@ -11,7 +11,41 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
-
+ $clinic = show_clinic('all');
+$clinic_items = "";
+$job = [0,1,2,3,4,5,6,7,8,9];
+foreach($clinic[1] as $val){
+    $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+}
+$internal = [
+             '0' => ['label'=>'員工','url'=> ['/adminsheet/index']],
+             '1' => ['label'=>'材料','url'=> ['/site/company']],
+             '2' => ['label'=>'診所','url'=> ['/clinic/index']],
+             '9' => ['label'=>'職權','url'=> ['/level/index']]
+            ];
+$internal_need = [];
+$nav_need = [];
+foreach($internal as $key => $val){
+    if(in_array($key,$job)){
+        $internal_need[] = $val;
+    }
+}
+$nav_arr = [
+            '3' => ['label' => '交件', 'url' => ['/site/todaycase']],
+            '4' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
+            '5' => ['label' => '支出', 'url' => ['/outlay/index']],
+            '6' => ['label' => '報表', 'url' => ['/site/report']],
+            '7' => ['label' => '公司內部管理','url' => ['#'],
+                'items'=> $internal_need,
+            ],
+            '8' => ['label' => '登出', 'url' => ['/site/index']]
+            ];
+foreach($nav_arr as $key => $val){
+    if(in_array($key,$job)){
+        $nav_need[] = $val;
+    }
+}
+// v_d($nav_need);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -29,11 +63,6 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    $clinic = show_clinic('all');
-    $clinic_items = "";
-    foreach($clinic[1] as $val){
-        $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
-    }
     if(Yii::$app->session['login']){
         NavBar::begin([
             'brandLabel' => '富翔牙體技術所',
@@ -42,62 +71,10 @@ AppAsset::register($this);
                 'class' => 'navbar-inverse navbar-fixed-top',
             ],
         ]);
-        if(Yii::$app->session['user']['2'] == '0'){
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => '交件', 'url' => ['/site/todaycase']],
-                    ['label' => '病例', 'url' => ['#'],
-                        'items'=> [
-                            $clinic_items
-                        ],
-                    ],
-                    ['label' => '支出', 'url' => ['/outlay/index']],
-                    ['label' => '報表', 'url' => ['/site/report']],
-                    ['label' => '公司內部管理','url' => ['#'],
-                        'items'=> [
-                            ['label'=>'員工','url'=> ['/adminsheet/index']],
-                            ['label'=>'材料','url'=> ['/site/company']],
-                            ['label'=>'診所','url'=> ['/clinic/index']]
-                        ],
-                    ],
-                    ['label' => '登出', 'url' => ['/site/index']]
-                ],
+                'items' => $nav_need
             ]);
-        }elseif(Yii::$app->session['user']['2'] == '1'){
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => '交件', 'url' => ['/site/todaycase']],
-                    ['label' => '病例', 'url' => ['#'],
-                        'items'=> [
-                            $clinic_items
-                        ],
-                    ],
-                    ['label' => '支出', 'url' => ['/outlay/index']],
-                    ['label' => '公司內部管理','url' => ['#'],
-                        'items'=> [
-                            ['label'=>'員工','url'=> ['/adminsheet/index']],
-                        ],
-                    ],
-                    ['label' => '登出', 'url' => ['/site/index']]
-                ],
-            ]);
-        }else{
-                        echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => '交件', 'url' => ['/site/todaycase']],
-                    ['label' => '病例', 'url' => ['#'],
-                        'items'=> [
-                            $clinic_items
-                        ],
-                    ],
-                    ['label' => '支出', 'url' => ['/outlay/index']],
-                    ['label' => '登出', 'url' => ['/site/index']]
-                ],
-            ]);
-        }
     }else{
         NavBar::begin([
             'brandLabel' => '牙技所管理系統登入',
@@ -134,9 +111,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left"></p>
 
-        <p class="pull-right">admin:黃柏禎</p>
+        <p class="pull-right"> 登入者: <?=!empty(Yii::$app->session['user'])?Yii::$app->session['user']['3'].'&nbsp'.level_name(Yii::$app->session['user']['2']):'' ?></p>
     </div>
 </footer>
 
