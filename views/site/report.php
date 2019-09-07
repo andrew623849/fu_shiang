@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = '報表';
 $this->params['breadcrumbs'][] = $this->title;
-$report_models = report_num($models,$clinic,$material);
+$report_models = report_num($models,$clinic,$material,$year);
 $price_out = outlay($models_outlay);
 $report_models['1'][] = $price_out;
 

@@ -2,7 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 use dosamigos\datepicker\DatePicker;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\AdminSheet */
 /* @var $form yii\widgets\ActiveForm */
@@ -45,8 +47,9 @@ $sale[1] = '女';
 	<?php }?>
     <?php if($url != 'pupdate'){?>
     <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'user_pay')->label("*員工薪資")->textInput(['maxlength' => true]) ?></div>
-    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'job')->label("*職位")->textInput(['maxlength' => true]) ?></div>
-    <?php }?>
+    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model,'job')->label("*職位")->dropDownList(ArrayHelper::map($job_info,'id','job_name'),['style'=>'border:1px solid ;'])?>
+    <?php }?></div>
+
     <div class="form-group">
         <?= Html::submitButton('送出', ['class' => 'btn btn-success']) ?>
     </div>

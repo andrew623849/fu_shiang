@@ -1,11 +1,19 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use kartik\daterange\DateRangePicker;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = $date.'~'.$date7.'要送的CASE';
+
+echo DateRangePicker::widget([ 'name' => 'todaycase[start_time]',
+                                                  'value' => Yii::$app->request->get('todaycase')['start_time'],
+                                                  'convertFormat' => true,
+                                                  'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
+
+// $this->title = $date.'~'.$date7;
 ?>
 <style type="text/css">
     th{
@@ -23,7 +31,7 @@ for($i = 0;$i < count($model);$i ++){
     }elseif($models['end_time'] <= date('Y-m-d',strtotime('+3 day'))){
         $options= "border:3px blue solid";
     }else{
-        $options = "";
+        $options = "border:3px solid";
     }
     if($clinic != $models['clinic_id']){
         echo '<hr><div class="col-sm-12"><h2>'.$clinic_info[($models['clinic_id']-1)]['clinic'].'</h2></div>';

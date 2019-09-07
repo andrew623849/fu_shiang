@@ -82,7 +82,7 @@ use dosamigos\datepicker\DatePicker;
             <div class="form-group col-sm-6"> <?= $form->field($model, 'other_price_2')->label("其他費用")->textInput() ?></div>
         <?php } ?>
     </div>
-    <input class="col-sm-12 btn btn-primary" type="button" id="m_add_btn" value="+">
+    <input class="col-sm-12 btn btn-primary" type="button" id="m_add_btn" value="新增材料+">
     <div class="form-group col-sm-12"> <?= $form->field($model, 'remark')->label("備註")->textarea(['rows' => '3']) ?></div>
     <div class="form-group col-sm-12"> <?= $form->field($model, 'price')->label("")->hiddenInput(['value' => -1]) ?></div>
         

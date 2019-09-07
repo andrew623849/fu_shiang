@@ -27,7 +27,7 @@ use Yii;
  * @property string $remark
  * @property int $deleted
  * @property string $deleted_time
- * @property int $dleted_id
+ * @property int $deleted_id
  *
  * @property Level $job0
  */
@@ -49,7 +49,7 @@ class AdminSheet extends \yii\db\ActiveRecord
         return [
             [['admin', 'password', 'build_time', 'job', 'user_name', 'user_br', 'user_sale', 'user_phone', 'user_email', 'user_pay'], 'required'],
             [['build_time', 'user_br', 'deleted_time'], 'safe'],
-            [['job', 'user_sale', 'user_pay', 'deleted', 'dleted_id'], 'integer'],
+            [['job', 'user_sale', 'user_pay', 'deleted', 'deleted_id'], 'integer'],
             [['admin', 'password', 'user_name', 'user_phone', 'user_email'], 'string', 'max' => 64],
             [['user_line', 'user_f_na', 'user_f_ph', 'user_f_rel', 'user_exp', 'user_grade', 'remark'], 'string', 'max' => 100],
             [['job'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['job' => 'id']],

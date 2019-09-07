@@ -54,17 +54,21 @@ class SiteController extends Controller
         $model = new AdminSheet();
         $message =  "";
         if(isset($_POST["admin"]) && isset($_POST["password"])){
-            $model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]]])->one();
+            $model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]],["password"=>$_POST["password"]]])->one();
             if($model != null){
-                Yii::$app->session['login'] = 1;
-                if(Yii::$app->session['login']){
+                if($model['deleted'] == 1){
+                    $message =  '登入失敗!!<br>您已於'.$model['deleted_time'].'離職';
+                }else{
+                   Yii::$app->session['login'] = 1;
+                    if(Yii::$app->session['login']){
                     Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_exp'],$model['user_grade'],$model['remark']];
                     return $this->render('person'); 
+                    } 
                 }
             }elseif($_POST["admin"] == ""){
-            $message =  '登入失敗!!<br>請輸入帳號';
+                $message =  '登入失敗!!<br>請輸入帳號';
             }elseif($_POST["password"] == ""){
-             $message =  '登入失敗!!<br>請輸入密碼';
+                $message =  '登入失敗!!<br>請輸入密碼';
             }else{
                 $message =  '登入失敗!!<br>請輸入正確帳號與密碼';
             }
@@ -80,18 +84,15 @@ class SiteController extends Controller
         }
     
     }
-    public function actionTodaycase(){   
+    public function actionTodaycase($date=''){   
         if(Yii::$app->session['login']){
-            $date = date('Y-m-d');
-            $date7 = date('Y-m-d',strtotime("+1 week"));
+            $date = empty($date)?date('Y-m-d'):$date;
             $model = new Toothcase;
-            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date7]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
+            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
             return $this->render('todaycase', [
                 'model' => $model,
-                'date' => $date,
-                'date7' =>$date7,
                 'clinic_info'=>$clinic['1'],
                 'material_info' =>$material['1'],
             ]);
@@ -187,6 +188,7 @@ class SiteController extends Controller
     public function actionReport(){
         if(Yii::$app->session['login']){
             $model = new Toothcase();
+            $year = empty($POST['year'])?date('Y'):$POST['year'];
             $models = $model->find()->where(['like','start_time',date('Y')])->asArray()->all();
             $model_outlay = new Outlay();
             $models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
@@ -197,6 +199,7 @@ class SiteController extends Controller
                 'material'=>$material['1'],
                 'models'=>$models,
                 'models_outlay'=>$models_outlay,
+                'year'=>$year
 
             ]);
         }else{

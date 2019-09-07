@@ -13,14 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admin-sheet-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title.($model->deleted==0?'(在職)':'(離職)')) ?></h1>
 
     <p>
         <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('刪除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => '確定要刪除此員工?',
+                'confirm' => '你確定要將此員工離職嗎?',
                 'method' => 'post',
             ],
         ]) ?>

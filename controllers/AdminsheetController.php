@@ -83,13 +83,14 @@ class AdminsheetController extends Controller
     {
         if(Yii::$app->session['login']){
             $model = new AdminSheet();
-
+            $job_info = show_level('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
             return $this->render('create', [
                 'model' => $model,
+                'job_info' =>$job_info[1]
             ]);
         }else{
             $model = new AdminSheet();           
@@ -110,12 +111,14 @@ class AdminsheetController extends Controller
     {
         if(Yii::$app->session['login']){
             $model = $this->findModel($id);
+            $job_info = show_level('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
 
             return $this->render('update', [
                 'model' => $model,
+                'job_info' => $job_info[1]
             ]);
         }else{
             $model = new AdminSheet();           
@@ -152,10 +155,11 @@ class AdminsheetController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionLeave($id)
     {
         if(Yii::$app->session['login']){
-            AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$id]);
+            $model = $this->findModel($id);
+            AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$model->id]);
             return $this->redirect(['index']);
         }else{
             $model = new AdminSheet();           
@@ -165,6 +169,19 @@ class AdminsheetController extends Controller
         }
     }
 
+    public function actionReinstatement($id)
+    {
+        if(Yii::$app->session['login']){
+            $model = $this->findModel($id);
+            AdminSheet::updateAll(['deleted'=>0,'deleted_time'=>'','deleted_id'=>'']);
+            return $this->redirect(['index']);
+        }else{
+            $model = new AdminSheet();           
+            return $this->render('/site/index', [      
+                'model' => $model,
+            ]);
+        }
+    }
     /**
      * Finds the AdminSheet model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

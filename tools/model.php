@@ -37,7 +37,7 @@ function show_clinic($var){
 function show_level($var){
 	if((string)$var == 'all'){
 	    $clinic_model = new Level();
-	    $clinic_info=$clinic_model->find()->asArray()->all(); 
+	    $clinic_info=$clinic_model->find()->where(["!=","id",0])->asArray()->all(); 
 		return [$clinic_model,$clinic_info];
 	}else{
 		$models = new Level();
@@ -79,7 +79,7 @@ function today_to($date,$var){
 	return date("Y-m-d",$d);
 }
 //算年度材料數量與月收
-function report_num($models,$clinic,$material){
+function report_num($models,$clinic,$material,$year){
 	$price = [];
 	$material_name = [];
 	$month = ['x', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
@@ -93,101 +93,53 @@ function report_num($models,$clinic,$material){
 			$material_name[$k] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($models as $k=>$v){
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="01"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['1'] = $price[$v['clinic_id']]['1'] + $price_case;
-			$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-			$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-			$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['1'] = $material_name[$v['material_id']]['1'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="01"){
+			$k = 1;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="02"){
-			$price_case = price_case($v);
-                        $price[$v['clinic_id']]['2'] = $price[$v['clinic_id']]['2'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['2'] = $material_name[$v['material_id']]['2'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="02"){
+			$k = 2;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="03"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['3'] = $price[$v['clinic_id']]['3'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['3'] = $material_name[$v['material_id']]['3'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="03"){
+			$k = 3;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="04"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['4'] = $price[$v['clinic_id']]['4'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['4'] = $material_name[$v['material_id']]['4'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="04"){
+			$k = 4;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="05"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['5'] = $price[$v['clinic_id']]['5'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['5'] = $material_name[$v['material_id']]['5'] + $tooth + $tooth1 + $tooth2;;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="05"){
+			$k = 5;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="06"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['6'] = $price[$v['clinic_id']]['6'] + $price_case;
-                        $tooth = !empty($v['tooth']) ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = !empty($v['tooth_1']) ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = !empty($v['tooth_2']) ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['6'] = $material_name[$v['material_id']]['6'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="06"){
+			$k = 6;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="07"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['7'] = $price[$v['clinic_id']]['7'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['7'] = $material_name[$v['material_id']]['7'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="07"){
+			$k = 7;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="08"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['8'] = $price[$v['clinic_id']]['8'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['8'] = $material_name[$v['material_id']]['8'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="08"){
+			$k = 8;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="09"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['9'] = $price[$v['clinic_id']]['9'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['9'] = $material_name[$v['material_id']]['9'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="09"){
+			$k = 9;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="10"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['10'] = $price[$v['clinic_id']]['10'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['10'] = $material_name[$v['material_id']]['10'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="10"){
+			$k = 10;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="11"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['11'] = $price[$v['clinic_id']]['11'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['11'] = $material_name[$v['material_id']]['11'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="11"){
+			$k = 11;
 		}
-		if(substr($v['start_time'],0,4) == date('Y') && substr($v['start_time'], 5,2) =="12"){
-			$price_case = price_case($v);
-			$price[$v['clinic_id']]['12'] = $price[$v['clinic_id']]['12'] + $price_case;
-                        $tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
-                        $tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
-                        $tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-			$material_name[$v['material_id']]['12'] = $material_name[$v['material_id']]['12'] + $tooth + $tooth1 + $tooth2;
+		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="12"){
+			$k = 12;
+		}
+		$price_case = price_case($v);
+		$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $price_case;
+		$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
+		$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
+		$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
+		$material_name[$v['material_id']][$k] = $material_name[$v['material_id']][$k] + $tooth;
+		if($tooth1 != 0){
+			$material_name[$v['material_id_1']][$k] = $material_name[$v['material_id_1']][$k] + $tooth1;
+		}
+		if($tooth2 != 0){
+			$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
 		}
 	}
 	return $models = [$material_name,$price];

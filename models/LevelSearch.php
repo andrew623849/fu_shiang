@@ -40,7 +40,7 @@ class LevelSearch extends Level
      */
     public function search($params)
     {
-        $query = Level::find();
+        $query = Level::find()->where(['!=','id',0]);
 
         // add conditions that should always apply here
 
