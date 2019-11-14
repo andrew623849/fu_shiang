@@ -19,7 +19,7 @@ $clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
 $this->title = $clinic[$clinic_id['clinic_id']].'病例';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="toothcase-index">
+<div class="toothcase-index  col-md-12">
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::a('新增病例',['create','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
 
@@ -35,19 +35,22 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
+	<div class="table-responsive">
 
     <?= GridView::widget([
-        'options'=>['id'=>'toothcase_grid'],
+        'options'=>['id'=>'toothcase_grid','width'=>'300px'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn',
+
             'name' => 'id',
             ],
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'yii\grid\SerialColumn',
+			],
             ['attribute' => 'start_time',
             'format' => ['date', "php:Y-m-d"],
-            'headerOptions' => ['width' => '20%'],
+			 'contentOptions' => ['style' => 'min-width:200px;'],
             'filter' => DateRangePicker::widget([ 'name' => 'BorrowRepaymentSearch[start_time]',
                                                   'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'],
                                                   'convertFormat' => true,
@@ -55,7 +58,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
              [
                 'attribute'=>'name',
-                'value'=>function($data){
+				'contentOptions' => ['style' => 'min-width:100px;'],
+
+				'value'=>function($data){
                     return $data->checkout == 1 ? $data->name.'(已結款)' : $data->name;
                 }
             ],
@@ -133,5 +138,6 @@ $this->registerJs($js);?>
     <p>
         <?= Html::a('新增病例', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+	</div>
 </div>
 

@@ -61,7 +61,7 @@ class SiteController extends Controller
                 }else{
                    Yii::$app->session['login'] = 1;
                     if(Yii::$app->session['login']){
-                    Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_exp'],$model['user_grade'],$model['remark']];
+                    Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_f_rel'],$model['user_exp'],$model['user_grade'],$model['remark']];
                     return $this->render('person'); 
                     } 
                 }
@@ -84,16 +84,25 @@ class SiteController extends Controller
         }
     
     }
-    public function actionTodaycase($date=''){   
+    public function actionTodaycase(){
         if(Yii::$app->session['login']){
-            $date = empty($date)?date('Y-m-d'):$date;
-            $model = new Toothcase;
-            $model = $model->find()->where(["and",[">=","end_time",$date],["<=","end_time",$date]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
+			$model = new Toothcase;
+			if(empty($_POST['time'])){
+				$start_time = date('Y-m-d');
+				$end_time = date('Y-m-d');
+				$time = $start_time.'~'.$end_time;
+			}else{
+				$start_time = explode('~',$_POST['time'])[0];
+				$end_time = explode('~',$_POST['time'])[1];
+				$time = $_POST['time'];
+			}
+            $model = $model->find()->where(["and",[">=","end_time",$start_time],["<=","end_time",$end_time]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
             $clinic = show_clinic('all');
             $material = show_material('all');
             return $this->render('todaycase', [
                 'model' => $model,
                 'clinic_info'=>$clinic['1'],
+                'time'=>$time,
                 'material_info' =>$material['1'],
             ]);
         }else{
@@ -129,17 +138,13 @@ class SiteController extends Controller
         }
     }
 
-    public function actionPdf($clinic_this=0){  
+    public function actionPdf(){
         if(Yii::$app->session['login']){
             $this->layout = false;
-            $clinic_this = $_POST['clinic_id']; 
             $clinic = show_clinic($_POST['clinic_id']);
             $material = show_material('all');
             $model = new Toothcase();
             $models = $model->find()->where(['in','id',explode(',',$_POST['keys'])])->orderBy(['start_time'=>SORT_ASC,'name'=>SORT_ASC])->asArray()->all();
-            // if($_POST['checkout'] == 1){
-            //     toothcase::updateAll([['checkout'=>'1'],['checkout_date'=>date('Y-m',strtotime($_POST['end_date']))]],['and',['=','clinic_id',$clinic_this],['<=','start_time',$_POST['end_date']],['>=','start_time',$_POST['start_date']],['=','checkout','0']]);
-            // }
             $content = $this->renderPartial('pdf',[
                 'model'=>$models,
                 'material'=>$material[1],
@@ -246,7 +251,7 @@ class SiteController extends Controller
             $model = new Toothcase();
             $clinic = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'tooth_1'=>$_POST['Toothcase']['tooth_1'],'tooth_2'=>$_POST['Toothcase']['tooth_2']]);
+                toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['id' => $model->id]);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             return $this->render('create', [

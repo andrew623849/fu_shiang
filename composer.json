@@ -23,7 +23,8 @@
         "yii2mod/yii2-c3-chart": "*",
         "unclead/yii2-multiple-input": "~2.0",
         "2amigos/yii2-date-picker-widget": "*",
-        "kartik-v/yii2-date-range": "*"
+        "kartik-v/yii2-date-range": "*",
+        "janisto/yii2-timepicker": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

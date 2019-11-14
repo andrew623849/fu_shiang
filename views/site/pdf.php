@@ -64,7 +64,7 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"><?= $val['tooth'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color'] ?></td>
                 <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
-                <td style="border-color:black;"><?= price_mm($val['tooth'],$val['material_id']) + $val['other_price'] ?></td>
+                <td style="border-color:black;" <?= $td_colspan ?>><?= $val['price'] ?></td>
                 <td style="border-color:black;" <?= $td_colspan ?>><?= $val['remark']?></td>
             </tr>
             <?php if($val['material_id_1'] != 0){
@@ -77,7 +77,6 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"><?= $val['tooth_1'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color_1'] ?></td>
                 <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
-                <td style="border-color:black;"><?= price_mm($val['tooth_1'],$val['material_id_1']) + $val['other_price_1'] ?></td>
             </tr>
         <?php
             }
@@ -92,7 +91,6 @@ foreach($model as $key=>$val){
                 <td style="border-color:black;"><?= $val['tooth_1'] ?></td>
                 <td style="border-color:black;"><?= $val['tooth_color_1'] ?></td>
                 <td style="border-color:black;"><?= $material_val['material'].'($'.$material_val['price'].')' ?></td>
-                <td style="border-color:black;"><?= price_mm($val['tooth_2'],$val['material_id_2']) + $val['other_price_2'] ?></td>
             </tr>
         <?php
             }

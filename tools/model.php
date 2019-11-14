@@ -47,20 +47,24 @@ function show_level($var){
 }
 //算case價錢
 function price_case($arr){
+	$price1 = 0;
+	$price2 = 0;
+	$price3 = 0;
 	$material_model = new Material();
+	if(!empty($arr['material_id_1'])){
+		$material_info1 = $material_model->find()->where(["id"=>$arr['material_id_1']])->asArray()->one();
+		$tooth_num1 = count(explode(",",$arr['tooth_1']));
+		$price2 = $material_info1['price']*$tooth_num1 + $arr['other_price_1'];
+	}
+	if(!empty($arr['material_id_1'])){
+		$material_info2 = $material_model->find()->where(["id"=>$arr['material_id_2']])->asArray()->one();
+		$tooth_num2 = count(explode(",",$arr['tooth_2']));
+		$price3 = $material_info2['price']*$tooth_num2 + $arr['other_price_2'];
+	}
 	$material_info = $material_model->find()->where(["id"=>$arr['material_id']])->asArray()->one();
-	$material_info1 = $material_model->find()->where(["id"=>$arr['material_id_1']])->asArray()->one();
-	$material_info2 = $material_model->find()->where(["id"=>$arr['material_id_2']])->asArray()->one();
 	$tooth_num = count(explode(",",$arr['tooth']));
-	$tooth_num1 = count(explode(",",$arr['tooth_1']));
-	$tooth_num2 = count(explode(",",$arr['tooth_2']));
-	// v_d([$material_info['price'],$tooth_num,$material_info1['price'],$tooth_num1,$material_info2['price'],$tooth_num2]);
-	$price_case = $material_info['price'] * $tooth_num + 
-				  $material_info1['price'] * $tooth_num1 + 
-				  $material_info2['price'] * $tooth_num2 + 
-				  $arr['other_price'] +
-				  $arr['other_price_1'] +
-				  $arr['other_price_2'];
+	$price1 = $material_info['price']*$tooth_num + $arr['other_price'];
+	$price_case = $price1 + $price2 + $price3;
 	return $price_case;
 }
 //算材料X數量價錢

@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
@@ -8,19 +9,30 @@ use kartik\daterange\DateRangePicker;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-echo DateRangePicker::widget([ 'name' => 'todaycase[start_time]',
-                                                  'value' => Yii::$app->request->get('todaycase')['start_time'],
-                                                  'convertFormat' => true,
-                                                  'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
 
-// $this->title = $date.'~'.$date7;
 ?>
 <style type="text/css">
     th{
         width:100px;
     }
 </style>
-<h1><?= Html::encode($this->title) ?></h1>
+<?php $form = ActiveForm::begin([
+	'action' => ['site/todaycase'],
+	'method' => 'post',
+	'options' =>['class'=>'todaycase_time']
+]); ?>
+<div class="col-md-12">
+<?= DateRangePicker::widget([
+		'name' => 'time',
+		'value' => $time,
+		'options'=>['id'=>'todaycase_timerange','class'=>'form-control'],
+		'convertFormat' => true,
+		'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ]
+		]
+]); ?>
+</div>
+
+<?php ActiveForm::end(); ?>
 <?php 
 $clinic = -1;
 $color = '#E0E0E0';
@@ -101,4 +113,10 @@ for($i = 0;$i < count($model);$i ++){
     </div>
 <?php
  }?>
-
+<?php
+	$js =<<< JS
+	$("#todaycase_timerange").change(function(){
+		$('.todaycase_time').submit();
+	});
+JS;
+	$this->registerJs($js);

@@ -16,14 +16,13 @@ $this->title = $user_arr[3];
             ['label'=>'員工編號','value'=>$user_arr[0]],
             ['label'=>'職稱','value'=>level_name($user_arr[2])],
             ['label'=>'聯絡方式','value'=>$user_arr[4]],
-            ['label'=>'緊急聯絡人','value'=>$user_arr[7]],
-            ['label'=>'緊急聯絡人聯絡方式','value'=>$user_arr[8]],
+            ['label'=>'緊急聯絡人','value'=>!empty($user_arr[8])?$user_arr[7].'(TEL:'.$user_arr[8].') 關係:'.$user_arr[9]:$user_arr[7].' 關係:'.$user_arr[9]],
             ['label'=>'信箱','value'=>$user_arr[5]],
-            ['label'=>'學歷','value'=>$user_arr[10]],
-            ['label'=>'經歷','value'=>$user_arr[9]],
+            ['label'=>'學歷','value'=>$user_arr[11]],
+            ['label'=>'經歷','value'=>$user_arr[10]],
             ['label'=>'薪資','value'=>$user_arr[6]],
             ['label'=>'到班日','value'=>$user_arr[1]],
-            ['label'=>'備註','value'=>$user_arr[11]]
+            ['label'=>'備註','value'=>$user_arr[12]]
         ]
     ]) ?>
 </div>

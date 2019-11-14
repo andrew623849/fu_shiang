@@ -13,9 +13,11 @@ use app\assets\AppAsset;
 AppAsset::register($this);
  $clinic = show_clinic('all');
 $clinic_items = "";
+$todaycase ="";
 $job = [0,1,2,3,4,5,6,7,8,9];
 foreach($clinic[1] as $val){
     $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+	$todaycase .= "<li><a href='?r=site/todaycase&clinic_id=".$val['id']."'>".$val['clinic']."</a></li>";
 }
 $internal = [
              '0' => ['label'=>'員工','url'=> ['/adminsheet/index']],
