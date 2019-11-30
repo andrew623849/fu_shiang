@@ -75,14 +75,20 @@ class MaterialSearch extends Material
 	{
 		Material::updateAll($type,['=','id',$id]);
 	}
-	public function ShowData($var,$where)
+	public function ShowData($var,$where,$table_name = '')
 	{
-		if((string)$var == 'all'){
-			$data = Material::find()->where($where)->asArray()->all();
-			return $data;
+		if((string)$var != 'all'){
+			$where['id'] = $var;
 		}
-		$where['id'] = $var;
-		$data = Material::find()->where($where)->asArray()->one();
+		$data = Material::find()->where($where)->asArray()->all();
+		if(in_array($table_name,array_flip(Material::attributeLabels()))){
+			foreach($data as $val){
+				$data_1[$val['id']]=$val[$table_name];
+			}
+		}
+
 		return $data;
 	}
+
+
 }

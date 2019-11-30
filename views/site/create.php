@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'clinic_model' => $clinic_model,
         'clinic_info' =>$clinic_info,
-        'material_model'=>$material_model,
-        'material_info'=>$material_info,
         'clinic_this'=>$clinic_this,
     ]) ?>
 

@@ -18,8 +18,6 @@ $this->params['breadcrumbs'][] = '更新資料';
         'model' => $model,
         'clinic_model' => $clinic_model,
         'clinic_info' =>$clinic_info,
-        'material_model'=>$material_model,
-        'material_info'=>$material_info,
     ]) ?>
 
 

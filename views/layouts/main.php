@@ -21,7 +21,7 @@ foreach($clinic[1] as $val){
 }
 $internal = [
              '0' => ['label'=>'員工','url'=> ['/adminsheet/index']],
-             '1' => ['label'=>'材料','url'=> ['/site/company']],
+             '1' => ['label'=>'材料','url'=> ['/material/index']],
              '2' => ['label'=>'診所','url'=> ['/clinic/index']],
              '9' => ['label'=>'職權','url'=> ['/level/index']]
             ];

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\MaterialSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -247,7 +248,6 @@ class SiteController extends Controller
      */
     public function actionCreate($clinic_this = 1){
         if(Yii::$app->session['login']){
-            $material = show_material('all');
             $model = new Toothcase();
             $clinic = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -258,8 +258,6 @@ class SiteController extends Controller
                 'model' => $model,
                 'clinic_model' => $clinic['0'],
                 'clinic_info'=>$clinic['1'],
-                'material_model'=>$material['0'],
-                'material_info'=>$material['1'],
                 'clinic_this' =>$clinic_this,
             ]);
         }else{
@@ -280,8 +278,6 @@ class SiteController extends Controller
     public function actionUpdate($id){
         if(Yii::$app->session['login']){
             $model = $this->findModel($id);
-            $material_info = show_material('all');
-            $material = show_material($id);
             $clinic = show_clinic($id);
             $clinic_info = show_clinic('all');
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -293,8 +289,6 @@ class SiteController extends Controller
                 'model' => $model,
                 'clinic_model' => $clinic['1'],
                 'clinic_info'=>$clinic_info['1'],
-                'material_model'=>$material['1'],
-                'material_info'=>$material_info['1'],
             ]);
         }else{
             $model = new AdminSheet();           
