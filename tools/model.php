@@ -89,12 +89,12 @@ function report_num($models,$clinic,$material,$year){
 	$month = ['x', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 	$material_name[0] = $month;
 	$price[0] = $month;
+
 	foreach($clinic as $k=>$v){
 		$price[($k+1)] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($material as $k=>$v){
-		if($k != 0)
-			$material_name[$k] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
+			$material_name[($k+1)] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($models as $k=>$v){
 		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="01"){
@@ -134,19 +134,19 @@ function report_num($models,$clinic,$material,$year){
 			$k = 12;
 		}
 		$price_case = price_case($v);
-		$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $price_case;
+		$price[($v['clinic_id']+1)][$k] = $price[($v['clinic_id']+1)][$k] + $price_case;
 		$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
 		$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
 		$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-		$material_name[$v['material_id']][$k] = $material_name[$v['material_id']][$k] + $tooth;
+		$material_name[($v['material_id']+1)][$k] = $material_name[($v['material_id']+1)][$k] + $tooth;
 		if($tooth1 != 0){
-			$material_name[$v['material_id_1']][$k] = $material_name[$v['material_id_1']][$k] + $tooth1;
+			$material_name[($v['material_id_1']+1)][$k] = $material_name[($v['material_id_1']+1)][$k] + $tooth1;
 		}
 		if($tooth2 != 0){
-			$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
+			$material_name[($v['material_id_2']+1)][$k] = $material_name[($v['material_id_2']+1)][$k] + $tooth2;
 		}
 	}
-	return $models = [$material_name,$price];
+	return [$material_name,$price];
 }
 //算支出
 function outlay($models_outlay){

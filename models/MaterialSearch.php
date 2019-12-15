@@ -85,8 +85,8 @@ class MaterialSearch extends Material
 			foreach($data as $val){
 				$data_1[$val['id']]=$val[$table_name];
 			}
+			return $data_1;
 		}
-
 		return $data;
 	}
 

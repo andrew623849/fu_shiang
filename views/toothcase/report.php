@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
-use yii\helpers\ArrayHelper;
-use yii\widgets\ActiveForm;
+use app\models\MaterialSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\toothcaseSearch */
@@ -11,6 +9,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = '報表';
 $this->params['breadcrumbs'][] = $this->title;
+$material = MaterialSearch::ShowData('all',[],'');
 $report_models = report_num($models,$clinic,$material,$year);
 $price_out = outlay($models_outlay);
 $report_models['1'][] = $price_out;
@@ -57,7 +56,7 @@ $report_models['1'][] = $price_out;
     'clientOptions' => [
        'data' => [
             'x' => 'x',
-            'columns' => 
+            'columns' =>
                 $report_models['1'],
         ],
         'axis' => [
