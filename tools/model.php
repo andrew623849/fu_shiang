@@ -47,7 +47,6 @@ function show_level($var){
 }
 //算case價錢
 function price_case($arr){
-	$price1 = 0;
 	$price2 = 0;
 	$price3 = 0;
 	$material_model = new Material();
@@ -56,7 +55,7 @@ function price_case($arr){
 		$tooth_num1 = count(explode(",",$arr['tooth_1']));
 		$price2 = $material_info1['price']*$tooth_num1 + $arr['other_price_1'];
 	}
-	if(!empty($arr['material_id_1'])){
+	if(!empty($arr['material_id_2'])){
 		$material_info2 = $material_model->find()->where(["id"=>$arr['material_id_2']])->asArray()->one();
 		$tooth_num2 = count(explode(",",$arr['tooth_2']));
 		$price3 = $material_info2['price']*$tooth_num2 + $arr['other_price_2'];
@@ -133,8 +132,7 @@ function report_num($models,$clinic,$material,$year){
 		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="12"){
 			$k = 12;
 		}
-		$price_case = price_case($v);
-		$price[($v['clinic_id']+1)][$k] = $price[($v['clinic_id']+1)][$k] + $price_case;
+		$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $v['price'];
 		$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
 		$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
 		$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
