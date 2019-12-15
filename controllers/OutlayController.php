@@ -5,8 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Outlay;
 use app\models\OutlaySearch;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\AdminSheet;
 
@@ -29,6 +29,15 @@ class OutlayController extends Controller
             ],
         ];
     }
+	public function beforeAction($action){
+		//如果未登录，则直接返回
+		if(Yii::$app->session['login'] == 0){
+			echo "<script>alert('請先登入');location.href='?r=site/index'</script>";
+
+			return  false;
+		}
+		return parent::beforeAction($action);
+	}
 
     /**
      * Lists all Outlay models.
@@ -36,20 +45,13 @@ class OutlayController extends Controller
      */
     public function actionIndex()
     {
-        if(Yii::$app->session['login']){
-            $searchModel = new OutlaySearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$searchModel = new OutlaySearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
     }
 
     /**

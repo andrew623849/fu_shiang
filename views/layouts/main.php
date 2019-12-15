@@ -16,8 +16,8 @@ $clinic_items = "";
 $todaycase ="";
 $job = [0,1,2,3,4,5,6,7,8,9];
 foreach($clinic[1] as $val){
-    $clinic_items .= "<li><a href='?r=site/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
-	$todaycase .= "<li><a href='?r=site/todaycase&clinic_id=".$val['id']."'>".$val['clinic']."</a></li>";
+    $clinic_items .= "<li><a href='?r=toothcase/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+	$todaycase .= "<li><a href='?r=toothcase/todaycase&clinic_id=".$val['id']."'>".$val['clinic']."</a></li>";
 }
 $internal = [
              '0' => ['label'=>'員工','url'=> ['/adminsheet/index']],
@@ -33,10 +33,10 @@ foreach($internal as $key => $val){
     }
 }
 $nav_arr = [
-            '3' => ['label' => '交件', 'url' => ['/site/todaycase']],
+            '3' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
             '4' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
             '5' => ['label' => '支出', 'url' => ['/outlay/index']],
-            '6' => ['label' => '報表', 'url' => ['/site/report']],
+            '6' => ['label' => '報表', 'url' => ['/toothcase/report']],
             '7' => ['label' => '公司內部管理','url' => ['#'],
                 'items'=> $internal_need,
             ],
@@ -68,7 +68,7 @@ foreach($nav_arr as $key => $val){
     if(Yii::$app->session['login']){
         NavBar::begin([
             'brandLabel' => '富翔牙體技術所',
-            'brandUrl' => ['/site/person'],
+            'brandUrl' => ['/toothcase/person'],
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
             ],
@@ -101,7 +101,7 @@ foreach($nav_arr as $key => $val){
         <?= Breadcrumbs::widget([
             'homeLink' => [
             'label' => '首頁',
-            'url' => ['site/person'],
+            'url' => ['toothcase/person'],
             'class' => 'myhome'
         ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

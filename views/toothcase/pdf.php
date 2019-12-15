@@ -9,6 +9,8 @@ foreach($model as $key=>$val){
     
     $price = $val['price'] + $price;
 }
+$material = \app\models\MaterialSearch::ShowData('all','','material');
+
 ?>
 
 <div class="pdf-dealer container">

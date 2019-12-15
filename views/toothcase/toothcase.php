@@ -27,13 +27,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = ActiveForm::begin([
             'action' => ['site/pdf'],
             'method' => 'post',
+			'options'=>['target'=>'_blank']
         ]); ?>
             <div  style="margin-left: -15px;display:none" >
                 <input id='pdf_case' name='keys'>
                <input name='clinic_id' value="<?= $clinic_id['clinic_id']?>">
                <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
             </div>
-            <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
+            <?= Html::Button('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
 	<div class="table-responsive">
 
@@ -122,7 +123,6 @@ $('input:checkbox[name="id[]"]').click(function(){
 $('.pdf_case').click(function() {
     keys.join(",");
     $("#pdf_case").val(keys);
-    keys = [];
 });
 function removeByValue(arr, val) {
   for(var i=0; i<arr.length; i++) {

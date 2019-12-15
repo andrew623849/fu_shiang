@@ -29,6 +29,15 @@ class AdminsheetController extends Controller
             ],
         ];
     }
+	public function beforeAction($action){
+		//如果未登录，则直接返回
+		if(Yii::$app->session['login'] == 0){
+			echo "<script>alert('請先登入');location.href='?r=site/index'</script>";
+
+			return  false;
+		}
+		return parent::beforeAction($action);
+	}
 
     /**
      * Lists all AdminSheet models.
@@ -37,21 +46,14 @@ class AdminsheetController extends Controller
 
     public function actionIndex()
     {
-         if(Yii::$app->session['login']){
-            $searchModel = new AdminSheetSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider_l = $searchModel->search2(Yii::$app->request->queryParams);
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'dataProvider_l' => $dataProvider_l,
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		$searchModel = new AdminSheetSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$dataProvider_l = $searchModel->search2(Yii::$app->request->queryParams);
+		return $this->render('index', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+			'dataProvider_l' => $dataProvider_l,
+		]);
     }
 
     /**
@@ -62,16 +64,13 @@ class AdminsheetController extends Controller
      */
     public function actionView($id)
     {
-        if(Yii::$app->session['login']){
-            return $this->render('view', [
-                'model' => $this->findModel($id),
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		return $this->render('view', [
+			'model' => $this->findModel($id),
+		]);
+		$model = new AdminSheet();
+		return $this->render('/site/index', [
+			'model' => $model,
+		]);
     }
 
     /**
@@ -81,23 +80,16 @@ class AdminsheetController extends Controller
      */
     public function actionCreate()
     {
-        if(Yii::$app->session['login']){
-            $model = new AdminSheet();
-            $job_info = show_level('all');
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+		$model = new AdminSheet();
+		$job_info = show_level('all');
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(['view', 'id' => $model->id]);
+		}
 
-            return $this->render('create', [
-                'model' => $model,
-                'job_info' =>$job_info[1]
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		return $this->render('create', [
+			'model' => $model,
+			'job_info' =>$job_info[1]
+		]);
     }
 
     /**
@@ -109,43 +101,28 @@ class AdminsheetController extends Controller
      */
     public function actionUpdate($id)
     {
-        if(Yii::$app->session['login']){
-            $model = $this->findModel($id);
-            $job_info = show_level('all');
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+		$model = $this->findModel($id);
+		$job_info = show_level('all');
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			return $this->redirect(['view', 'id' => $model->id]);
+		}
 
-            return $this->render('update', [
-                'model' => $model,
-                'job_info' => $job_info[1]
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		return $this->render('update', [
+			'model' => $model,
+			'job_info' => $job_info[1]
+		]);
     }
 
         public function actionPupdate($id)
     {
-        if(Yii::$app->session['login']){
-            $model = $this->findModel($id);
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->session['login'] = 0;
-                return $this->render('/site/index', ['message'=>"修改個人資料成功，請重新登入"]);
-            }
-
-            return $this->render('pupdate', [
-                'model' => $model,
-            ]);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		$model = $this->findModel($id);
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			Yii::$app->session['login'] = 0;
+			return $this->render('/site/index', ['message'=>"修改個人資料成功，請重新登入"]);
+		}
+		return $this->render('pupdate', [
+			'model' => $model,
+		]);
     }
 
     /**
@@ -157,30 +134,16 @@ class AdminsheetController extends Controller
      */
     public function actionLeave($id)
     {
-        if(Yii::$app->session['login']){
-            $model = $this->findModel($id);
-            AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$model->id]);
-            return $this->redirect(['index']);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		$model = $this->findModel($id);
+		AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$model->id]);
+		return $this->redirect(['index']);
     }
 
     public function actionReinstatement($id)
     {
-        if(Yii::$app->session['login']){
-            $model = $this->findModel($id);
-            AdminSheet::updateAll(['deleted'=>0,'deleted_time'=>'','deleted_id'=>'']);
-            return $this->redirect(['index']);
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		$model = $this->findModel($id);
+		AdminSheet::updateAll(['deleted'=>0,'deleted_time'=>'','deleted_id'=>'']);
+		return $this->redirect(['index']);
     }
     /**
      * Finds the AdminSheet model based on its primary key value.
@@ -191,16 +154,9 @@ class AdminsheetController extends Controller
      */
     protected function findModel($id)
     {
-        if(Yii::$app->session['login']){
-            if (($model = AdminSheet::findOne($id)) !== null) {
-                return $model;
-            }
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }else{
-            $model = new AdminSheet();           
-            return $this->render('/site/index', [      
-                'model' => $model,
-            ]);
-        }
+		if (($model = AdminSheet::findOne($id)) !== null) {
+			return $model;
+		}
+		throw new NotFoundHttpException('The requested page does not exist.');
     }
 }
