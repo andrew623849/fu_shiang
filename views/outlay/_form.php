@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use dosamigos\datepicker\DatePicker;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Outlay */
@@ -17,12 +17,11 @@ use dosamigos\datepicker\DatePicker;
 	</div>
     <div class="form-group col-sm-6">
     	<?= $form->field($model, 'buy_time')->label("*支付時間")->widget(DatePicker::classname(), [
-        'inline'=>false,
-        'language' => 'us',
-        'clientOptions'=>[
-            'autoclose'=>true,
-            'format' => 'yyyy-mm-dd'
-        ]
+			'type' => DatePicker::TYPE_INPUT,
+			'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm-dd'
+			]
   	  	]); ?>
     </div>
     <div class="form-group col-sm-6">

@@ -17,7 +17,7 @@ use kartik\daterange\DateRangePicker;
     }
 </style>
 <?php $form = ActiveForm::begin([
-	'action' => ['site/todaycase'],
+	'action' => ['toothcase/todaycase'],
 	'method' => 'post',
 	'options' =>['class'=>'todaycase_time']
 ]); ?>

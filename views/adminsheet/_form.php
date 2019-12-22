@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use dosamigos\datepicker\DatePicker;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\AdminSheet */
@@ -18,12 +18,11 @@ $sale[1] = '女';
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_name')->label("*姓名")->textInput(['maxlength' => true]) ?></div>
     <div class="form-group col-sm-4" ><?= $form->field($model, 'user_sale')->label("*性別")->dropDownList($sale,['style'=>'border:1px solid ;'])?></div>
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_br')->label("*出生年/月/日")->widget(DatePicker::classname(), [
-    		'inline'=>false,
-    		'language' => 'us',
-    		'clientOptions'=>[
-    			'autoclose'=>true,
-    			'format' => 'yyyy-mm-dd'
-    		]
+			'type' => DatePicker::TYPE_INPUT,
+			'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm-dd'
+			]
     ]); ?></div>
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_phone')->label("*手機")->textInput(['maxlength' => true]) ?></div>
     <div class="form-group col-sm-4"  style="height:99px;"><?= $form->field($model, 'user_email')->label("*信箱")->textInput(['maxlength' => true]) ?></div>

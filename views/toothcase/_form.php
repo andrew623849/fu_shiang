@@ -3,9 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use yii\web\JsExpression;
-use dosamigos\datepicker\DatePicker;
-use kartik\slider\Slider;
+use kartik\date\DatePicker;
 
 
 /* @var $this yii\web\View */
@@ -27,35 +25,32 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
     }
 }?>
         <div class="form-group col-sm-4"><?= $form->field($model, 'start_time')->label("*收件日")->widget(DatePicker::classname(), [
-            'inline'=>false,
-            'language' => 'us',
-            'clientOptions'=>[
-                'autoclose'=>true,
-                'format' => 'yyyy-mm-dd'
-            ]
+			'type' => DatePicker::TYPE_INPUT,
+			'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm-dd'
+			]
     ]); ?></div>
         <div class="form-group col-sm-4"><?= $form->field($model, 'end_time')->label("*交件日")->widget(DatePicker::classname(), [
-            'inline'=>false,
-            'language' => 'us',
-            'clientOptions'=>[
-                'autoclose'=>true,
-                'format' => 'yyyy-mm-dd'
-            ]
+			'type' => DatePicker::TYPE_INPUT,
+			'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm-dd'
+			]
     ]); ?></div>
         <div class="form-group col-sm-4"><?= $form->field($model, 'try_time')->label("*試戴日")->widget(DatePicker::classname(), [
-            'inline'=>false,
-            'language' => 'us',
-            'clientOptions'=>[
-                'autoclose'=>true,
-                'format' => 'yyyy-mm-dd'
-            ]
+			'type' => DatePicker::TYPE_INPUT,
+			'pluginOptions' => [
+				'autoclose'=>true,
+				'format' => 'yyyy-mm-dd'
+			]
     ]); ?></div>
     <div class="form-group col-sm-6" style="height:99px;"><?= $form->field($model, 'name')->label("*病人姓名")->textInput(['maxlength' => true]) ?></div>
     <div class="form-group col-sm-6" style="height:99px;"><?= $form->field($model,'clinic_id')->label("*診所")->dropDownList(ArrayHelper::map($clinic_info,'id','clinic'),['style'=>'border:1px solid ;'])?></div>
     <div class="form-group col-sm-12" style="background-color:#E8E8E8;">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth')->label("*齒位1")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth.svg"); ?>
+<!--			--><?php //include("tooth.svg"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id')->label("*材料1")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color')->label("齒色")->textInput(['maxlength' => true]) ?>
@@ -70,7 +65,7 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
         <input class="btn btn-danger" style="margin-left: 98.3%;" type="button" id="m_del_btn_1" value="x">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth_1')->label("*齒位2")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth1.svg"); ?>
+<!--			--><?php //include("tooth1.svg"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_1')->label("*材料2")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_1')->label("齒色")->textInput(['maxlength' => true]) ?>
@@ -85,7 +80,7 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
         <input class="btn btn-danger right" style="margin-left:  98.3%;" type="button" id="m_del_btn_2" value="x">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth_2')->label("*齒位3")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth2.svg"); ?>
+<!--			--><?php //include("tooth2.svg"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_2')->label("*材料3")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_2')->label("齒色")->textInput(['maxlength' => true]) ?>
