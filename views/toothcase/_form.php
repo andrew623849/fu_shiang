@@ -109,15 +109,18 @@ $js =<<< JS
 			console.log(index);
 			$("#tooth"+index).css({'visibility': 'hidden'});
 		});
-		
-		$("input[name ='Toothcase[tooth_1]']").val().forEach(function(index){
-			console.log(index);
-			$("#tooth"+index).css({'visibility': 'hidden'});
-		});
-		$("input[name ='Toothcase[tooth_2]']").val().forEach(function(index){
-			console.log(index);
-			$("#tooth"+index).css({'visibility': 'hidden'});
-		});
+		if($("input[name ='Toothcase[tooth_1]']").val() != ''){
+			$("input[name ='Toothcase[tooth_1]']").val().forEach(function(index){
+				console.log(index);
+				$("#tooth"+index).css({'visibility': 'hidden'});
+			});
+		}
+		if($("input[name ='Toothcase[tooth_2]']").val() != ''){
+			$("input[name ='Toothcase[tooth_2]']").val().forEach(function(index){
+				console.log(index);
+				$("#tooth"+index).css({'visibility': 'hidden'});
+			});
+		}
 	});
 
 	function removeByValue(arr, val) {
