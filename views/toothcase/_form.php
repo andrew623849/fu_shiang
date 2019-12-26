@@ -106,18 +106,15 @@ $js =<<< JS
     var v = 1;
 	$().ready(function() {
 		$("input[name ='Toothcase[tooth]']").val().split(',').forEach(function(index){
-			console.log(index);
 			$("#tooth"+index).css({'visibility': 'hidden'});
 		});
 		if($("input[name ='Toothcase[tooth_1]']").val() != ''){
-			$("input[name ='Toothcase[tooth_1]']").val().forEach(function(index){
-				console.log(index);
+			$("input[name ='Toothcase[tooth_1]']").val().split(',').forEach(function(index){
 				$("#tooth"+index).css({'visibility': 'hidden'});
 			});
 		}
 		if($("input[name ='Toothcase[tooth_2]']").val() != ''){
-			$("input[name ='Toothcase[tooth_2]']").val().forEach(function(index){
-				console.log(index);
+			$("input[name ='Toothcase[tooth_2]']").val().split(',').forEach(function(index){
 				$("#tooth"+index).css({'visibility': 'hidden'});
 			});
 		}
