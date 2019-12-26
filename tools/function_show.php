@@ -18,3 +18,8 @@ function show($var){
 	exit();
 }
 
+function OpenSVG($str){
+	$mysvg = fopen("./images/svg/".$str.".svg","r") or die( "Unable to to file!");
+	echo fread($mysvg,filesize("./images/svg/".$str.".svg"));
+	fclose($mysvg);
+}

@@ -9,7 +9,7 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
-$material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'deleted'=>0],'material');
+$material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'deleted'=>0]);
 ?>
 
 <div class="toothcase-form">
@@ -50,7 +50,7 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
     <div class="form-group col-sm-12" style="background-color:#E8E8E8;">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth')->label("*齒位1")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth.svg"); ?>
+			<?php OpenSVG("tooth"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id')->label("*材料1")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color')->label("齒色")->textInput(['maxlength' => true]) ?>
@@ -65,7 +65,7 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
         <input class="btn btn-danger" style="margin-left: 98.3%;" type="button" id="m_del_btn_1" value="x">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth_1')->label("*齒位2")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth1.svg"); ?>
+			<?php OpenSVG("tooth1"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_1')->label("*材料2")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_1')->label("齒色")->textInput(['maxlength' => true]) ?>
@@ -80,7 +80,7 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
         <input class="btn btn-danger right" style="margin-left:  98.3%;" type="button" id="m_del_btn_2" value="x">
 		<div class="form-group col-sm-4">
 			<?= $form->field($model, 'tooth_2')->label("*齒位3")->hiddenInput(['maxlength' => true]) ?>
-			<?php include("tooth2.svg"); ?>
+			<?php OpenSVG("tooth2"); ?>
 		</div>
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_2')->label("*材料3")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_2')->label("齒色")->textInput(['maxlength' => true]) ?>
@@ -104,6 +104,31 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
 <?php
 $js =<<< JS
     var v = 1;
+	$().ready(function() {
+		$("input[name ='Toothcase[tooth]']").val().split(',').forEach(function(index){
+			console.log(index);
+			$("#tooth"+index).css({'visibility': 'hidden'});
+		});
+		
+		$("input[name ='Toothcase[tooth_1]']").val().forEach(function(index){
+			console.log(index);
+			$("#tooth"+index).css({'visibility': 'hidden'});
+		});
+		$("input[name ='Toothcase[tooth_2]']").val().forEach(function(index){
+			console.log(index);
+			$("#tooth"+index).css({'visibility': 'hidden'});
+		});
+	});
+
+	function removeByValue(arr, val) {
+		for(var i=0; i<arr.length; i++) {
+			if(arr[i] == val) {
+				arr.splice(i, 1);
+				break;
+			}
+		}
+		return arr;
+	}
     $('#m_add_btn').click(function(){
         $('.material_id_'+v).show();
         if(v == 2){
