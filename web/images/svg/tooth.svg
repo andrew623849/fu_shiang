@@ -192,7 +192,7 @@
             $("#tooth"+id).removeAttr("style");
             val = $("input[name ='Toothcase[tooth]']").val().split(",");
             for(var i=0; i<val.length; i++) {
-                if(arr[i] == id) {
+                if(val[i] == id) {
                     val.splice(i, 1);
                     break;
                 }
