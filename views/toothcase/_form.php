@@ -110,12 +110,12 @@ $js =<<< JS
 		});
 		if($("input[name ='Toothcase[tooth_1]']").val() != ''){
 			$("input[name ='Toothcase[tooth_1]']").val().split(',').forEach(function(index){
-				$("#tooth"+index).css({'visibility': 'hidden'});
+				$("#tooth1"+index).css({'visibility': 'hidden'});
 			});
 		}
 		if($("input[name ='Toothcase[tooth_2]']").val() != ''){
 			$("input[name ='Toothcase[tooth_2]']").val().split(',').forEach(function(index){
-				$("#tooth"+index).css({'visibility': 'hidden'});
+				$("#tooth2"+index).css({'visibility': 'hidden'});
 			});
 		}
 	});
