@@ -119,16 +119,6 @@ $js =<<< JS
 			});
 		}
 	});
-
-	function removeByValue(arr, val) {
-		for(var i=0; i<arr.length; i++) {
-			if(arr[i] == val) {
-				arr.splice(i, 1);
-				break;
-			}
-		}
-		return arr;
-	}
     $('#m_add_btn').click(function(){
         $('.material_id_'+v).show();
         if(v == 2){

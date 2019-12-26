@@ -191,7 +191,12 @@
         function chang_no(id) {
             $("#tooth"+id).removeAttr("style");
             val = $("input[name ='Toothcase[tooth]']").val().split(",");
-            val = removeByValue(val, id);
+            for(var i=0; i<val.length; i++) {
+                if(arr[i] == id) {
+                    val.splice(i, 1);
+                    break;
+                }
+            }
             $("input[name ='Toothcase[tooth]']").val(val.join(','));
         }
     ]]>
