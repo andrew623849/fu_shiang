@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::begin(); ?>
     <?php $form = ActiveForm::begin([
-            'action' => ['site/pdf'],
+            'action' => ['/toothcase/pdf'],
             'method' => 'post',
 			'options'=>['target'=>'_blank']
         ]); ?>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                <input name='clinic_id' value="<?= $clinic_id['clinic_id']?>">
                <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
             </div>
-            <?= Html::Button('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
+            <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
 	<div class="table-responsive">
 
