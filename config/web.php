@@ -58,7 +58,7 @@ $config = [
 //				 '/fushiang/web/<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 //				 '/fushiang/web/<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
 //             ],
-],
+//         ],
         
     ],
     'params' => $params,
