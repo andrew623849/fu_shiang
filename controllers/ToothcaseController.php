@@ -10,7 +10,6 @@ use yii\web\Controller;
 use app\models\toothcaseSearch;
 use kartik\mpdf\Pdf;
 use Mpdf\Mpdf;
-use app\models\Outlay;
 class ToothcaseController extends Controller
 {   /**
      * {@inheritdoc}
@@ -139,17 +138,8 @@ class ToothcaseController extends Controller
 		return $pdf->render();
     }
     public function actionReport(){
-		$model = new Toothcase();
-		$year = empty($POST['year'])?date('Y'):$POST['year'];
-		$models = $model->find()->where(['like','start_time',date('Y')])->asArray()->all();
-		$model_outlay = new Outlay();
-		$models_outlay = $model_outlay->find()->where(['like','buy_time',date('Y')])->asArray()->all();
-		$clinic = show_clinic('all');
 		return $this->render('report', [
-			'clinic'=>$clinic['1'],
-			'models'=>$models,
-			'models_outlay'=>$models_outlay,
-			'year'=>$year
+			'year'=>empty($_POST['year'])?date('Y'):$_POST['year']
 
 		]);
     }
@@ -160,15 +150,8 @@ class ToothcaseController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id){   
-		$clinic = show_clinic('all');
-		$material = show_material($id);
 		return $this->render('view', [
 			'model' => $this->findModel($id),
-			'clinic'=>$clinic['1'],
-			'material_info' =>$material['1'],
-			'material_info1' =>$material['2'],
-			'material_info2' =>$material['3'],
-			'id_max' => $material['4'],
 		]);
     }
 

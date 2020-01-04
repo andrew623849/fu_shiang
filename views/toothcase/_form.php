@@ -16,13 +16,6 @@ $material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'delet
     <?php $form = ActiveForm::begin(); ?>
     <?php if($url == 'create'){
      $model ->clinic_id = $clinic_this;
-     $i=-35;
-     while ($i<=35){ 
-        $d = strtotime(date('Y-m-d')) + ($i + 1) * 85800;
-        $date_time = date("Y-m-d",$d);
-        $date[$date_time] = $date_time;
-        $i ++;
-    }
 }?>
         <div class="form-group col-sm-4"><?= $form->field($model, 'start_time')->label("*收件日")->widget(DatePicker::classname(), [
 			'type' => DatePicker::TYPE_INPUT,
