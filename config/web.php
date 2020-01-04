@@ -47,15 +47,15 @@ $config = [
         ],
         'db' => $db,
         
-        // 'urlManager' => [
-        //     'enablePrettyUrl' => true,
-        //     'showScriptName' => false,
-        //     'rules' => [
-        //         '<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
-        //         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-        //         '<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
-        //     ],
-        // ],
+         'urlManager' => [
+             'enablePrettyUrl' => true,
+             'showScriptName' => false,
+             'rules' => [
+                 '<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
+                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                 '<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
+             ],
+         ],
         
     ],
     'params' => $params,
