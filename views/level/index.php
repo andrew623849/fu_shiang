@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\AdminsheetSearch;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\LevelSearch */
@@ -27,7 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'job_name',
             'build_time',
-            'build_id',
+			[
+				'attribute'=>'build_id',
+				'value'=>function($data){
+					$admin_data = AdminsheetSearch::find()->where(['=','id',$data->build_id])->asArray()->one();
+					return $admin_data['user_name'];
+				}
+			],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

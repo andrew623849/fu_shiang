@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			],
             ['attribute' => 'start_time',
             'format' => ['date', "php:Y-m-d"],
-			 'contentOptions' => ['style' => 'min-width:200px;'],
+		 	'contentOptions' => ['style' => 'min-width:200px;'],
             'filter' => DateRangePicker::widget([ 'name' => 'BorrowRepaymentSearch[start_time]',
                                                   'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'],
                                                   'convertFormat' => true,
@@ -72,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 $material_name = Material::find()->asArray()->all();
                 return $material_name[$data->material_id]["material"].'('.$data->tooth.')<br>'.($data->material_id_1 == 0?'':$material_name[$data->material_id_1]["material"].'('.$data->tooth_1.')<br>').($data->material_id_2 == 0?'':$material_name[$data->material_id_2]["material"].'('.$data->tooth_2.')');
             },
+			'filter' =>ArrayHelper::map(Material::find()->Asarray()->all(),'id','material'),
             'label'=>'材料',
              ],
              'remark',
