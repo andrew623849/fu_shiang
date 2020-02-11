@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\AdminsheetSearch;
+use app\models\Adminsheet;
 
 
 /* @var $this yii\web\View */
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			[
 				'attribute'=>'build_id',
 				'value'=>function($data){
-					$admin_data = AdminsheetSearch::find()->where(['=','id',$data->build_id])->asArray()->one();
+					$admin_data = Adminsheet::find()->where(['=','id',$data->build_id])->asArray()->one();
 					return $admin_data['user_name'];
 				}
 			],
