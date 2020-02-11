@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'job_name',
-            'build_time',
 			[
 				'attribute'=>'build_id',
 				'value'=>'adminSheets.0.user_name'

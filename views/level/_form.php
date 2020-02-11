@@ -96,6 +96,6 @@ foreach($level_labels as $key=>$val){
 					$("#level-$key").val(parseInt ($("#level-$key").val())-1);
 			   }
 			});
-	JS;
+JS;
 }
 $this->registerJs($js);
