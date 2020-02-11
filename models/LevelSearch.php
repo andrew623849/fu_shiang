@@ -40,8 +40,8 @@ class LevelSearch extends Level
      */
     public function search($params)
     {
-        $query = Level::find()->where(['!=','id',0]);
-
+        $query = Level::find()->where(['!=','level.id',0]);
+		$query->joinWith(['adminSheets']);/*这里的articlecategory是article模型里面关联的方法名，除了首字母，其他都要完全一样，否则会报错*/
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -61,7 +61,6 @@ class LevelSearch extends Level
             'id' => $this->id,
             'build_time' => $this->build_time,
             'build_id' => $this->build_id,
-            'useable' => $this->useable,
         ]);
 
         $query->andFilterWhere(['like', 'job_name', $this->job_name]);

@@ -31,10 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'build_time',
 			[
 				'attribute'=>'build_id',
-				'value'=>function($data){
-					$admin_data = Adminsheet::find()->where(['=','id',$data->build_id])->asArray()->one();
-					return $admin_data['user_name'];
-				}
+				'value'=>'adminSheets.0.user_name'
 			],
 
             ['class' => 'yii\grid\ActionColumn'],

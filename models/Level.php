@@ -89,7 +89,7 @@ class Level extends \yii\db\ActiveRecord
      */
     public function getAdminSheets()
     {
-        return $this->hasMany(AdminSheet::className(), ['job' => 'id']);
+        return $this->hasMany(AdminSheet::className(), ['id' => 'build_id']);
     }
 
 }
