@@ -15,7 +15,7 @@ AppAsset::register($this);
 $clinic = show_clinic('all');
 $clinic_items = "";
 foreach($clinic[1] as $val){
-    $clinic_items .= "<li><a href='?r=toothcase/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+	$clinic_items .= "<li><a href='?r=toothcase/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
 }
 
 $job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level']];
@@ -53,8 +53,9 @@ foreach($job['nav'] as $key => $val){
 		}
 	}
 }
+
 $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
-// v_d($nav_need);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -72,35 +73,17 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
 
 <div class="wrap">
     <?php
-    if(Yii::$app->session['login']){
-        NavBar::begin([
-            'brandLabel' => '富翔牙體技術所',
-            'brandUrl' => ['/toothcase/person'],
-            'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
-            ],
-        ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => $nav_need
-            ]);
-    }else{
-        NavBar::begin([
-            'brandLabel' => '牙技所管理系統登入',
-            'brandUrl' => ['/site/index'],
-            'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
-            ],
-        ]);
-        echo Nav::widget([
-            'options' => ['class' => 'navbar-nav navbar-right'],
-            'items' => [
-                ['label' => '介紹', 'url' => ['#']],
-                ['label' => '登入', 'url' => ['/site/index']]
-            ],
-        ]);
-    }
-
+	NavBar::begin([
+		'brandLabel' => '富翔牙體技術所',
+		'brandUrl' => ['/toothcase/person'],
+		'options' => [
+			'class' => 'navbar-inverse navbar-fixed-top',
+		],
+	]);
+		echo Nav::widget([
+			'options' => ['class' => 'navbar-nav navbar-right'],
+			'items' => $nav_need
+		]);
     NavBar::end();
     ?>
 
@@ -122,7 +105,7 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
     <div class="container">
         <p class="pull-left"></p>
 
-        <p class="pull-right"> 登入者: <?=!empty(Yii::$app->session['user'])?Yii::$app->session['user']['3'].'&nbsp'.level_name(Yii::$app->session['user']['2']):'' ?></p>
+        <p class="pull-right"> 登入者: <?= Yii::$app->session['user']['3'].'&nbsp'.level_name(Yii::$app->session['user']['2']) ?></p>
     </div>
 </footer>
 

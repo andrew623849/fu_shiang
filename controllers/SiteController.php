@@ -38,7 +38,7 @@ class SiteController extends Controller
         ];
     } 
     public function actionIndex(){
-    // $this->layout = false; 
+     	$this->layout = 'logout';
         Yii::$app->session['login'] = 0;
         Yii::$app->session['user'] = "";
         $model = new AdminSheet();
@@ -49,11 +49,12 @@ class SiteController extends Controller
                 if($model['deleted'] == 1){
                     $message =  '登入失敗!!<br>您已於'.$model['deleted_time'].'離職';
                 }else{
-                   Yii::$app->session['login'] = 1;
-                    if(Yii::$app->session['login']){
-                    Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_f_rel'],$model['user_exp'],$model['user_grade'],$model['remark']];
-                    return $this->render('//toothcase/person');
-                    } 
+					Yii::$app->session['login'] = 1;
+					if(Yii::$app->session['login']){
+						Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_f_rel'],$model['user_exp'],$model['user_grade'],$model['remark']];
+						$this->layout = 'main';
+						return $this->render('//toothcase/person');
+					}
                 }
             }elseif($_POST["admin"] == ""){
                 $message =  '登入失敗!!<br>請輸入帳號';
