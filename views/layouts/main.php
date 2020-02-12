@@ -9,42 +9,51 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\models\Level;
 
 AppAsset::register($this);
- $clinic = show_clinic('all');
+$clinic = show_clinic('all');
 $clinic_items = "";
-$job = [0,1,2,3,4,5,6,7,8,9];
 foreach($clinic[1] as $val){
     $clinic_items .= "<li><a href='?r=toothcase/toothcase&toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
 }
-$internal = [
-             '0' => ['label'=>'員工','url'=> ['/adminsheet/index']],
-             '1' => ['label'=>'材料','url'=> ['/material/index']],
-             '2' => ['label'=>'診所','url'=> ['/clinic/index']],
-             '9' => ['label'=>'職權','url'=> ['/level/index']]
-            ];
-$internal_need = [];
-$nav_need = [];
-foreach($internal as $key => $val){
-    if(in_array($key,$job)){
-        $internal_need[] = $val;
-    }
-}
+
+$job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level']];
 $nav_arr = [
-            '3' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
-            '4' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
-            '5' => ['label' => '支出', 'url' => ['/outlay/index']],
-            '6' => ['label' => '報表', 'url' => ['/toothcase/report']],
-            '7' => ['label' => '公司內部管理','url' => ['#'],
-                'items'=> $internal_need,
-            ],
-            '8' => ['label' => '登出', 'url' => ['/site/index']]
-            ];
-foreach($nav_arr as $key => $val){
-    if(in_array($key,$job)){
-        $nav_need[] = $val;
-    }
+	'today_case' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
+	'toothcase' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
+	'outlay' => ['label' => '支出', 'url' => ['/outlay/index']],
+	'report' => ['label' => '報表', 'url' => ['/toothcase/report']],
+	'公司內部管理' =>[
+		'admin_sheet' => ['label'=>'員工','url'=> ['/adminsheet/index']],
+		'material' => ['label'=>'材料','url'=> ['/material/index']],
+		'clinic' => ['label'=>'診所','url'=> ['/clinic/index']],
+		'level' => ['label'=>'職權','url'=> ['/level/index']],
+	]
+];
+$user_job = Level::find()->where(['=','id',Yii::$app->session['user'][2]])->asArray()->one();
+
+$nav_need = [];
+foreach($job['nav'] as $key => $val){
+	if(!empty($job[$val])){
+		$nav2_need = [];
+		foreach($job[$val] as $vval){
+			$decbin = preg_split('//', decbin($user_job[$vval]), -1, PREG_SPLIT_NO_EMPTY);
+			if($decbin[0] == 1){
+				$nav2_need[] = $nav_arr[$val][$vval];
+			}
+		}
+		if(!empty($nav2_need)){
+			$nav_need[] = ['label' => $val,'url' => ['#'], 'items'=> $nav2_need];
+		}
+	}else{
+		$decbin = preg_split('//', decbin($user_job[$val]), -1, PREG_SPLIT_NO_EMPTY);
+		if($decbin[0] == 1){
+			$nav_need[] = $nav_arr[$val];
+		}
+	}
 }
+$nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
 // v_d($nav_need);
 ?>
 <?php $this->beginPage() ?>

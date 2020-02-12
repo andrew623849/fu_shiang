@@ -28,20 +28,19 @@ $level_labels = LevelSearch::LevelLabels();
 			<tbody>
 			<?php foreach($level_labels as $key=>$val){
 				$decbin = preg_split('//', decbin($model[$key]), -1, PREG_SPLIT_NO_EMPTY);
-
 			?>
 				<tr>
-					<td><?= $val?><input type="checkbox" id="<?= $key?>" <?= ((!empty($decbin[0]) && $decbin[0] == 1) || empty($decbin[0]))?'checked':''?>></td>
-					<td><input type="checkbox" id="<?= $key?>_new" <?= ((!empty($decbin[1]) && $decbin[1] == 1) || empty($decbin[1]))?'checked':''?> <?= ($decbin[0] == 1 || empty($decbin[0]))?'':'disabled'?>></td>
-					<td><input type="checkbox" id="<?= $key?>_edit" <?= ((!empty($decbin[2]) && $decbin[2] == 1) || empty($decbin[2]))?'checked':''?> <?= ($decbin[0] == 1 || empty($decbin[0]))?'':'disabled'?>></td>
-					<td><input type="checkbox" id="<?= $key?>_del" <?= ((!empty($decbin[3]) && $decbin[3] == 1) || empty($decbin[3]))?'checked':''?> <?= ($decbin[0] == 1 || empty($decbin[0]))?'':'disabled'?>></td>
+					<td><?= $val?><input type="checkbox" id="<?= $key?>" <?= ($decbin[0] == 1 || $type == 'create')?'checked':''?>></td>
+					<td><input type="checkbox" id="<?= $key?>_new" <?= ((!empty($decbin[1]) && $decbin[1] == 1) || $type == 'create')?'checked':''?> <?= ($decbin[0] == 1 || $type == 'create')?'':'disabled'?>></td>
+					<td><input type="checkbox" id="<?= $key?>_edit" <?= ((!empty($decbin[2]) && $decbin[2] == 1) || $type == 'create')?'checked':''?> <?= ($decbin[0] == 1 || $type == 'create')?'':'disabled'?>></td>
+					<td><input type="checkbox" id="<?= $key?>_del" <?= ((!empty($decbin[3]) && $decbin[3] == 1) || $type == 'create')?'checked':''?> <?= ($decbin[0] == 1 || $type == 'create')?'':'disabled'?>></td>
 				</tr>
 			<?php }?>
 			</tbody>
 		</table>
 	</div>
 	<?php foreach($level_labels as $key=>$val){ ?>
-		<input type="hidden" name="Level[<?=$key?>]" id="level-<?=$key?>" value="<?= !empty($model[$key])?$model[$key]:15?>">
+		<input type="hidden" name="Level[<?=$key?>]" id="level-<?=$key?>" value="<?= $type == 'create'?15:$model[$key]?>">
 	<?php }?>
     <div class="form-group">
         <?= Html::submitButton('送出', ['class' => 'btn btn-success']) ?>

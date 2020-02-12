@@ -32,8 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'job_name',
             'build_time',
-            'build_id',
-            'useable',
+			['label'=>'建立人','value'=>$model['adminSheets'][0]['user_name']],
         ],
     ]) ?>
 
