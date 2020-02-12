@@ -35,6 +35,11 @@ class MaterialController extends Controller
 
 			return  false;
 		}
+		if(empty(Yii::$app->session['right']['material'])){
+			echo "<script>alert('沒有材料管理權限');history.go(-1);</script>";
+
+			return  false;
+		}
 		return parent::beforeAction($action);
 	}
 

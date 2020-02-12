@@ -36,6 +36,11 @@ class OutlayController extends Controller
 
 			return  false;
 		}
+		if(empty(Yii::$app->session['right']['outlay'])){
+			echo "<script>alert('沒有支出管理權限');history.go(-1);</script>";
+
+			return  false;
+		}
 		return parent::beforeAction($action);
 	}
 

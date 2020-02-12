@@ -28,9 +28,20 @@ class ToothcaseController extends Controller
     }
 
 	public function beforeAction($action){
+//		v_d(View());
 		//如果未登录，则直接返回
 		if(Yii::$app->session['login'] == 0){
 			echo "<script>alert('請先登入');location.href='?r=site/index'</script>";
+
+			return  false;
+		}
+		if(empty(Yii::$app->session['right']['today_case']) && $_GET['r'] == 'toothcase/todaycase'){
+			echo "<script>alert('沒有交件管理權限');history.go(-1);</script>";
+
+			return  false;
+		}
+		if(empty(Yii::$app->session['right']['toothcase']) && $_GET['r'] == 'toothcase/toothcase'){
+			echo "<script>alert('沒有病例管理權限');history.go(-1);</script>";
 
 			return  false;
 		}
@@ -80,7 +91,7 @@ class ToothcaseController extends Controller
      * Lists all toothcase models.
      * @return mixed
      */
-    public function actionToothcase(){   
+    public function actionToothcase(){
 		$clinic_id=Yii::$app->request->queryParams;
 		if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
 		$searchModel = new toothcaseSearch();

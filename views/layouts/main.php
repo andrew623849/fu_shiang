@@ -41,6 +41,7 @@ foreach($job['nav'] as $key => $val){
 			$decbin = preg_split('//', decbin($user_job[$vval]), -1, PREG_SPLIT_NO_EMPTY);
 			if($decbin[0] == 1){
 				$nav2_need[] = $nav_arr[$val][$vval];
+				$right[$vval] = 1;
 			}
 		}
 		if(!empty($nav2_need)){
@@ -50,10 +51,11 @@ foreach($job['nav'] as $key => $val){
 		$decbin = preg_split('//', decbin($user_job[$val]), -1, PREG_SPLIT_NO_EMPTY);
 		if($decbin[0] == 1){
 			$nav_need[] = $nav_arr[$val];
+			$right[$val] = 1;
 		}
 	}
 }
-
+Yii::$app->session['right'] = $right;
 $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
 
 ?>

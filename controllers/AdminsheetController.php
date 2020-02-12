@@ -36,6 +36,11 @@ class AdminsheetController extends Controller
 
 			return  false;
 		}
+		if(empty(Yii::$app->session['right']['admin_sheet'])){
+			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
+
+			return  false;
+		}
 		return parent::beforeAction($action);
 	}
 
