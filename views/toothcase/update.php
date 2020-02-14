@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 $this->title = $clinic_model['clinic'].'(更新資料)';
-$this->params['breadcrumbs'][] = ['label' => $clinic_model['clinic'].'病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>$model['clinic_id']]];
+$this->params['breadcrumbs'][] = ['label' => $clinic_model['clinic'].'病例', 'url' => ['toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = '更新資料';
 ?>

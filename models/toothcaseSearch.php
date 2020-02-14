@@ -58,10 +58,7 @@ class toothcaseSearch extends Toothcase
             $query->andFilterCompare('start_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('BorrowRepaymentSearch')['start_time'])[1]) + 86400), '<');//結束時間}
         }
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'tooth', $this->tooth])
-            ->andFilterWhere(['like', 'tooth_color', $this->tooth_color])
-            ->andFilterWhere(['like', 'remark', $this->remark])
-            ->andFilterWhere(['like', 'start_time', $this->start_time]);
+            ->andFilterWhere(['like', 'remark', $this->remark]);
 
         return $dataProvider;
     }

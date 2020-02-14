@@ -9,7 +9,7 @@ use app\models\MaterialSearch;
 $clinic = clinicSearch::ShowData('all',[],'');
 
 $this->title = $clinic[$model['clinic_id']-1]['clinic'].':病人資料';
-$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']-1]['clinic'].'病例', 'url' => ['toothcase','toothcaseSearch[clinic_id]'=>$model['clinic_id']]];
+$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']-1]['clinic'].'病例', 'url' => ['toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
 \yii\web\YiiAsset::register($this);
 $material = MaterialSearch::ShowData('all',[],'material');
