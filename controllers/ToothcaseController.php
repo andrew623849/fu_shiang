@@ -92,8 +92,7 @@ class ToothcaseController extends Controller
      * @return mixed
      */
     public function actionToothcase(){
-		$clinic_id=Yii::$app->request->queryParams;
-		if(count($clinic_id) < 2) $clinic_id=['toothcaseSearch'=>['clinic_id'=>1,],];
+		$clinic_id = Yii::$app->request->get("id") ?? "1";
 		$searchModel = new toothcaseSearch();
 		$dataProvider = $searchModel->search($clinic_id);
 		$clinic = show_clinic('all');

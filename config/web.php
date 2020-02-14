@@ -51,12 +51,7 @@ $config = [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
 			'rules' => [
-				'<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-				'<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
-				'/fushiang/web/<controller:\w+>/view/<slug:[\w-]+>' => '<controller>/view',
-				'/fushiang/web/<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-				'/fushiang/web/<controller:\w+>/cat/<slug:[\w-]+>' => '<controller>/cat',
 			],
 		],
     ],
