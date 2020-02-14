@@ -13,15 +13,13 @@ use app\models\Material;
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $request = Yii::$app->request;
-$clinic_id=$request->get('toothcaseSearch');
 $clinic=ArrayHelper::map($clinic_info,'id','clinic');
-$clinic_id['clinic_id']=$clinic_id['clinic_id']==NULl?1:$clinic_id['clinic_id'];
-$this->title = $clinic[$clinic_id['clinic_id']].'病例';
+$this->title = $clinic[$clinic_id].'病例';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="toothcase-index  col-md-12">
     <h1><?= Html::encode($this->title) ?></h1>
-    <?= Html::a('新增病例',['create','clinic_this' => $clinic_id['clinic_id']], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('新增病例',['create','clinic_this' => $clinic_id], ['class' => 'btn btn-success']) ?>
 
     <?php Pjax::begin(); ?>
     <?php $form = ActiveForm::begin([
@@ -31,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
             <div  style="margin-left: -15px;display:none" >
                 <input id='pdf_case' name='keys'>
-               <input name='clinic_id' value="<?= $clinic_id['clinic_id']?>">
+               <input name='clinic_id' value="<?= $clinic_id?>">
                <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
             </div>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
