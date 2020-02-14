@@ -15,7 +15,7 @@ AppAsset::register($this);
 $clinic = show_clinic('all');
 $clinic_items = "";
 foreach($clinic[1] as $val){
-	$clinic_items .= "<li><a href='toothcase/toothcase?toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
+	$clinic_items .= "<li><a href='/toothcase/toothcase?toothcaseSearch[clinic_id]=".$val['id']."'>".$val['clinic']."</a></li>";
 }
 
 $job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level']];
