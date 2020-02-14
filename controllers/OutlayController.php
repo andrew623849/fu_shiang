@@ -32,7 +32,7 @@ class OutlayController extends Controller
 	public function beforeAction($action){
 		//如果未登录，则直接返回
 		if(Yii::$app->session['login'] == 0){
-			echo "<script>alert('請先登入');location.href='?r=site/index'</script>";
+			echo "<script>alert('請先登入');location.href=''</script>";
 
 			return  false;
 		}
