@@ -31,15 +31,17 @@ $nav_arr = [
 		'level' => ['label'=>'職權','url'=> ['/level/index']],
 	]
 ];
-$user_job = Level::find()->where(['=','id',Yii::$app->session['user'][2]])->asArray()->one();
+$user_job = Yii::$app->session['user'][2];
+$user_level = Level::find()->where(['=','id',$user_job])->asArray()->one();
 
 $nav_need = [];
+$right = [];
 foreach($job['nav'] as $key => $val){
 	if(!empty($job[$val])){
 		$nav2_need = [];
 		foreach($job[$val] as $vval){
-			$decbin = preg_split('//', decbin($user_job[$vval]), -1, PREG_SPLIT_NO_EMPTY);
-			if($decbin[0] == 1){
+			$decbin = preg_split('//', decbin($user_level[$vval]), -1, PREG_SPLIT_NO_EMPTY);
+			if($decbin[0] == 1 || $user_job == 0){
 				$nav2_need[] = $nav_arr[$val][$vval];
 				$right[$vval] = 1;
 			}
@@ -48,8 +50,8 @@ foreach($job['nav'] as $key => $val){
 			$nav_need[] = ['label' => $val,'url' => ['#'], 'items'=> $nav2_need];
 		}
 	}else{
-		$decbin = preg_split('//', decbin($user_job[$val]), -1, PREG_SPLIT_NO_EMPTY);
-		if($decbin[0] == 1){
+		$decbin = preg_split('//', decbin($user_level[$val]), -1, PREG_SPLIT_NO_EMPTY);
+		if($decbin[0] == 1 || $user_job == 0){
 			$nav_need[] = $nav_arr[$val];
 			$right[$val] = 1;
 		}

@@ -7,7 +7,7 @@ use yii\helpers\ArrayHelper;
 $request = Yii::$app->request;
 $clinic=ArrayHelper::map($clinic_info,'id','clinic');
 $this->title = '新增病例';
-$this->params['breadcrumbs'][] = ['label' => $clinic[$clinic_this].'病例', 'url' => ['toothcase/'.$clinic_this]];
+$this->params['breadcrumbs'][] = ['label' => $clinic[$clinic_this].'病例', 'url' => ['toothcase/toothcase/'.$clinic_this]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="toothcase-create">
