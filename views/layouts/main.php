@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\Systemsetup;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -10,6 +11,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\models\Level;
+$sys_name = Systemsetup::SysName();
 
 AppAsset::register($this);
 $clinic = show_clinic('all');
@@ -58,7 +60,7 @@ foreach($job['nav'] as $key => $val){
 	}
 }
 Yii::$app->session['right'] = $right;
-$nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
+$nav_need[] =  ['label' => '登出', 'url' => ['/backend/index']];
 
 ?>
 <?php $this->beginPage() ?>
@@ -69,7 +71,7 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title>富翔牙體技術所</title>
+    <title><?= $sys_name?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -78,8 +80,8 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
 <div class="wrap">
     <?php
 	NavBar::begin([
-		'brandLabel' => '富翔牙體技術所',
-		'brandUrl' => ['/toothcase/person'],
+		'brandLabel' => $sys_name,
+		'brandUrl' => ['/backend/person'],
 		'options' => [
 			'class' => 'navbar-inverse navbar-fixed-top',
 		],
@@ -95,7 +97,7 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/site/index']];
         <?= Breadcrumbs::widget([
             'homeLink' => [
             'label' => '首頁',
-            'url' => ['toothcase/person'],
+            'url' => ['backend/person'],
             'class' => 'myhome'
         ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],

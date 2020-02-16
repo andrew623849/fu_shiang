@@ -3,15 +3,17 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use app\models\Systemsetup;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\AppAsset;
-$sys_name = Systemsetup::SysName();
+use app\models\Systemsetup;
+
 
 AppAsset::register($this);
+$sys_name = Systemsetup::SysName();
+$sys_logo = Systemsetup::SysLogo();
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -30,16 +32,18 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
         NavBar::begin([
-            'brandLabel' => $sys_name,
-            'brandUrl' => ['/backend/index'],
+            'brandLabel' => !empty($sys_logo) ? Html::img($sys_logo, ['alt'=>$sys_name]):$sys_name,
+            'brandUrl' => ['/site/index'],
             'options' => [
                 'class' => 'navbar-inverse navbar-fixed-top',
+				'style' => 'blockground-color:white'
             ],
         ]);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => '前台', 'target'=>'_blank', 'url' => ['/site/index'],'linkOptions' => ['target'=>'_blank']]
+                ['label' => '前台', 'url' => ['#']],
+                ['label' => '登入', 'url' => ['/site/index'],'options' => ['target'=>'_blank']]
             ],
         ]);
 

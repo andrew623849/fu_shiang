@@ -1,35 +1,37 @@
 <?php
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\toothcaseSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
 
+use kriss\swiper\SwiperWidget;
+use yii\helpers\Html;
+
+$swiperEl = 'swiper';
+echo SwiperWidget::widget([
+	'slides' => [
+		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
+		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
+		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
+	],
+	'pagination' => true,
+	'navigation' => true,
+	'scrollbar' => false,
+	'swiperEl' => $swiperEl,
+	'clientOptions' => [
+		'speed' => 200,
+		'loop' => true,
+	]
+]);
+
+$js = <<<JS
+	$('#w0-swiper-container').click(function() {
+		{$swiperEl}.slideNext();
+	});
+	function swiperE1_auto(){
+		setTimeout(function(){
+			{$swiperEl}.slideNext();
+			swiperE1_auto();
+		},5000);
+	}
+	swiperE1_auto();
+
+JS;
+	$this->registerJs($js);
 ?>
-<div class="site-login">
-    <?php if(isset($message) &&  $message!=""){
-       echo '<div class="alert alert-danger">'.$message.'</div>';
-     } ?>
-    <?php $form = ActiveForm::begin([
-        'id' => 'login-form',
-        'options' => ['class' => 'form-horizontal'],
-        'action' => ['site/index'],
-        'method' => 'post',
-        'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
-            'labelOptions' => ['class' => 'col-lg-1 control-label'],
-        ],
-    ]); ?>
-        <div class="form-group">
-            <label>帳號:
-            <input type = "text" name = "admin" ></label>
-        </div>
-        <div class="form-group">
-            <label>密碼:
-            <input type = "password" name = "password" ></label>
-        </div>
-        <div class="form-group">
-            <?= Html::submitButton('登入', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-        </div>
-<?php ActiveForm::end(); ?>
-</div>

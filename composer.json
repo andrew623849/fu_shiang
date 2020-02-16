@@ -23,7 +23,8 @@
         "yii2mod/yii2-c3-chart": "*",
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-date-range": "*",
-        "kartik-v/yii2-widget-datepicker": "dev-master"
+        "kartik-v/yii2-widget-datepicker": "dev-master",
+        "kriss/yii2-swiper-widget": "^1.0"
 
     },
     "require-dev": {

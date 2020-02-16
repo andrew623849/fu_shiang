@@ -30,13 +30,7 @@ class AdminsheetController extends Controller
         ];
     }
 	public function beforeAction($action){
-		//如果未登录，则直接返回
-		if(Yii::$app->session['login'] == 0){
-			echo "<script>alert('請先登入');location.href='/site/index'</script>";
-
-			return  false;
-		}
-		if(empty(Yii::$app->session['right']['admin_sheet'])){
+		if(empty(Yii::$app->session['right']['admin_sheet']) && empty(Yii::$app->request->get("id"))){
 			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
 
 			return  false;
@@ -71,10 +65,6 @@ class AdminsheetController extends Controller
     {
 		return $this->render('view', [
 			'model' => $this->findModel($id),
-		]);
-		$model = new AdminSheet();
-		return $this->render('/site/index', [
-			'model' => $model,
 		]);
     }
 
@@ -118,12 +108,13 @@ class AdminsheetController extends Controller
 		]);
     }
 
-        public function actionPupdate($id)
+	public function actionPupdate($id)
     {
 		$model = $this->findModel($id);
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			Yii::$app->session['login'] = 0;
-			return $this->render('/site/index', ['message'=>"修改個人資料成功，請重新登入"]);
+			$this->layout = 'logout';
+			return $this->render('/backend/index', ['message'=>"修改個人資料成功，請重新登入"]);
 		}
 		return $this->render('pupdate', [
 			'model' => $model,

@@ -28,23 +28,17 @@ class ToothcaseController extends Controller
     }
 
 	public function beforeAction($action){
-//		v_d(View());
-		//如果未登录，则直接返回
-		if(Yii::$app->session['login'] == 0){
-			echo "<script>alert('請先登入');location.href='/site/index'</script>";
-
-			return  false;
-		}
-		if(empty(Yii::$app->session['right']['today_case']) && $_GET['r'] == 'toothcase/todaycase'){
+		if(empty(Yii::$app->session['right']['today_case']) && empty(Yii::$app->request->get("id"))){
 			echo "<script>alert('沒有交件管理權限');history.go(-1);</script>";
 
 			return  false;
 		}
-		if(empty(Yii::$app->session['right']['toothcase']) && $_GET['r'] == 'toothcase/toothcase'){
+		if(empty(Yii::$app->session['right']['toothcase']) && !empty(Yii::$app->request->get("id"))){
 			echo "<script>alert('沒有病例管理權限');history.go(-1);</script>";
 
 			return  false;
 		}
+
 		return parent::beforeAction($action);
 	}
     /**
@@ -62,9 +56,6 @@ class ToothcaseController extends Controller
         ];
     }
 
-    public function actionPerson(){
-		return $this->render('person');
-    }
     public function actionTodaycase(){
 		$model = new Toothcase;
 		if(empty($_POST['time'])){

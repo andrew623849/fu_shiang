@@ -29,12 +29,6 @@ class LevelController extends Controller
         ];
     }
 	public function beforeAction($action){
-		//如果未登录，则直接返回
-		if(Yii::$app->session['login'] == 0){
-			echo "<script>alert('請先登入');location.href='/site/index'</script>";
-
-			return  false;
-		}
 		if(empty(Yii::$app->session['right']['level'])){
 			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
 
