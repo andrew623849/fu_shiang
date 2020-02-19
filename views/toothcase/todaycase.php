@@ -1,4 +1,6 @@
 <?php
+
+use app\models\Material;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ActiveForm;
@@ -8,6 +10,7 @@ use kartik\daterange\DateRangePicker;
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$material = Material::find('material')->indexBy('id')->asArray()->all();
 
 
 ?>
@@ -59,7 +62,7 @@ for($i = 0;$i < count($model);$i ++){
             ['label'=>'收件日','value'=>$models->start_time],
             ['label'=>'交件日','value'=>$models->end_time],
             ['label'=>'病人姓名','value'=>$models->name],
-            ['label'=>'材料1','value'=>$material_info[($models->material_id)]['material']],
+            ['label'=>'材料1','value'=>$material[($models->material_id)]['material']],
             ['label'=>'齒位','value'=>$models->tooth],
             ['label'=>'齒色','value'=>$models->tooth_color],
             ['label'=>'備註','value'=>$models->remark],
@@ -76,10 +79,10 @@ for($i = 0;$i < count($model);$i ++){
             ['label'=>'收件日','value'=>$models->start_time],
             ['label'=>'交件日','value'=>$models->end_time],
             ['label'=>'病人姓名','value'=>$models->name],
-            ['label'=>'材料1','value'=>$material_info[($models->material_id)]['material']],
+            ['label'=>'材料1','value'=>$material[($models->material_id)]['material']],
             ['label'=>'齒位','value'=>$models->tooth],
             ['label'=>'齒色','value'=>$models->tooth_color],
-            ['label'=>'材料2','value'=>$material_info[($models->material_id_1)==0?0:($models->material_id_1)]['material']],
+            ['label'=>'材料2','value'=>($models->material_id_1)==0?'':$material[($models->material_id_1)]['material']],
             ['label'=>'齒位','value'=>$models->tooth_1],
             ['label'=>'齒色','value'=>$models->tooth_color_1],
             ['label'=>'備註','value'=>$models->remark],
@@ -96,13 +99,13 @@ for($i = 0;$i < count($model);$i ++){
             ['label'=>'收件日','value'=>$models->start_time],
             ['label'=>'交件日','value'=>$models->end_time],
             ['label'=>'病人姓名','value'=>$models->name],
-            ['label'=>'材料1','value'=>$material_info[($models->material_id)]['material']],
+            ['label'=>'材料1','value'=>$material[($models->material_id)]['material']],
             ['label'=>'齒位','value'=>$models->tooth],
             ['label'=>'齒色','value'=>$models->tooth_color],
-            ['label'=>'材料2','value'=>$material_info[($models->material_id_1)==0?0:($models->material_id_1)]['material']],
+            ['label'=>'材料2','value'=>($models->material_id_1)==0?'':$material[($models->material_id_1)]['material']],
             ['label'=>'齒位','value'=>$models->tooth_1],
             ['label'=>'齒色','value'=>$models->tooth_color_1],
-            ['label'=>'材料3','value'=>$material_info[($models->material_id_2)==0?0:($models->material_id_2)]['material']],
+            ['label'=>'材料3','value'=>($models->material_id_2)==0?'':$material[($models->material_id_2)]['material']],
             ['label'=>'齒位','value'=>$models->tooth_2],
             ['label'=>'齒色','value'=>$models->tooth_color_2],
             ['label'=>'備註','value'=>$models->remark],

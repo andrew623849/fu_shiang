@@ -24,7 +24,10 @@
         "unclead/yii2-multiple-input": "~2.0",
         "kartik-v/yii2-date-range": "*",
         "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kriss/yii2-swiper-widget": "^1.0"
+        "kriss/yii2-swiper-widget": "^1.0",
+        "2amigos/yii2-ckeditor-widget" : "~2.1",
+        "wbraganca/yii2-fancytree-widget": "*",
+        "kartik-v/yii2-tabs-x": "dev-master"
 
     },
     "require-dev": {

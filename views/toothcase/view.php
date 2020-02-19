@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\models\clinicSearch;
-use app\models\MaterialSearch;
+use app\models\Material;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
@@ -12,7 +12,7 @@ $this->title = $clinic[$model['clinic_id']-1]['clinic'].':病人資料';
 $this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']-1]['clinic'].'病例', 'url' => ['toothcase/toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
 \yii\web\YiiAsset::register($this);
-$material = MaterialSearch::ShowData('all',[],'material');
+$material = Material::find('material')->indexBy('id')->asArray()->all();
 ?>
 <div class="toothcase-view">
 
@@ -39,13 +39,13 @@ $material = MaterialSearch::ShowData('all',[],'material');
             ['label'=>'收件日','value'=>$model->start_time],
             ['label'=>'試戴日','value'=>$model->try_time],
             ['label'=>'病人姓名','value'=>$model->name],
-            ['label'=>'材料1','value'=>$material[$model->material_id]],
+            ['label'=>'材料1','value'=>$material[$model->material_id]['material']],
             ['label'=>'齒位','value'=>$model->tooth],
             ['label'=>'齒色','value'=>$model->tooth_color],
-            ['label'=>'材料2','value'=>!empty($model->material_id_1)?$material[$model->material_id_1]:'無'],
+            ['label'=>'材料2','value'=>!empty($model->material_id_1)?$material[$model->material_id_1]['material']:'無'],
             ['label'=>'齒位','value'=>$model->tooth_1],
             ['label'=>'齒色','value'=>$model->tooth_color_1],
-            ['label'=>'材料3','value'=>!empty($model->material_id_2)?$material[$model->material_id_2]:'無'],
+            ['label'=>'材料3','value'=>!empty($model->material_id_2)?$material[$model->material_id_2]['material']:'無'],
             ['label'=>'齒位','value'=>$model->tooth_2],
             ['label'=>'齒色','value'=>$model->tooth_color_2],
             ['label'=>'備註','value'=>$model->remark],

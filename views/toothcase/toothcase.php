@@ -16,6 +16,9 @@ $request = Yii::$app->request;
 $clinic=ArrayHelper::map($clinic_info,'id','clinic');
 $this->title = $clinic[$clinic_id].'病例';
 $this->params['breadcrumbs'][] = $this->title;
+global $material_name;
+$material_name = Material::find('material')->indexBy('id')->asArray()->all();
+
 ?>
 <div class="toothcase-index  col-md-12">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -60,14 +63,14 @@ $this->params['breadcrumbs'][] = $this->title;
 				'contentOptions' => ['style' => 'min-width:100px;'],
 
 				'value'=>function($data){
-                    return $data->checkout == 1 ? $data->name.'(已結款)' : $data->name;
+                    return $data->checkout == 1 ? $data->name.'<span color="red">(已結款)</span>' : $data->name;
                 }
             ],
             [
             'attribute'=>'Material',
             'format' => 'raw',
             'value'=>function($data){
-                $material_name = Material::find()->asArray()->all();
+    			global $material_name;
                 return $material_name[$data->material_id]["material"].'('.$data->tooth.')<br>'.($data->material_id_1 == 0?'':$material_name[$data->material_id_1]["material"].'('.$data->tooth_1.')<br>').($data->material_id_2 == 0?'':$material_name[$data->material_id_2]["material"].'('.$data->tooth_2.')');
             },
 			'filter' =>ArrayHelper::map(Material::find()->Asarray()->all(),'id','material'),

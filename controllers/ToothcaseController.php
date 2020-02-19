@@ -69,12 +69,10 @@ class ToothcaseController extends Controller
 		}
 		$model = $model->find()->where(["and",[">=","end_time",$start_time],["<=","end_time",$end_time]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
 		$clinic = show_clinic('all');
-		$material = show_material('all');
 		return $this->render('todaycase', [
 			'model' => $model,
 			'clinic_info'=>$clinic['1'],
 			'time'=>$time,
-			'material_info' =>$material['1'],
 		]);
     }
 
@@ -185,7 +183,7 @@ class ToothcaseController extends Controller
      */
     public function actionUpdate($id){
 		$model = $this->findModel($id);
-		$clinic = show_clinic($id);
+		$clinic = show_clinic($model['clinic_id']);
 		$clinic_info = show_clinic('all');
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
@@ -194,7 +192,7 @@ class ToothcaseController extends Controller
 
 		return $this->render('update', [
 			'model' => $model,
-			'clinic_model' => $clinic['1'],
+			'clinic_model' => $clinic,
 			'clinic_info'=>$clinic_info['1'],
 		]);
     }
