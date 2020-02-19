@@ -30,6 +30,9 @@ class AdminsheetController extends Controller
         ];
     }
 	public function beforeAction($action){
+		if(Yii::$app->session['login'] == 0){
+			echo "<script>alert('請先登入');location.href=''";
+		}
 		if(empty(Yii::$app->session['right']['admin_sheet']) && empty(Yii::$app->request->get("id"))){
 			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
 
