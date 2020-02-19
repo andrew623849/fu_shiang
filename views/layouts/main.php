@@ -34,7 +34,7 @@ $nav_arr = [
 		'frontend' => ['label'=>'前台編輯','url'=> ['/frontend/edit']],
 	]
 ];
-$user_job = !empty(Yii::$app->session['user'][2])?Yii::$app->session['user'][2]:0;
+$user_job = Yii::$app->session['user'][2];
 $user_level = Level::find()->where(['=','id',$user_job])->asArray()->one();
 
 $nav_need = [];

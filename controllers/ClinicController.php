@@ -30,7 +30,9 @@ class ClinicController extends Controller
     }
 	public function beforeAction($action){
 		if(Yii::$app->session['login'] == 0){
-			echo "<script>alert('請先登入');location.href=''";
+			echo "<script>alert('請先登入');location.href='/backend/index'</script>";
+			return  false;
+
 		}
 		if(empty(Yii::$app->session['right']['clinic'])){
 			echo "<script>alert('沒有診所管理權限');history.go(-1);</script>";
