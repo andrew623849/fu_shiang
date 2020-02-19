@@ -20,7 +20,7 @@ foreach($clinic[1] as $val){
 	$clinic_items .= "<li><a href='/toothcase/toothcase/".$val['id']."'>".$val['clinic']."</a></li>";
 }
 
-$job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level']];
+$job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level','frontend']];
 $nav_arr = [
 	'today_case' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
 	'toothcase' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
@@ -31,9 +31,10 @@ $nav_arr = [
 		'material' => ['label'=>'材料','url'=> ['/material/index']],
 		'clinic' => ['label'=>'診所','url'=> ['/clinic/index']],
 		'level' => ['label'=>'職權','url'=> ['/level/index']],
+		'frontend' => ['label'=>'前台編輯','url'=> ['/frontend/edit']],
 	]
 ];
-$user_job = Yii::$app->session['user'][2];
+$user_job = !empty(Yii::$app->session['user'][2])?Yii::$app->session['user'][2]:0;
 $user_level = Level::find()->where(['=','id',$user_job])->asArray()->one();
 
 $nav_need = [];
