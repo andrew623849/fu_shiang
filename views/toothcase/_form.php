@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Material;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -9,7 +10,9 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
-$material_data = \app\models\MaterialSearch::ShowData('all',['useable'=>0,'deleted'=>0]);
+$material_data = Material::find()->indexBy('id')->asArray()->all();
+$material_data[0] = ['material'=>'請選擇'];
+ksort($material_data);
 ?>
 
 <div class="toothcase-form">
