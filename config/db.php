@@ -6,9 +6,9 @@
 			$sql_ID = mysqli_query($link, "select * from user_list where user_admin='$dbname'");
 			$sql_data = $sql_ID->fetch_assoc();
 			if(empty($sql_data)){
-			header("location: http://cowbtool.com");
-			exit;
-				$sql_data['code'] = 'main';
+				header("location: http://cowbtool.com");
+				exit;
+					$sql_data['code'] = 'main';
 
 			}
 			mysqli_close($link);

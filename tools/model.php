@@ -136,12 +136,12 @@ function report_num($models,$clinic,$material,$year){
 		$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
 		$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
 		$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
-		$material_name[($v['material_id']+1)][$k] = $material_name[($v['material_id']+1)][$k] + $tooth;
+		$material_name[$v['material_id']][$k] = $material_name[$v['material_id']][$k] + $tooth;
 		if($tooth1 != 0){
-			$material_name[($v['material_id_1']+1)][$k] = $material_name[($v['material_id_1']+1)][$k] + $tooth1;
+			$material_name[$v['material_id_1']][$k] = $material_name[$v['material_id_1']][$k] + $tooth1;
 		}
 		if($tooth2 != 0){
-			$material_name[($v['material_id_2']+1)][$k] = $material_name[($v['material_id_2']+1)][$k] + $tooth2;
+			$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
 		}
 	}
 	return [$material_name,$price];
