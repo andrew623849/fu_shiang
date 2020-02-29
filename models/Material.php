@@ -11,6 +11,7 @@ use Yii;
  * @property int $sort 材料的排序
  * @property string $material 材料的名稱
  * @property int $price 材料的價錢
+ * @property string $make_process 材料的製作流程
  * @property string $build_time 建立時間
  * @property int $deleted 修改資料後 要隱藏起來(永不顯示) 0:未隱藏 1:隱藏
  * @property int $useable 將材料放入停用區 0:使用 1:暫不使用
@@ -38,6 +39,7 @@ class Material extends \yii\db\ActiveRecord
             [['id', 'sort', 'price', 'deleted', 'useable'], 'integer'],
             [['build_time', 'modify_time'], 'safe'],
             [['material'], 'string', 'max' => 50],
+            [['make_process'], 'string', 'max' => 500],
             [['id'], 'unique'],
         ];
     }
@@ -56,6 +58,7 @@ class Material extends \yii\db\ActiveRecord
             'deleted' => 'Deleted',
             'useable' => 'Useable',
             'modify_time' => 'Modify Time',
+            'make_process' => '製作流程',
         ];
     }
 

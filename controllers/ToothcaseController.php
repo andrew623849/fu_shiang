@@ -72,7 +72,7 @@ class ToothcaseController extends Controller
 			$end_time = explode('~',$_POST['time'])[1];
 			$time = $_POST['time'];
 		}
-		$model = $model->find()->where(["and",[">=","end_time",$start_time],["<=","end_time",$end_time]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
+		$model = $model->find()->where(["or",["and",[">=","end_time",$start_time],["<=","end_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
 		$clinic = show_clinic('all');
 		return $this->render('todaycase', [
 			'model' => $model,
