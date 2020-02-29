@@ -27,7 +27,8 @@
         "kriss/yii2-swiper-widget": "^1.0",
         "2amigos/yii2-ckeditor-widget" : "~2.1",
         "wbraganca/yii2-fancytree-widget": "*",
-        "kartik-v/yii2-tabs-x": "dev-master"
+        "kartik-v/yii2-tabs-x": "dev-master",
+        "mludvik/yii2-tags-input": "~1.0"
 
     },
     "require-dev": {
