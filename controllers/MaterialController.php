@@ -100,11 +100,10 @@ class MaterialController extends Controller
     public function actionUpdate($id)
     {
         $model_1 = $this->findModel($id);
-		MaterialSearch::UpdateById(['deleted'=>'1'],$id);
-
 		$model = new Material();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+			MaterialSearch::UpdateById(['deleted'=>'1'],$id);
+			return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

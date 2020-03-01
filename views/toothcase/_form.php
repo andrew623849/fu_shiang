@@ -10,7 +10,8 @@ use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
-$material_data = Material::find()->indexBy('id')->asArray()->all();
+$material_data = Material::find()->where(['=','deleted','0'])->indexBy('id')->asArray()->all();
+//v_d($material_data);
 $material_data[0] = ['material'=>'請選擇'];
 ksort($material_data);
 ?>
