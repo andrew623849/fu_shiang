@@ -1,4 +1,6 @@
 <?php
+
+use app\models\Material;
 use yii\helpers\Html;
 use Mpdf\Mpdf;
 use kartik\mpdf\Pdf;
@@ -9,7 +11,7 @@ foreach($model as $key=>$val){
     
     $price = $val['price'] + $price;
 }
-$material = \app\models\MaterialSearch::ShowData('all','');
+$material = Material::find()->indexBy('id')->asArray()->all();
 
 ?>
 

@@ -119,6 +119,7 @@ class ToothcaseController extends Controller
 			'marginTop' =>20,
 			// your html content input
 			'content' => $content,
+			'filename'=> $clinic['clinic'].'_'.date('Y.m',strtotime($_POST['end_date'])).'.pdf',
 			// format content from your own css file if needed or use the
 			// enhanced bootstrap css built by Krajee for mPDF formatting
 			'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
