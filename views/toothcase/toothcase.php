@@ -33,7 +33,7 @@ $material_name = Material::find('material')->indexBy('id')->asArray()->all();
             <div  style="margin-left: -15px;display:none" >
                 <input id='pdf_case' name='keys'>
                <input name='clinic_id' value="<?= $clinic_id?>">
-               <input type = "date" name = "end_date" value = <?= date('Y-m-d') ?>>
+               <input type = "date" name = "end_date" value = <?= date('Y-m-d',strtotime('-7 days')) ?>>
             </div>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
