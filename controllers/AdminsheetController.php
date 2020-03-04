@@ -136,7 +136,7 @@ class AdminsheetController extends Controller
     public function actionLeave($id)
     {
 		$model = $this->findModel($id);
-		AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['0']],['id'=>$model->id]);
+		AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['id']],['id'=>$model->id]);
 		return $this->redirect(['index']);
     }
 

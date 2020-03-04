@@ -11,7 +11,9 @@ class BackendController extends Controller
 {   /**
      * {@inheritdoc}
      */
-
+	private $clientId = 'pdIDlXwhecWpEIsHSwJHKw';
+	private $clientSecret = 'EVBItEZPDw525sSop0zFPqVJCMo9xR7NU84x0P6JBkk';
+	private $callback = 'http://fushiang.cowbtest.com/backend/person';
     public function behaviors()
     {
         return [
@@ -52,13 +54,33 @@ class BackendController extends Controller
 
         return $this->render('index');
     }
+	public function actionSend(){
+    	$token = 'Rxmm0mvZjNbi8ofVM06uZZNcmaLeWkxABCXvN9JyD2M';
+    	$data['message'] = '我愛你';
+		$this->snedNotify($token,$data);
+	}
+	public function actionJoinLine(){
+		$url = "https://notify-bot.line.me/oauth/authorize";
+		$data = [
+			"response_type" => "code",
+			"client_id" => $this->clientId,
+			"redirect_uri" => $this->callback,
+			"scope" => "notify",
+			"state" => "csrf_token",
+			"response_mode"=>"form_post"
+
+		];
+		$url = $url . "?" . http_build_query($data);
+		return $this->redirect($url);
+	}
 	public function actionPerson(){
 		if(Yii::$app->session['login']){
 			if(!empty($_POST['code']) && $_POST['state'] == 'csrf_token'){
 				$response = $this->token($_POST['code']);
 				if(!empty($response)){
 					$this->snedNotify($response, ['message'=>'歡迎加入']);
-					AdminSheet::updateAll(['line_token' => $response], ['id' => $_SESSION['user']['0']]);
+					$_SESSION['user']['line_token'] = $response;
+					AdminSheet::updateAll(['line_token' => $response], ['id' => $_SESSION['user']['id']]);
 				}
 			}
 			return $this->render('person');
@@ -66,14 +88,14 @@ class BackendController extends Controller
 		$message =  "";
 		if(isset($_POST["admin"]) && isset($_POST["password"])){
 			$model = new AdminSheet();
-			$model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]],["password"=>$_POST["password"]]])->one();
+			$model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]],["password"=>$_POST["password"]]])->asArray()->one();
 			if($model != null){
 				if($model['deleted'] == 1){
 					$message =  '登入失敗!!<br>您已於'.$model['deleted_time'].'離職';
 				}else{
 					Yii::$app->session['login'] = 1;
 					if(Yii::$app->session['login']){
-						Yii::$app->session['user'] = [$model['id'],$model['build_time'],$model['job'],$model['user_name'],$model['user_phone'],$model['user_email'],$model['user_pay'],$model['user_f_na'],$model['user_f_ph'],$model['user_f_rel'],$model['user_exp'],$model['user_grade'],$model['remark']];
+						Yii::$app->session['user'] = $model;
 						$this->layout = 'main';
 						return $this->render('person');
 					}
@@ -95,9 +117,9 @@ class BackendController extends Controller
 		$data = [
 			"grant_type" => "authorization_code",
 			"code" => $code,
-			"redirect_uri" => 'http://fushiang.cowbtool.com/backend/person',
-			"client_id" => 'pdIDlXwhecWpEIsHSwJHKw',
-			"client_secret" => 'EVBItEZPDw525sSop0zFPqVJCMo9xR7NU84x0P6JBkk',
+			"redirect_uri" => $this->callback,
+			"client_id" => $this->clientId,
+			"client_secret" => $this->clientSecret,
 		];
 		$header = [
 			"Content-Type: application/x-www-form-urlencoded"

@@ -34,7 +34,7 @@ $nav_arr = [
 		'frontend' => ['label'=>'前台編輯','url'=> ['/frontend/edit']],
 	]
 ];
-$user_job = Yii::$app->session['user'][2];
+$user_job = Yii::$app->session['user']['job'];
 $user_level = Level::find()->where(['=','id',$user_job])->asArray()->one();
 
 $nav_need = [];
@@ -112,7 +112,7 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/backend/index']];
     <div class="container">
         <p class="pull-left"></p>
 
-        <p class="pull-right"> 登入者: <?= Yii::$app->session['user']['3'].'&nbsp'.level_name(Yii::$app->session['user']['2']) ?></p>
+        <p class="pull-right"> 登入者: <?= Yii::$app->session['user']['user_name'].'&nbsp'.level_name(Yii::$app->session['user']['job']) ?></p>
     </div>
 </footer>
 

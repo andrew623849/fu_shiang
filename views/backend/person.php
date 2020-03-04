@@ -6,44 +6,35 @@ use yii\widgets\DetailView;
 /* @var $searchModel app\models\toothcaseSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $user_arr = Yii::$app->session['user'];
-$this->title = $user_arr[3];
 
+$this->title = $user_arr['user_name'];
 ?>
 <div>
     <h1><?= Html::encode($this->title) ?>
-		<?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr[0]], ['class' => 'btn btn-success']) ?>
-		<?= Html::button('LINE連動',['class' => 'btn btn-success line_auth']) ?>
+		<?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr['id']], ['class' => 'btn btn-primary']) ?>
+
+<?php if(empty($user_arr['line_token'])){
+			echo Html::a('LINE連動', ['backend/join-line'], ['class' => 'btn btn-success']);
+		}else{
+//			echo Html::a('LINE解除', ['backend/leave-line'],['class' => 'btn btn-danger']);
+		}
+ ?>
 	</h1>
     <?= DetailView::widget([
         'model'=>$user_arr,
         'attributes' => [
-            ['label'=>'員工編號','value'=>$user_arr[0]],
-            ['label'=>'職稱','value'=>level_name($user_arr[2])],
-            ['label'=>'聯絡方式','value'=>$user_arr[4]],
-            ['label'=>'緊急聯絡人','value'=>!empty($user_arr[8])?$user_arr[7].'(TEL:'.$user_arr[8].') 關係:'.$user_arr[9]:$user_arr[7].' 關係:'.$user_arr[9]],
-            ['label'=>'信箱','value'=>$user_arr[5]],
-            ['label'=>'學歷','value'=>$user_arr[11]],
-            ['label'=>'經歷','value'=>$user_arr[10]],
-            ['label'=>'薪資','value'=>$user_arr[6]],
-            ['label'=>'到班日','value'=>$user_arr[1]],
-            ['label'=>'備註','value'=>$user_arr[12]]
+            ['label'=>'員工編號','value'=>$user_arr['id']],
+            ['label'=>'職稱','value'=>level_name($user_arr['job'])],
+            ['label'=>'聯絡方式','value'=>$user_arr['user_phone']],
+            ['label'=>'緊急聯絡人','value'=>!empty($user_arr['user_f_ph'])?$user_arr['user_f_na'].'(TEL:'.$user_arr['user_f_ph'].') 關係:'.$user_arr['user_f_rel']:$user_arr['user_f_na'].' 關係:'.$user_arr['user_f_rel']],
+            ['label'=>'信箱','value'=>$user_arr['user_email']],
+            ['label'=>'學歷','value'=>$user_arr['user_grade']],
+            ['label'=>'經歷','value'=>$user_arr['user_exp']],
+            ['label'=>'薪資','value'=>$user_arr['user_pay']],
+            ['label'=>'到職日','value'=>$user_arr['build_time']],
+            ['label'=>'備註','value'=>$user_arr['remark']]
         ]
     ]) ?>
 </div>
-<?php
-$js=<<<js
-	$('.line_auth').on('click',function() {
-	  var URL = 'https://notify-bot.line.me/oauth/authorize?';
-            URL += 'response_type=code';
-            URL += '&client_id=	pdIDlXwhecWpEIsHSwJHKw';
-            URL += '&client_secret=	EVBItEZPDw525sSop0zFPqVJCMo9xR7NU84x0P6JBkk';
-            URL += '&redirect_uri=http://fushiang.cowbtool.com/backend/person';
-            URL += '&scope=notify';
-            URL += '&state=csrf_token';
-            URL += '&response_mode=form_post';
 
-            window.location.href = URL;
-	});
-js;
-$this->registerJs($js);
 
