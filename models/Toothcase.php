@@ -16,17 +16,21 @@ use Yii;
  * @property int $material_id 材料
  * @property string $tooth 齒位
  * @property string $tooth_color 齒色
- * @property int $price
  * @property int $other_price
+ * @property string $make_p
  * @property int $material_id_1
  * @property string $tooth_1
  * @property string $tooth_color_1
  * @property int $other_price_1
+ * @property string $make_p1
  * @property int $material_id_2
  * @property string $tooth_2
  * @property string $tooth_color_2
  * @property int $other_price_2
+ * @property string $make_p2
+ * @property int $price
  * @property int $checkout 已結帳:1未結帳:0
+ * @property string $checkout_date
  * @property string $remark 備註
  *
  * @property Clinic $clinic
@@ -48,12 +52,11 @@ class Toothcase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'price', 'other_price'], 'required'],
-            [['start_time', 'end_time', 'try_time'], 'safe'],
-            [['clinic_id', 'material_id', 'price', 'other_price', 'material_id_1', 'other_price_1', 'material_id_2', 'other_price_2', 'checkout'], 'integer'],
+            [['start_time', 'end_time', 'clinic_id', 'name', 'material_id', 'tooth', 'other_price', 'price'], 'required'],
+            [['start_time', 'end_time', 'try_time', 'checkout_date'], 'safe'],
+            [['clinic_id', 'material_id', 'other_price', 'material_id_1', 'other_price_1', 'material_id_2', 'other_price_2', 'price', 'checkout'], 'integer'],
             [['name'], 'string', 'max' => 20],
-            [['tooth', 'tooth_color'], 'string', 'max' => 50],
-            [['tooth_1', 'tooth_color_1', 'tooth_2', 'tooth_color_2'], 'string', 'max' => 100],
+            [['tooth', 'tooth_color', 'make_p', 'tooth_1', 'tooth_color_1', 'make_p1', 'tooth_2', 'tooth_color_2', 'make_p2'], 'string', 'max' => 100],
             [['remark'], 'string', 'max' => 500],
             [['clinic_id'], 'exist', 'skipOnError' => true, 'targetClass' => Clinic::className(), 'targetAttribute' => ['clinic_id' => 'id']],
             [['material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::className(), 'targetAttribute' => ['material_id' => 'id']],
@@ -80,13 +83,16 @@ class Toothcase extends \yii\db\ActiveRecord
             'remark' => '備註',
             'material_id_1' => '材料2',
             'tooth_1' => '齒位2',
+            'make_p' => 'Make P',
             'tooth_color_1' => 'Tooth Color 1',
             'other_price_1' => 'Other Price 1',
             'material_id_2' => '材料3',
             'tooth_2' => '材料3',
+            'make_p1' => 'Make P1',
             'tooth_color_2' => 'Tooth Color 2',
             'other_price_2' => 'Other Price 2',
             'checkout' => 'Checkout',
+            'make_p2' => 'Make P2',
         ];
     }
 

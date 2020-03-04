@@ -1,5 +1,6 @@
 <?php
 
+use app\models\AdminSheet;
 use app\models\Material;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -11,6 +12,7 @@ use kartik\daterange\DateRangePicker;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $material = Material::find('material')->indexBy('id')->asArray()->all();
+$admin_sheet = AdminSheet::find('user_name')->indexBy('id')->asArray()->all();
 ?>
 <style type="text/css">
     th{
@@ -63,8 +65,9 @@ for($i = 0;$i < count($model);$i ++){
     	$make_p = explode(',', $material[$models['material_id']]['make_process']);
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-    	foreach($make_p as $val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>''];
+		$marker_per = explode(',',$models['make_p']);
+		foreach($make_p as $key=>$val){
+			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -80,8 +83,9 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p = explode(',', $material[$models['material_id_1']]['make_process']);
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-		foreach($make_p as $val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>''];
+		$marker_per = explode(',',$models['make_p1']);
+		foreach($make_p as $key=>$val){
+			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -97,8 +101,9 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p = explode(',', $material[$models['material_id_2']]['make_process']);
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-		foreach($make_p as $val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>''];
+		$marker_per = explode(',',$models['make_p2']);
+		foreach($make_p as $key=>$val){
+			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
