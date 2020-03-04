@@ -7,9 +7,13 @@ use yii\widgets\DetailView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $user_arr = Yii::$app->session['user'];
 $this->title = $user_arr[3];
+
 ?>
 <div>
-    <h1><?= Html::encode($this->title) ?>  <?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr[0]], ['class' => 'btn btn-success']) ?></h1>
+    <h1><?= Html::encode($this->title) ?>
+		<?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr[0]], ['class' => 'btn btn-success']) ?>
+		<?= Html::button('LINE連動',['class' => 'btn btn-success line_auth']) ?>
+	</h1>
     <?= DetailView::widget([
         'model'=>$user_arr,
         'attributes' => [
@@ -26,5 +30,20 @@ $this->title = $user_arr[3];
         ]
     ]) ?>
 </div>
+<?php
+$js=<<<js
+	$('.line_auth').on('click',function() {
+	  var URL = 'https://notify-bot.line.me/oauth/authorize?';
+            URL += 'response_type=code';
+            URL += '&client_id=	pdIDlXwhecWpEIsHSwJHKw';
+            URL += '&client_secret=	EVBItEZPDw525sSop0zFPqVJCMo9xR7NU84x0P6JBkk';
+            URL += '&redirect_uri=http://fushiang.cowbtool.com/backend/person';
+            URL += '&scope=notify';
+            URL += '&state=csrf_token';
+            URL += '&response_mode=form_post';
 
+            window.location.href = URL;
+	});
+js;
+$this->registerJs($js);
 

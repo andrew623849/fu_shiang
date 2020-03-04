@@ -16,6 +16,7 @@ use Yii;
  * @property string $user_br
  * @property int $user_sale
  * @property string $user_phone
+ * @property string $line_token
  * @property string $user_email
  * @property string $user_line
  * @property int $user_pay
@@ -28,8 +29,6 @@ use Yii;
  * @property int $deleted
  * @property string $deleted_time
  * @property int $deleted_id
- *
- * @property Level $job0
  */
 class AdminSheet extends \yii\db\ActiveRecord
 {
@@ -50,9 +49,9 @@ class AdminSheet extends \yii\db\ActiveRecord
             [['admin', 'password', 'build_time', 'job', 'user_name', 'user_br', 'user_sale', 'user_phone', 'user_email', 'user_pay'], 'required'],
             [['build_time', 'user_br', 'deleted_time'], 'safe'],
             [['job', 'user_sale', 'user_pay', 'deleted', 'deleted_id'], 'integer'],
-            [['admin', 'password', 'user_name', 'user_phone', 'user_email'], 'string', 'max' => 64],
+            [['admin', 'password', 'user_name', 'user_phone',  'user_email'], 'string', 'max' => 64],
+            [['line_token'], 'string', 'max' => 500],
             [['user_line', 'user_f_na', 'user_f_ph', 'user_f_rel', 'user_exp', 'user_grade', 'remark'], 'string', 'max' => 100],
-            [['job'], 'exist', 'skipOnError' => true, 'targetClass' => Level::className(), 'targetAttribute' => ['job' => 'id']],
         ];
     }
 
@@ -81,6 +80,7 @@ class AdminSheet extends \yii\db\ActiveRecord
             'user_sale' => '性別',
             'user_line' => 'LINE ID',
             'user_f_rel' => '聯絡人關係',
+            'line_token' => 'Line Token',
         ];
     }
 
