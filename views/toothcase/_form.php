@@ -54,8 +54,25 @@ ksort($material_data);
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id')->label("*材料1")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color')->label("齒色")->textInput(['maxlength' => true]) ?>
 			<?= $form->field($model, 'other_price')->label("其他費用")->textInput(['value' => $model['other_price']??0]) ?>
-			<div id="material_id_makep"></div>
-
+			<div id="material_id_makep">
+				<?php
+					$html = '';
+					if(!empty($model['make_p'])){
+						$make_p1 = explode(',',$model['make_p']);
+						$material_id_makep = explode(',',$material_data[$model['material_id']]['make_process']);
+						foreach($make_p1 as $key=>$val){
+							$html .= '<div class="form-group col-sm-4">' .
+								'<label class="control-label">'.$material_id_makep[$key].'</label>' .
+								'<select class="form-control make_process">';
+							foreach($admin_data as $k=>$v){
+								$html .= '<option '.($val==$v['id']?'selected':'').' value="'. $v['id'] .'">' . $v['user_name'] .'</option>';
+							}
+							$html .= '</select></div>';
+						}
+					}
+					echo $html;
+				?>
+			</div>
 		</div>
 	</div>
     <div class="form-group col-sm-12 material_id_1" style="background-color:#E8E8E8;" <?php if($model['material_id_1'] == 0){echo 'hidden';$val= "'value'=>0";}else{$val='';}?>>
@@ -67,8 +84,25 @@ ksort($material_data);
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_1')->label("*材料2")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_1')->label("齒色")->textInput(['maxlength' => true]) ?>
 			<?= $form->field($model, 'other_price_1')->label("其他費用")->textInput(['value' =>  $model['other_price_1']??0]) ?>
-			<div id="material_id_1makep"></div>
-
+			<div id="material_id_1makep">
+				<?php
+					$html = '';
+					if(!empty($model['make_p1'])){
+						$make_p1 = explode(',',$model['make_p1']);
+						$material_id_1makep = explode(',',$material_data[$model['material_id_1']]['make_process']);
+						foreach($make_p1 as $key=>$val){
+							$html .= '<div class="form-group col-sm-4">' .
+								'<label class="control-label">'.$material_id_1makep[$key].'</label>' .
+								'<select class="form-control make_process_1">';
+							foreach($admin_data as $k=>$v){
+								$html .= '<option '.($val==$v['id']?'selected':'').' value="'. $v['id'] .'">' . $v['user_name'] .'</option>';
+							}
+							$html .= '</select></div>';
+						}
+					}
+					echo $html;
+				?>
+			</div>
 		</div>
     </div>
     <div class="form-group col-sm-12 material_id_2" style="background-color:#E8E8E8;" <?php if($model['material_id_2'] == 0){echo 'hidden';$val= "'value'=>0";}else{$val='';}?>>
@@ -80,7 +114,25 @@ ksort($material_data);
 		<div class="form-group col-sm-8"><?= $form->field($model,'material_id_2')->label("*材料3")->dropDownList(ArrayHelper::map($material_data,'id','material'),['style'=>'border:1px solid ;'])?>
 			<?= $form->field($model, 'tooth_color_2')->label("齒色")->textInput(['maxlength' => true]) ?>
 			<?= $form->field($model, 'other_price_2')->label("其他費用")->textInput(['value' => $model['other_price_2']??0]) ?>
-			<div id="material_id_2makep"></div>
+			<div id="material_id_2makep">
+				<?php
+					$html = '';
+					if(!empty($model['make_p2'])){
+						$make_p1 = explode(',',$model['make_p2']);
+						$material_id_2makep = explode(',',$material_data[$model['material_id_2']]['make_process']);
+						foreach($make_p1 as $key=>$val){
+							$html .= '<div class="form-group col-sm-4">' .
+								'<label class="control-label">'.$material_id_1makep[$key].'</label>' .
+								'<select class="form-control make_process_2">';
+							foreach($admin_data as $k=>$v){
+								$html .= '<option '.($val==$v['id']?'selected':'').' value="'. $v['id'] .'">' . $v['user_name'] .'</option>';
+							}
+							$html .= '</select></div>';
+						}
+					}
+					echo $html;
+				?>
+			</div>
 		</div>
     </div>
     <input class="col-sm-12 btn btn-primary" type="button" id="m_add_btn" value="新增材料+">
