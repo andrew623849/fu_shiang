@@ -67,7 +67,7 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
+			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -85,7 +85,7 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p1']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
+			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -103,7 +103,7 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p2']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>$admin_sheet[$marker_per[$key]]['user_name']];
+			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
