@@ -149,7 +149,7 @@ class BackendController extends Controller
 		if (!empty($data["imageFile"])) {
 			$data["imageFile"] = curl_file_create($data["imageFile"]);
 		}
-		$response = $this->curl($url, $type, $data, [], $header);
+		$response = BackendController::curl($url, $type, $data, [], $header);
 		$response = json_decode($response, true);
 		if ($response["status"] != "200") {
 			return false;

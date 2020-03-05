@@ -68,7 +68,7 @@ class AdminsheetSearch extends AdminSheet
             ->andFilterWhere(['like', 'user_email', $this->user_email]);
         return $dataProvider;
     }
-        public function search2($params)
+	public function search2($params)
     {
         $query = AdminSheet::find()->Where(['deleted'=>'1']);
         $query->joinWith(['level']);/*这里的articlecategory是article模型里面关联的方法名，除了首字母，其他都要完全一样，否则会报错*/
@@ -97,4 +97,9 @@ class AdminsheetSearch extends AdminSheet
             ->andFilterWhere(['like', 'user_email', $this->user_email]);
         return $dataProvider;
     }
+
+	public function GetUserData($id)
+	{
+		return AdminSheet::find()->where(['in',"id",$id])->indexBy("id")->asArray()->all();
+	}
 }
