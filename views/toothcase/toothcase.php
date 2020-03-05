@@ -137,9 +137,6 @@ function removeByValue(arr, val) {
 JS;
 $this->registerJs($js);?>
 <?php Pjax::end(); ?>
-    <p>
-        <?= Html::a('新增病例', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 	</div>
 </div>
 
