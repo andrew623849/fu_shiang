@@ -13,7 +13,7 @@ class BackendController extends Controller
      */
 	private $clientId = 'pdIDlXwhecWpEIsHSwJHKw';
 	private $clientSecret = 'EVBItEZPDw525sSop0zFPqVJCMo9xR7NU84x0P6JBkk';
-	private $callback = 'http://fushiang.cowbtest.com/backend/person';
+	private $callback = 'http://fushiang.cowbtool.com/backend/person';
     public function behaviors()
     {
         return [
