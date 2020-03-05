@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\AdminsheetSearch;
-use app\models\clinicSearch;
 use app\models\MaterialSearch;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -184,7 +183,7 @@ class ToothcaseController extends Controller
 					$make_p2 = explode(',',$model->make_p2)[0];
 				}
 			}
-			$user_data = AdminSheetSearch::GetUserData($user);
+			$user_data = AdminsheetSearch::GetUserData($user);
 			$material = MaterialSearch::ShowData('all','','material');
 			foreach($user_data as $key=>$val){
 				$data['msg'] = '';
