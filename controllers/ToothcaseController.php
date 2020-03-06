@@ -2,8 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\AdminSheetSearch;
-use app\models\MaterialSearch;
+use app\models\LineMsg;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -171,44 +170,7 @@ class ToothcaseController extends Controller
 		$model = new Toothcase();
 		$clinic = show_clinic('all');
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			$user = $model->make_p;
-			$make_p = explode(',',$model->make_p)[0];
-			$make_p1 = 0;
-			$make_p2 = 0;
-			if(!empty($model->make_p1)){
-				$user .= ','.$model->make_p1;
-				$make_p1 = explode(',',$model->make_p1)[0];
-				if(!empty($model->make_p2)){
-					$user .= ','.$model->make_p2;
-					$make_p2 = explode(',',$model->make_p2)[0];
-				}
-			}
-			$user_data = AdminSheetSearch::GetUserData($user);
-			$material = MaterialSearch::ShowData('all','','material');
-			foreach($user_data as $key=>$val){
-				$data['msg'] = '';
-				if($make_p == $key || $make_p1 == $key || $make_p2 == $key){
-					$data['message'] = "\r\n".$model['clinic']['clinic'].'診所 - 新增一組病例'."\r\n\r\n";
-					$data['message'] .= "病人姓名 : ".$model->name."\r\n";
-					$data['message'] .= "交件日 : ".$model->end_time."\r\n";
-					$data['message'] .= "材料1 : ".$material[$model->material_id]."\r\n";
-					$data['message'] .= "齒位 : ".$model->tooth."\r\n";
-					$data['message'] .= "齒色 : ".$model->tooth_color."\r\n";
-					if(!empty($model->material_id_1)){
-						$data['message'] .= "材料2 : ".$material[$model->material_id_1]."\r\n";
-						$data['message'] .= "齒位 : ".$model->tooth_1."\r\n";
-						$data['message'] .= "齒色 : ".$model->tooth_color_1."\r\n";
-					}
-					if(!empty($model->material_id_2)){
-						$data['message'] .= "材料3 : ".$material[$model->material_id_2]."\r\n";
-						$data['message'] .= "齒位 : ".$model->tooth_1."\r\n";
-						$data['message'] .= "齒色 : ".$model->tooth_color_2."\r\n";
-					}
-					$data['message'] .= "備註:".$model->remark."\r\n";
-				}
-				if(!empty($data['message']) && !empty($val['line_token']))
-					BackendController::snedNotify($val['line_token'],$data);
-			}
+			LineMsg::AddCase($model);
 			toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['id' => $model->id]);
 			return $this->redirect(['view', 'id' => $model->id]);
 		}

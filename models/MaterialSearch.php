@@ -89,6 +89,13 @@ class MaterialSearch extends Material
 		}
 		return $data;
 	}
-
+	public function GetMaterialData($id = '')
+	{
+		if(!empty($id)){
+			return Material::find()->where(['in',"id",$id])->indexBy("id")->asArray()->all();
+		}else{
+			return Material::find()->indexBy("id")->asArray()->all();
+		}
+	}
 
 }
