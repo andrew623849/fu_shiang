@@ -1,10 +1,10 @@
 <?php
-;
+
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\toothcaseSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+use kartik\tabs\TabsX;
+
+
 $user_arr = Yii::$app->session['user'];
 
 $this->title = $user_arr['user_name'];
@@ -17,6 +17,7 @@ $this->title = $user_arr['user_name'];
 			echo Html::a('LINE連動', ['backend/join-line'], ['class' => 'btn btn-success']);
 		}else{
 //			echo Html::a('LINE解除', ['backend/leave-line'],['class' => 'btn btn-danger']);
+//			echo Html::button('發送LINE', ['class' => 'btn btn-success','id'=>'send_line']);
 		}
  ?>
 	</h1>
@@ -36,5 +37,22 @@ $this->title = $user_arr['user_name'];
         ]
     ]) ?>
 </div>
+<?php
 
-
+// Above
+	$items = [
+		[
+			'label'=>'工作內容',
+			'active'=>true,
+			'content'=>Yii::$app->runAction('backend/weekinfo'),
+		],
+		[
+			'label'=>'訊息發送',
+			'content'=>''
+		],
+	];
+	echo TabsX::widget([
+		'items'=>$items,
+		'position'=>TabsX::POS_ABOVE,
+		'encodeLabels'=>false
+	]);

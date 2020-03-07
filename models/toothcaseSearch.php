@@ -62,4 +62,25 @@ class toothcaseSearch extends Toothcase
 
         return $dataProvider;
     }
+
+	/**
+	 * 找出登入者的工作內容
+	 *
+	 * @param array $params
+	 *
+	 * @return ActiveDataProvider
+	 */
+    function getWeekCase()
+	{
+		return Toothcase::find()->where(['>=','end_time',date('Y-m-d')])->asArray()->all();
+	}
+
+	function getData($id = '')
+	{
+		if(!empty($id)){
+			return Toothcase::find()->where(['in','id',$id])->asArray()->all();
+		}else{
+			return Toothcase::find()->asArray()->all();
+		}
+	}
 }

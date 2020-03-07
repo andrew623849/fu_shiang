@@ -53,13 +53,26 @@ class BackendController extends Controller
 
         return $this->render('index');
     }
+
 	public function actionLinesend(){
 		return $this->render('linesend');
 	}
+
+	public function actionWeekinfo(){
+    	$this->layout = false;
+		return $this->render('weekinfo');
+	}
+
+	public function actionFinishcase(){
+		$this->layout = false;
+		return $this->render('finishcase');
+	}
+
 	public function actionJoinLine(){
 		$url = LineNotify::authorization();
 		return $this->redirect($url);
 	}
+
 	public function actionPerson(){
 		if(Yii::$app->session['login']){
 			if(!empty($_POST['code']) && $_POST['state'] == 'csrf_token'){
