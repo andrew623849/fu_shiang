@@ -98,8 +98,12 @@ class AdminsheetSearch extends AdminSheet
         return $dataProvider;
     }
 
-	public function GetUserData($id)
+	public function GetUserData($id = '')
 	{
-		return AdminSheet::find()->where(['in',"id",$id])->indexBy("id")->asArray()->all();
+		if(!empty($id)){
+			return AdminSheet::find()->where(['in',"id",$id])->indexBy("id")->asArray()->all();
+		}else{
+			return AdminSheet::find()->indexBy("id")->asArray()->all();
+		}
 	}
 }

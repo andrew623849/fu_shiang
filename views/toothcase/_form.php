@@ -1,6 +1,6 @@
 <?php
 
-use app\models\AdminSheet;
+use app\models\AdminsheetSearch;
 use app\models\Material;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -12,7 +12,7 @@ use kartik\date\DatePicker;
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
 $material_data = Material::find()->where(['or',['and',['=','deleted','0'],['=','useable','0']],['in','id',$model['material_id'].','.$model['material_id_1'].','.$model['material_id_2']]])->indexBy('id')->asArray()->all();
-$admin_data = AdminSheet::find()->where(['=','deleted','0'])->indexBy('id')->asArray()->all();
+$admin_data = AdminsheetSearch::GetUserData();
 //v_d($material_data);
 $material_data[0] = ['material'=>'請選擇'];
 ksort($material_data);
@@ -222,6 +222,7 @@ $js .= 'var admin_data = '.json_encode($admin_data).';';
 $js .= <<< JS
 	$("#toothcase-material_id").change(function() {
 		make_process_data = make_process[$(this).val()]['make_process'].split(',');
+		maker_process_data = make_process[$(this).val()]['maker_process'].split(',');
 		html = '';
 		if(make_process_data != ''){
 			for(key in make_process_data){
@@ -229,7 +230,7 @@ $js .= <<< JS
 					'<label class="control-label">'+make_process_data[key]+'</label>' + 
 					'<select class="form-control make_process">';
 						for(akey in admin_data){
-							html += '<option value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
+							html += '<option '+ (maker_process_data[key] == admin_data[akey]['id']?'selected':'') +' value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
 						}
 				html += '</select></div>';
 						
@@ -239,6 +240,7 @@ $js .= <<< JS
 	});
 	$("#toothcase-material_id_1").change(function() {
 		make_process_data = make_process[$(this).val()]['make_process'].split(',');
+		maker_process_data = make_process[$(this).val()]['maker_process'].split(',');
 		html = '';
 		if(make_process_data != ''){
 			for(key in make_process_data){
@@ -246,7 +248,7 @@ $js .= <<< JS
 					'<label class="control-label">'+make_process_data[key]+'</label>' + 
 					'<select class="form-control make_process_1">';
 						for(akey in admin_data){
-							html += '<option value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
+							html += '<option '+ (maker_process_data[key] == admin_data[akey]['id']?'selected':'') +' value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
 						}
 				html += '</select></div>';
 						
@@ -256,6 +258,7 @@ $js .= <<< JS
 	});
 		$("#toothcase-material_id_2").change(function() {
 		make_process_data = make_process[$(this).val()]['make_process'].split(',');
+		maker_process_data = make_process[$(this).val()]['maker_process'].split(',');
 		html = '';
 		if(make_process_data != ''){
 			for(key in make_process_data){
@@ -263,7 +266,7 @@ $js .= <<< JS
 					'<label class="control-label">'+make_process_data[key]+'</label>' + 
 					'<select class="form-control make_process_2">';
 						for(akey in admin_data){
-							html += '<option value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
+							html += '<option '+ (maker_process_data[key] == admin_data[akey]['id']?'selected':'') +' value="'+ admin_data[akey]['id'] +'">' + admin_data[akey]['user_name'] +'</option>';
 						}
 				html += '</select></div>';
 						
