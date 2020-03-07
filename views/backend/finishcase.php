@@ -3,12 +3,14 @@
 	use app\models\toothcaseSearch;
 
 	$data = toothcaseSearch::getData($_POST['id'])[0];
+	$user_arr = Yii::$app->session['user'];
+
 	$make_p = explode(',',$data['make_p']);
 	$make_p1 = explode(',',$data['make_p1']);
 	$make_p2 = explode(',',$data['make_p2']);
 	$make_p_f = [];
 	foreach($make_p as $val){
-		if($val == $_SESSION['user']['id']){
+		if($val == $user_arr['id']){
 			$make_p_f[] = 1;
 		}else{
 			$make_p_f[] = 0;
@@ -16,7 +18,7 @@
 	}
 	$make_p1_f = [];
 	foreach($make_p1 as $val){
-		if($val == $_SESSION['user']['id']){
+		if($val == $user_arr['id']){
 			$make_p1_f[] = 1;
 		}else{
 			$make_p1_f[] = 0;
@@ -24,7 +26,7 @@
 	}
 	$make_p2_f = [];
 	foreach($make_p2 as $val){
-		if($val == $_SESSION['user']['id']){
+		if($val == $user_arr['id']){
 			$make_p2_f[] = 1;
 		}else{
 			$make_p2_f[] = 0;
