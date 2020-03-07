@@ -1,6 +1,6 @@
 <?php
 
-use app\models\AdminsheetSearch;
+use app\models\AdminSheetSearch;
 use app\models\Material;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -12,7 +12,7 @@ use kartik\date\DatePicker;
 /* @var $model app\models\toothcase */
 /* @var $form yii\widgets\ActiveForm */
 $material_data = Material::find()->where(['or',['and',['=','deleted','0'],['=','useable','0']],['in','id',$model['material_id'].','.$model['material_id_1'].','.$model['material_id_2']]])->indexBy('id')->asArray()->all();
-$admin_data = AdminsheetSearch::GetUserData();
+$admin_data = AdminSheetSearch::GetUserData();
 //v_d($material_data);
 $material_data[0] = ['material'=>'請選擇'];
 ksort($material_data);
