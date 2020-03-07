@@ -141,6 +141,9 @@ ksort($material_data);
     <?= $form->field($model, 'make_p')->label("")->hiddenInput()?>
    	<?= $form->field($model, 'make_p1')->label("")->hiddenInput()?>
     <?= $form->field($model, 'make_p2')->label("")->hiddenInput()?>
+    <?= $form->field($model, 'make_p_f')->label("")->hiddenInput()?>
+    <?= $form->field($model, 'make_p1_f')->label("")->hiddenInput()?>
+    <?= $form->field($model, 'make_p2_f')->label("")->hiddenInput()?>
 
 	<div class="form-group col-sm-4"><?= Html::Button('提交', ['class' => 'btn btn-success submit']) ?></div>
     
@@ -168,20 +171,30 @@ $js =<<< JS
 	
 	$('.submit').on('click',function() {
 		var make_p = [];
+		var make_p_f = [];
 		$('.make_process').each(function() {
 			make_p.push($(this).val());
+			make_p_f.push(0);
 		})
 		$("input[name ='Toothcase[make_p]']").val(make_p.join(','));
+		$("input[name ='Toothcase[make_p_f]']").val(make_p_f.join(','));
 		var make_p = [];
+		var make_p_f = [];
 		$('.make_process_1').each(function() {
 			make_p.push($(this).val());
+			make_p_f.push(0);
+
 		})
 		$("input[name ='Toothcase[make_p1]']").val(make_p.join(','));
+		$("input[name ='Toothcase[make_p1_f]']").val(make_p_f.join(','));
 		var make_p = [];
+		var make_p_f = [];
 		$('.make_process_2').each(function() {
 			make_p.push($(this).val());
+			make_p_f.push(0);
 		})
 		$("input[name ='Toothcase[make_p2]']").val(make_p.join(','));
+		$("input[name ='Toothcase[make_p2_f]']").val(make_p_f.join(','));
 		$('#w0').submit();
 	});
 	
