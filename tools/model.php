@@ -1,7 +1,10 @@
 <?php
-use app\models\Material;
+
+	use app\models\clinicSearch;
+	use app\models\Material;
 use app\models\Clinic;
-use app\models\Toothcase;
+	use app\models\MaterialSearch;
+	use app\models\Toothcase;
 use app\models\Level;
 
 //資料表要取得材料名稱要用的
@@ -82,18 +85,20 @@ function today_to($date,$var){
 	return date("Y-m-d",$d);
 }
 //算年度材料數量與月收
-function report_num($models,$clinic,$material,$year){
+function report_num($models,$year){
 	$price = [];
 	$material_name = [];
 	$month = ['x', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
 	$material_name[0] = $month;
 	$price[0] = $month;
+	$clinic = clinicSearch::GetData();
+	$material = MaterialSearch::GetMaterialData();
 
 	foreach($clinic as $k=>$v){
-		$price[$k] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
+		$price[] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($material as $k=>$v){
-			$material_name[($k+1)] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
+		$material_name[] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($models as $k=>$v){
 		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="01"){

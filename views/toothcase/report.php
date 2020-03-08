@@ -1,12 +1,10 @@
 <?php
 
 use yii\helpers\Html;
-use app\models\MaterialSearch;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 use app\models\Outlay;
 use app\models\Toothcase;
-use app\models\clinicSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\toothcaseSearch */
@@ -16,9 +14,7 @@ $this->title = '報表';
 $this->params['breadcrumbs'][] = $this->title;
 $models = Toothcase::find()->where(['like','start_time',$year])->asArray()->all();
 $models_outlay = Outlay::find()->where(['like','buy_time',$year])->asArray()->all();
-$material = MaterialSearch::ShowData('all',[],'');
-$clinic = clinicSearch::GetData();
-$report_models = report_num($models,$clinic,$material,$year);
+$report_models = report_num($models,$year);
 $price_out = outlay($models_outlay);
 $report_models['1'][] = $price_out;
 
