@@ -12,6 +12,9 @@ class Tool
 		foreach($make_p as $mkey => $mval){
 			if($mval == $u_id){
 				$material_msg .= (!empty($material_msg)?'->':'').$material_id[$mkey];
+			}else{
+				if(!empty($material_msg))
+					break;
 			}
 		}
 		return $material_msg;

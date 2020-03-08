@@ -68,18 +68,12 @@ class clinicSearch extends Clinic
 
         return $dataProvider;
     }
-	public function ShowData($var,$where,$table_name = '')
+	public function GetData($id = '')
 	{
-		if((string)$var != 'all'){
-			$where['id'] = $var;
+		if(!empty($id)){
+			return Clinic::find()->where(['in',"id",$id])->indexBy("id")->asArray()->all();
+		}else{
+			return Clinic::find()->indexBy("id")->asArray()->all();
 		}
-		$data = Clinic::find()->where($where)->asArray()->all();
-		if(in_array($table_name,array_flip(Clinic::attributeLabels()))){
-			foreach($data as $val){
-				$data_1[$val['id']]=$val[$table_name];
-			}
-			return $data_1;
-		}
-		return $data;
 	}
 }

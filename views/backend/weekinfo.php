@@ -69,7 +69,6 @@ $js = <<<JS
 	function finishcase(id){
 		$.ajax({
             url: 'finishcase',
-            dataType: "json",
             type:"POST",
             data:{
             	'id':id	
