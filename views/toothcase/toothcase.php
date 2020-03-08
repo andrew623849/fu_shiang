@@ -1,10 +1,12 @@
 
 <?php
 
+use dosamigos\multiselect\MultiSelect;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-use yii\widgets\ActiveForm;
+	use yii\web\JsExpression;
+	use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
 use yii\widgets\Pjax;
 use app\models\Material;
@@ -18,6 +20,9 @@ $this->title = $clinic[$clinic_id].'病例';
 $this->params['breadcrumbs'][] = $this->title;
 global $material_name;
 $material_name = Material::find('material')->indexBy('id')->asArray()->all();
+$select_data = ArrayHelper::map(Material::find()->Asarray()->all(),'id','material');
+$select_data[0] = '清空';
+ksort($select_data);
 
 ?>
 <div class="toothcase-index  col-md-12">
@@ -53,15 +58,15 @@ $material_name = Material::find('material')->indexBy('id')->asArray()->all();
             ['attribute' => 'start_time',
             'format' => ['date', "php:Y-m-d"],
 		 	'contentOptions' => ['style' => 'min-width:200px;'],
-            'filter' => DateRangePicker::widget([ 'name' => 'BorrowRepaymentSearch[start_time]',
-                                                  'value' => Yii::$app->request->get('BorrowRepaymentSearch')['start_time'],
+            'filter' => DateRangePicker::widget([ 'name' => 'start_time',
+                                                  'value' => Yii::$app->request->get('start_time'),
                                                   'convertFormat' => true,
                                                   'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
             ],
              [
                 'attribute'=>'name',
 				'contentOptions' => ['style' => 'min-width:100px;'],
-
+				'filter' => '<input name="name" class="form-control" value="'.Yii::$app->request->get('name').'">',
 				'value'=>function($data){
                     return $data->checkout == 1 ? $data->name.'<span color="red">(已結款)</span>' : $data->name;
                 }
@@ -73,10 +78,25 @@ $material_name = Material::find('material')->indexBy('id')->asArray()->all();
     			global $material_name;
                 return $material_name[$data->material_id]["material"].'('.$data->tooth.')<br>'.($data->material_id_1 == 0?'':$material_name[$data->material_id_1]["material"].'('.$data->tooth_1.')<br>').($data->material_id_2 == 0?'':$material_name[$data->material_id_2]["material"].'('.$data->tooth_2.')');
             },
-			'filter' =>ArrayHelper::map(Material::find()->Asarray()->all(),'id','material'),
+			'filter' =>MultiSelect::widget([
+				"options" => ['multiple'=>"multiple",'title'=>'請選擇'], // for the actual multiselect
+				'data' => $select_data, // data as array
+				'value' => Yii::$app->request->get('material')?Yii::$app->request->get('material'):[],
+				'name' => 'material', // name for the form
+				'clientOptions' => [
+					'nSelectedText'=> '123',
+    				'nonSelectedText'=> '請選擇',
+					'maxHeight' => 180,
+					'buttonWidth'=> '180',
+
+				]
+			]),
             'label'=>'材料',
              ],
-             'remark',
+			[
+				'attribute'=>'remark',
+				'filter' => '',
+			],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
