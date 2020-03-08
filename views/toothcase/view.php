@@ -6,10 +6,10 @@ use app\models\Material;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
-$clinic = clinicSearch::ShowData('all',[],'');
+$clinic = clinicSearch::GetData();
 
-$this->title = $clinic[$model['clinic_id']-1]['clinic'].':病人資料';
-$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']-1]['clinic'].'病例', 'url' => ['toothcase/toothcase/'.$model['clinic_id']]];
+$this->title = $clinic[$model['clinic_id']]['clinic'].':病人資料';
+$this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']]['clinic'].'病例', 'url' => ['toothcase/toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
 \yii\web\YiiAsset::register($this);
 $material = Material::find('material')->indexBy('id')->asArray()->all();
