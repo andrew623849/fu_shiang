@@ -90,7 +90,7 @@ function report_num($models,$clinic,$material,$year){
 	$price[0] = $month;
 
 	foreach($clinic as $k=>$v){
-		$price[($k+1)] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
+		$price[$k] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($material as $k=>$v){
 			$material_name[($k+1)] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
