@@ -35,7 +35,7 @@ foreach($case as $val){
 		}
 		if($_SESSION['user']['id'] == $make_p1_f0){
 			$material_id = explode(',',$material[$val['material_id_1']]['make_process']);
-			$material_msg = Tool::MaterialMsg($_SESSION['user']['id'],$make_p,$material_id);
+			$material_msg = Tool::MaterialMsg($_SESSION['user']['id'],$make_p1,$material_id);
 
 			$arr[] = ['label'=>'材料2','value'=>$material[$val['material_id_1']]['material']];
 			$arr[] = ['label'=>'齒位','value'=>$val['tooth_1']];
@@ -44,7 +44,7 @@ foreach($case as $val){
 		}
 		if($_SESSION['user']['id'] == $make_p2_f0){
 			$material_id = explode(',',$material[$val['material_id_2']]['make_process']);
-			$material_msg = Tool::MaterialMsg($_SESSION['user']['id'],$make_p,$material_id);
+			$material_msg = Tool::MaterialMsg($_SESSION['user']['id'],$make_p2,$material_id);
 
 			$arr[] = ['label'=>'材料3','value'=>$material[$val['material_id_2']]['material']];
 			$arr[] = ['label'=>'齒位','value'=>$val['tooth_2']];
