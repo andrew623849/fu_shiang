@@ -66,8 +66,13 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p']);
+		$marker_pf = explode(',',$models['make_p_f']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
+			if($marker_pf[$key] == 1){
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>':''];
+			}else{
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>':''];
+			}
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -84,8 +89,13 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p1']);
+		$marker_pf = explode(',',$models['make_p1_f']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
+			if($marker_pf[$key] == 1){
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>':''];
+			}else{
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>':''];
+			}
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
@@ -102,8 +112,13 @@ for($i = 0;$i < count($model);$i ++){
 		$make_p_arr = [];
 		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
 		$marker_per = explode(',',$models['make_p2']);
+		$marker_pf = explode(',',$models['make_p2_f']);
 		foreach($make_p as $key=>$val){
-			$make_p_arr[] =  ['label'=>$val,'value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name']:''];
+			if($marker_pf[$key] == 1){
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>':''];
+			}else{
+				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>!empty($marker_per[$key])?$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>':''];
+			}
 		}
 		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
 			'model' => $models,
