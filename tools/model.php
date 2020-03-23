@@ -101,40 +101,40 @@ function report_num($models,$year){
 		$material_name[] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($models as $k=>$v){
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="01"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="01"){
 			$k = 1;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="02"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="02"){
 			$k = 2;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="03"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="03"){
 			$k = 3;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="04"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="04"){
 			$k = 4;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="05"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="05"){
 			$k = 5;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="06"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="06"){
 			$k = 6;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="07"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="07"){
 			$k = 7;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="08"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="08"){
 			$k = 8;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="09"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="09"){
 			$k = 9;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="10"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="10"){
 			$k = 10;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="11"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="11"){
 			$k = 11;
 		}
-		if(substr($v['start_time'],0,4) == $year && substr($v['start_time'], 5,2) =="12"){
+		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="12"){
 			$k = 12;
 		}
 		$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $v['price'];
