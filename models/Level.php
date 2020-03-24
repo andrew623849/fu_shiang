@@ -20,6 +20,7 @@ use Yii;
  * @property int $material 材料權限
  * @property int $clinic 診所權限
  * @property int $level 職位權限
+ * @property int $frontend 前台權限
  */
 class Level extends \yii\db\ActiveRecord
 {
@@ -37,8 +38,8 @@ class Level extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'job_name', 'build_time', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level'], 'required'],
-            [['id', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level'], 'integer'],
+            [['id', 'job_name', 'build_time', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level', 'frontend'], 'required'],
+            [['id', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level', 'frontend'], 'integer'],
             [['build_time'], 'safe'],
             [['job_name'], 'string', 'max' => 100],
             [['id'], 'unique'],
@@ -64,6 +65,7 @@ class Level extends \yii\db\ActiveRecord
             'material' => '材料權限',
             'clinic' => '診所權限',
             'level' => '職位權限',
+            'frontend' => '前台權限',
         ];
     }
 
@@ -81,6 +83,7 @@ class Level extends \yii\db\ActiveRecord
 			'material' => '材料權限',
 			'clinic' => '診所權限',
 			'level' => '職位權限',
+			'frontend' => '前台權限',
 		];
 	}
 

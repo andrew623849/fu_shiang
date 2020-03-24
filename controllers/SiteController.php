@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\UploadForm;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -40,7 +41,10 @@ class SiteController extends Controller
     } 
     public function actionIndex(){
      	$this->layout = 'frontend';
-        return $this->render('index');
+     	$model = new UploadForm();
+        return $this->render('index',[
+        	'model' =>$model,
+		]);
     }
 
 }
