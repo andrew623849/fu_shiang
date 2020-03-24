@@ -5,8 +5,8 @@ use dosamigos\multiselect\MultiSelect;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-	use yii\web\JsExpression;
-	use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
+use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
 use yii\widgets\Pjax;
 use app\models\Material;
@@ -42,10 +42,10 @@ ksort($select_data);
             </div>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
-	<div class="table-responsive">
+	<div class="table-responsive" style="min-height: 500px;">
 
     <?= GridView::widget([
-        'options'=>['id'=>'toothcase_grid','width'=>'300px'],
+        'options'=>['id'=>'toothcase_grid'],
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [

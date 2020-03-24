@@ -30,9 +30,9 @@
         "kartik-v/yii2-tabs-x": "dev-master",
         "mludvik/yii2-tags-input": "~1.0",
         "2amigos/yii2-multi-select-widget" : "*",
-        "softark/yii2-dual-listbox": "dev-master"
-
-
+        "softark/yii2-dual-listbox": "dev-master",
+        "2amigos/yii2-ckeditor-widget" : "~2.1",
+        "kartik-v/yii2-widget-fileinput": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

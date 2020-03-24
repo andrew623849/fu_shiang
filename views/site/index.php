@@ -3,23 +3,38 @@
 use kriss\swiper\SwiperWidget;
 use yii\helpers\Html;
 
-$swiperEl = 'swiper';
-echo SwiperWidget::widget([
-	'slides' => [
-		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
-		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
-		Html::img('http://img.zcool.cn/community/01665258173c34a84a0d304fc68fdf.jpg'),
-	],
-	'pagination' => true,
-	'navigation' => true,
-	'scrollbar' => false,
-	'swiperEl' => $swiperEl,
-	'clientOptions' => [
-		'speed' => 200,
-		'loop' => true,
-	]
-]);
+$dir = $model->home_file.'/home_img';
+// 用 opendir() 開啟目錄，開啟失敗終止程式
+$handle = @opendir($dir) or die("Cannot open " . $dir);
 
+// 用 readdir 讀取檔案內容
+while($file = readdir($handle)){
+	if($file != "." && $file != ".."){
+		$file_arr[] =  Html::img('../'.$dir.'/'.$file,['height'=>400]);
+	}
+}
+$swiperEl = 'swiper';
+if(!empty($file_arr)){
+	echo SwiperWidget::widget([
+		'slides' => $file_arr,
+		'pagination' => true,
+		'navigation' => true,
+		'scrollbar' => false,
+		'swiperEl' => $swiperEl,
+		'clientOptions' => [
+			'speed' => 200,
+			'loop' => true,
+		]
+	]);
+}
+
+?>
+<div class="col-md-12" style="padding-top: 30px;">
+<?php
+require_once($model->home_file.'/homepage.html');
+?>
+</div>
+<?php
 $js = <<<JS
 	$('#w0-swiper-container').click(function() {
 		{$swiperEl}.slideNext();
