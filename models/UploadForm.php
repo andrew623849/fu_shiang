@@ -37,11 +37,9 @@ class UploadForm extends Model
 					$file->saveAs($this->home_file.'/home_img/'.$file->name);
 				}
 			}
-			if(!empty($this->text)){
-				$file = fopen($this->home_file.'/homepage.html',"w"); //開啟檔案
-				fwrite($file,$this->text);
-				fclose($file);
-			}
+			$file = fopen($this->home_file.'/homepage.html',"w"); //開啟檔案
+			fwrite($file,$this->text);
+			fclose($file);
 			return true;
 		} else {
 			return false;

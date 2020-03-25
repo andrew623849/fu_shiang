@@ -11,10 +11,10 @@ if(!empty($model->errors)){
 			'active'=>true,
 			'content'=>Yii::$app->runAction('frontend/home'),
 		],
-//		[
-//			'label'=>'分頁編輯',
-//			'content'=>Yii::$app->runAction('frontend/home'),
-//		],
+		[
+			'label'=>'分頁編輯',
+			'content'=>Yii::$app->runAction('frontend/pagination'),
+		],
 	];
 	echo TabsX::widget([
 		'items'=>$items,

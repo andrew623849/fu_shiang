@@ -100,8 +100,9 @@ class FrontendController extends Controller
 	}
 	public function actionPagination()
 	{
-		$html = $this->renderPartial('pagination');
-		return Json::encode($html);
+		$this->layout = false;
+		return $this->render('pagination',[
+		]);
 	}
 
 }
