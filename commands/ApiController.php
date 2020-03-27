@@ -1,22 +1,17 @@
 <?php
 namespace app\commands;
 
-use app\models\Adminsheet;
-use app\models\clinicSearch;
-use app\models\LineNotify;
-use app\models\MaterialSearch;
-use app\models\Toothcase;
-use Yii;
+use app\console\models\AdminSheet;
+use app\console\models\clinicSearch;
+use app\console\models\MaterialSearch;
+use app\console\models\Toothcase;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
-Yii::import('application.models.*');
 
 class ApiController extends Controller
 {
 	public function actionEveryDayCase(){
-		Yii::$enableIncludePath = false;
-
 		$admin_user = Adminsheet::find()->where(['=','job',1])->asArray()->all();
 		$today_case = Toothcase::find()->where(['=','end_time',date('Y-m-d')])->asArray()->all();
 		$material = MaterialSearch::GetMaterialData();
