@@ -8,6 +8,10 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
+	'import'=>[
+		'application.models.*',
+		'application.components.*',
+	],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -26,10 +30,6 @@ $config = [
             ],
         ],
         'db' => $db,
-		'import'=>[
-			'application.models.*',
-			'application.components.*',
-		],
     ],
 
     'params' => $params,
