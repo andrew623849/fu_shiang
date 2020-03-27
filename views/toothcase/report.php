@@ -92,7 +92,7 @@ $report_models['1'][] = $price_out;
                     'position' => 'outer-top'
                 ],
                 'min' => 0,
-                'max' => 200000,
+                'max' => 300000,
                 'padding' => ['top' => 10, 'bottom' => 0]
             ]
         ]

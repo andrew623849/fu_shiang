@@ -93,12 +93,11 @@ function report_num($models,$year){
 	$price[0] = $month;
 	$clinic = clinicSearch::GetData();
 	$material = MaterialSearch::GetMaterialData();
-
 	foreach($clinic as $k=>$v){
-		$price[] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
+		$price[$k] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($material as $k=>$v){
-		$material_name[] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
+		$material_name[$k] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 	}
 	foreach($models as $k=>$v){
 		if(substr($v['end_time'],0,4) == $year && substr($v['end_time'], 5,2) =="01"){
@@ -149,6 +148,8 @@ function report_num($models,$year){
 			$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
 		}
 	}
+	$material_name = array_values($material_name);
+	$price = array_values($price);
 	return [$material_name,$price];
 }
 //算支出
