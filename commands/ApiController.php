@@ -6,7 +6,7 @@ use app\models\clinicSearch;
 use app\models\LineNotify;
 use app\models\MaterialSearch;
 use app\models\Toothcase;
-use yii\web\Controller;
+use yii\console\Controller;
 use yii\console\ExitCode;
 
 class ApiController extends Controller
