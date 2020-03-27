@@ -7,6 +7,7 @@ use app\models\LineNotify;
 use app\models\MaterialSearch;
 use app\models\Toothcase;
 use yii\web\Controller;
+use yii\console\ExitCode;
 
 class ApiController extends Controller
 {
@@ -41,6 +42,6 @@ class ApiController extends Controller
 				echo $val['user_name']."每日提醒繳件MSG發送失敗\r\n";
 			}
 		}
-		return true;
+		return ExitCode::OK;
 	}
 }
