@@ -26,11 +26,12 @@ $config = [
             ],
         ],
         'db' => $db,
+		'import'=>[
+			'application.models.*',
+			'application.components.*',
+		],
     ],
-	'import'=>array(
-		'application.models.*',
-		'application.components.*',
-	),
+
     'params' => $params,
     /*
     'controllerMap' => [
