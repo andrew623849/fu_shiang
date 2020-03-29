@@ -57,6 +57,10 @@ class toothcaseSearch extends Toothcase
             $query->andFilterCompare('end_time', explode('~', Yii::$app->request->get('end_time'))[0], '>=');//起始時間
             $query->andFilterCompare('end_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('end_time'))[1]) + 86400), '<');//結束時間}
         }
+		if (!empty(Yii::$app->request->get('start_time'))){
+			$query->andFilterCompare('start_time', explode('~', Yii::$app->request->get('start_time'))[0], '>=');//起始時間
+			$query->andFilterCompare('start_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('start_time'))[1]) + 86400), '<');//結束時間}
+		}
 		if(!empty(Yii::$app->request->get('material'))){
         	if(in_array(0,Yii::$app->request->get('material'))){
         		$_GET['material'] = '';
@@ -79,7 +83,7 @@ class toothcaseSearch extends Toothcase
 	 */
     function getWeekCase()
 	{
-		return Toothcase::find()->where(['>=','end_time',date('Y-m-d')])->asArray()->all();
+		return Toothcase::find()->where(['>=','start_time',date('Y-m-d')])->asArray()->all();
 	}
 
 	function getData($id = '')

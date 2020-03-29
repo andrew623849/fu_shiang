@@ -55,6 +55,14 @@ ksort($select_data);
             ],
             ['class' => 'yii\grid\SerialColumn',
 			],
+			['attribute' => 'start_time',
+			 'format' => ['date', "php:Y-m-d"],
+			 'contentOptions' => ['style' => 'min-width:200px;'],
+			 'filter' => DateRangePicker::widget([ 'name' => 'start_time',
+												   'value' => Yii::$app->request->get('start_time'),
+												   'convertFormat' => true,
+												   'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ] ] ])
+			],
             ['attribute' => 'end_time',
             'format' => ['date', "php:Y-m-d"],
 		 	'contentOptions' => ['style' => 'min-width:200px;'],
@@ -95,6 +103,7 @@ ksort($select_data);
              ],
 			[
 				'attribute'=>'remark',
+				'contentOptions' => ['style' => 'min-width:200px;'],
 				'filter' => '',
 			],
             ['class' => 'yii\grid\ActionColumn'],
