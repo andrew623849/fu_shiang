@@ -7,6 +7,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 
+$url=Yii::$app->urlManager->createAbsoluteUrl(['frontend/file-upload']);
 
 $form = ActiveForm::begin([
 	'action' => ['frontend/edit'],
@@ -45,10 +46,9 @@ echo $form->field($model,'imageFile[]')->label("輪番圖片")->widget(FileInput
 echo '</div>';
 echo $form->field($model,'text')->label("首頁內文")->widget(CKEditor::className(),[
         'preset' => 'custom',
-//		'kcfinder' => true,
 		'clientOptions' => [
 			'height' => 800,
-
+			'filebrowserUploadUrl' => $url
 		],
     ]) ?>
 <?php ActiveForm::end();

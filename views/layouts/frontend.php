@@ -42,8 +42,7 @@ $sys_logo = Systemsetup::SysLogo();
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => '前台', 'url' => ['#']],
-                ['label' => '登入', 'url' => ['/site/index'],'options' => ['target'=>'_blank']]
+
             ],
         ]);
 
