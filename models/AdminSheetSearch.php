@@ -38,9 +38,9 @@ class AdminsheetSearch extends AdminSheet
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$type)
     {
-        $query = AdminSheet::find()->Where(['deleted'=>'0']);
+        $query = AdminSheet::find()->Where($type);
         $query->joinWith(['level']);/*这里的articlecategory是article模型里面关联的方法名，除了首字母，其他都要完全一样，否则会报错*/
 
         // add conditions that should always apply here
@@ -62,35 +62,6 @@ class AdminsheetSearch extends AdminSheet
             'user_pay' => $this->user_pay,
         ]);
 
-        $query->andFilterWhere(['like', 'user_name', $this->user_name])
-            ->andFilterWhere(['like', 'user_phone', $this->user_phone])
-            ->andFilterWhere(['like', 'job', $this->job])
-            ->andFilterWhere(['like', 'user_email', $this->user_email]);
-        return $dataProvider;
-    }
-	public function search2($params)
-    {
-        $query = AdminSheet::find()->Where(['deleted'=>'1']);
-        $query->joinWith(['level']);/*这里的articlecategory是article模型里面关联的方法名，除了首字母，其他都要完全一样，否则会报错*/
-        // add conditions that should always apply here
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        $this->load($params);
-
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'build_time' => $this->build_time,
-            'user_pay' => $this->user_pay,
-        ]);
         $query->andFilterWhere(['like', 'user_name', $this->user_name])
             ->andFilterWhere(['like', 'user_phone', $this->user_phone])
             ->andFilterWhere(['like', 'job', $this->job])

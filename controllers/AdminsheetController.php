@@ -50,15 +50,30 @@ class AdminsheetController extends Controller
 
     public function actionIndex()
     {
+		return $this->render('index');
+    }
+
+	public function actionWork()
+	{
+		$this->layout = false;
 		$searchModel = new AdminSheetSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$dataProvider_l = $searchModel->search2(Yii::$app->request->queryParams);
-		return $this->render('index', [
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['deleted'=>'0']);
+		return $this->render('work', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
-			'dataProvider_l' => $dataProvider_l,
 		]);
-    }
+	}
+
+	public function actionWorkLeave()
+	{
+		$this->layout = false;
+		$searchModel = new AdminSheetSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['deleted'=>'0']);
+		return $this->render('work-leave', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
 
     /**
      * Displays a single AdminSheet model.
