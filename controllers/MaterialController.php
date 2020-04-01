@@ -48,16 +48,31 @@ class MaterialController extends Controller
      */
     public function actionIndex()
     {
-		$searchModel = new MaterialSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,['useable'=>0,'deleted'=>0]);
-        $dataProvider_1 = $searchModel->search(Yii::$app->request->queryParams,['useable'=>1,'deleted'=>0]);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'dataProvider_1' => $dataProvider_1,
-        ]);
+        return $this->render('index');
     }
+	public function actionUseable()
+	{
+		$this->layout = false;
+
+		$searchModel = new MaterialSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['useable'=>0,'deleted'=>0]);
+
+		return $this->render('use', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
+	public function actionNoUseable()
+	{
+		$this->layout = false;
+		$searchModel = new MaterialSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['useable'=>1,'deleted'=>0]);
+
+		return $this->render('no-use', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
 
     /**
      * Displays a single Material model.

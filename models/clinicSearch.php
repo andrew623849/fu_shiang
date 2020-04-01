@@ -76,4 +76,12 @@ class clinicSearch extends Clinic
 			return Clinic::find()->indexBy("id")->asArray()->all();
 		}
 	}
+	public function GetDataWhere($arr = '')
+	{
+		if(!empty($arr)){
+			return Clinic::find()->where($arr)->indexBy("id")->asArray()->all();
+		}else{
+			return Clinic::find()->indexBy("id")->asArray()->all();
+		}
+	}
 }

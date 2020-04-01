@@ -97,5 +97,12 @@ class MaterialSearch extends Material
 			return Material::find()->indexBy("id")->asArray()->all();
 		}
 	}
-
+	public function GetDataWhere($arr = '')
+	{
+		if(!empty($arr)){
+			return Material::find()->where($arr)->indexBy("id")->asArray()->all();
+		}else{
+			return Material::find()->indexBy("id")->asArray()->all();
+		}
+	}
 }
