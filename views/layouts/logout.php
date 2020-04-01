@@ -28,7 +28,8 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
+	<div class="container">
+	<?php
         NavBar::begin([
             'brandLabel' => $sys_name,
             'brandUrl' => ['/backend/index'],
@@ -45,9 +46,6 @@ AppAsset::register($this);
 
     NavBar::end();
     ?>
-
-    <div class="container">
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>

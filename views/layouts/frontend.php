@@ -3,7 +3,6 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -30,17 +29,32 @@ $sys_logo = Systemsetup::SysLogo();
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
+	<?php
+		NavBar::begin([
+            'brandLabel' => !empty($sys_logo) ? Html::img($sys_logo, ['alt'=>$sys_name]):$sys_name,
+            'brandUrl' => ['/site/index'],
+            'options' => [
+                'class' => 'navbar-default navbar-fixed-top',
+            ],
+        ]);
+		NavBar::end();
+
+	?>
+	<div class="container">
+		<div class="row"></div>
+	<?php
+
         NavBar::begin([
             'brandLabel' => !empty($sys_logo) ? Html::img($sys_logo, ['alt'=>$sys_name]):$sys_name,
             'brandUrl' => ['/site/index'],
             'options' => [
-                'class' => 'navbar-inverse navbar-fixed-top',
-				'style' => 'blockground-color:white'
+                'class' => 'navbar-default navbar-fixed-top',
             ],
         ]);
         echo Nav::widget([
-            'options' => ['class' => 'navbar-nav navbar-right'],
+            'options' => [
+				'class' => 'navbar-nav navbar-right',
+			],
             'items' => [
 
             ],
@@ -48,9 +62,6 @@ $sys_logo = Systemsetup::SysLogo();
 
     NavBar::end();
     ?>
-
-    <div class="container">
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>

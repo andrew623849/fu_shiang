@@ -14,9 +14,9 @@ use app\models\Level;
 $sys_name = Systemsetup::SysName();
 
 AppAsset::register($this);
-$clinic = show_clinic('all');
+$clinic = clinicSearch::GetDataWhere(['=','deleted',1]);
 $clinic_items = "";
-foreach($clinic[1] as $val){
+foreach($clinic as $val){
 	$clinic_items .= "<li><a href='/toothcase/toothcase/".$val['id']."'>".$val['clinic']."</a></li>";
 }
 
@@ -25,7 +25,7 @@ $nav_arr = [
 	'today_case' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
 	'toothcase' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
 	'outlay' => ['label' => '支出', 'url' => ['/outlay/index']],
-	'report' => ['label' => '報表', 'url' => ['/toothcase/report']],
+	'report' => ['label' => '報表', 'url' => ['/report/index']],
 	'公司內部管理' =>[
 		'admin_sheet' => ['label'=>'員工','url'=> ['/adminsheet/index']],
 		'material' => ['label'=>'材料','url'=> ['/material/index']],
@@ -79,7 +79,8 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/backend/index']];
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
+	<div class="container">
+	<?php
 	NavBar::begin([
 		'brandLabel' => $sys_name,
 		'brandUrl' => ['/backend/person'],
@@ -94,7 +95,6 @@ $nav_need[] =  ['label' => '登出', 'url' => ['/backend/index']];
     NavBar::end();
     ?>
 
-    <div class="container">
         <?= Breadcrumbs::widget([
             'homeLink' => [
             'label' => '首頁',
