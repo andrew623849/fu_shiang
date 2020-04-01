@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use app\models\clinicSearch;
 use app\models\Systemsetup;
 use app\widgets\Alert;
 use yii\helpers\Html;
