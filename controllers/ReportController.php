@@ -30,6 +30,11 @@ class ReportController extends Controller
 			return  false;
 
 		}
+		if(empty(Yii::$app->session['right']['report']) && empty(Yii::$app->request->get("id"))){
+			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
+
+			return  false;
+		}
 		return parent::beforeAction($action);
 	}
     /**

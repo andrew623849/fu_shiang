@@ -28,7 +28,7 @@
 	];
 	return [
 		'class' => 'yii\db\Connection',
-		'dsn' => 'mysql:host=localhost;dbname=cowbtool_k537',
+		'dsn' => 'mysql:host=localhost;dbname=cowbtool_main',
 		'username' => 'root',
 		'password' => 'andrew623401',
 		'charset' => 'utf8',

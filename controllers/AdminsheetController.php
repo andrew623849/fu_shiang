@@ -68,7 +68,7 @@ class AdminsheetController extends Controller
 	{
 		$this->layout = false;
 		$searchModel = new AdminSheetSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['deleted'=>'0']);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['deleted'=>'1']);
 		return $this->render('work-leave', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,

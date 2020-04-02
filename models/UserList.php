@@ -33,9 +33,9 @@ class UserList extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'user_admin', 'user_name', 'user_email', 'user_cellphone', 'user_address', 'user_phone'], 'required'],
-            [['user_company_num'], 'integer'],
-            [['code', 'user_admin', 'user_name', 'user_email', 'user_cellphone', 'user_address', 'user_phone'], 'string', 'max' => 64],
+            [['user_company_num','user_mny'], 'integer'],
+            [['start_time', 'end_time'], 'safe'],
+            [['code', 'user_admin', 'company_name', 'user_name', 'user_email', 'user_cellphone', 'user_address', 'user_phone'], 'string', 'max' => 64],
         ];
     }
 
@@ -46,14 +46,18 @@ class UserList extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'code' => 'Code',
-            'user_admin' => 'User Admin',
-            'user_name' => 'User Name',
-            'user_email' => 'User Email',
-            'user_cellphone' => 'User Cellphone',
-            'user_address' => 'User Address',
+            'code' => '編號',
+            'user_admin' => '帳號',
+            'company_name' => '公司名稱',
+            'user_name' => '負責人',
+            'user_email' => '負責人信箱',
+            'user_cellphone' => '負責人手機',
+            'user_address' => '負責人地址',
             'user_company_num' => 'User Company Num',
-            'user_phone' => 'User Phone',
+            'user_phone' => '公司電話',
+			'user_mny'=>'月費',
+			'start_time'=>'啟用日',
+			'end_time'=>'截止日',
         ];
     }
 }
