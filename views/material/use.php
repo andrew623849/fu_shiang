@@ -19,9 +19,11 @@ use yii\grid\GridView;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pagination' => [
+	        'route' => 'material/index'
+	    ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'material',
             'price',
 			[
