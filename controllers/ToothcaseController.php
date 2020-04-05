@@ -161,6 +161,18 @@ class ToothcaseController extends Controller
 		]);
     }
 
+	public function actionViewM($id,$tooth,$color,$set,$make_p,$make_p_f)
+	{
+		$this->layout = false;
+		return $this->render('view-m',[
+			'id'=>$id,
+			'tooth'=>$tooth,
+			'color'=>$color,
+			'set'=>$set,
+			'make_p'=>$make_p,
+			'make_p_f'=>$make_p_f,
+		]);
+	}
     /**
      * Creates a new toothcase model.
      * If creation is successful, the browser will be redirected to the 'view' page.

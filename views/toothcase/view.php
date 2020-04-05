@@ -1,6 +1,7 @@
 <?php
+
+use kartik\tabs\TabsX;
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 use app\models\clinicSearch;
 use app\models\Material;
 
@@ -11,8 +12,45 @@ $clinic = clinicSearch::GetData();
 $this->title = $clinic[$model['clinic_id']]['clinic'].':病人資料';
 $this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']]['clinic'].'病例', 'url' => ['toothcase/toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
-\yii\web\YiiAsset::register($this);
 $material = Material::find('material')->indexBy('id')->asArray()->all();
+$items[] = [
+	'label'=>$material[$model->material_id]['material'],
+	'active'=>true,
+	'content'=>Yii::$app->runAction('toothcase/view-m',[
+		'id'=>0,
+		'tooth'=>$model->tooth,
+		'color'=>$model->tooth_color,
+		'set'=>$model->material_id,
+		'make_p'=>$model->make_p,
+		'make_p_f'=>$model->make_p_f,
+	]),
+];
+if(!empty($model->material_id_1)){
+	$items[] = [
+		'label'=>$material[$model->material_id_1]['material'],
+		'content'=>Yii::$app->runAction('toothcase/view-m',[
+			'id'=>1,
+			'tooth'=>$model->tooth_1,
+			'color'=>$model->tooth_color_1,
+			'set'=>$model->material_id_1,
+			'make_p'=>$model->make_p1,
+			'make_p_f'=>$model->make_p1_f,
+		]),
+	];
+}
+if(!empty($model->material_id_2)){
+	$items[] = [
+		'label'=>$material[$model->material_id_2]['material'],
+		'content'=>Yii::$app->runAction('toothcase/view-m',[
+			'id'=>2,
+			'tooth'=>$model->tooth_2,
+			'color'=>$model->tooth_color_2,
+			'set'=>$model->material_id_2,
+			'make_p'=>$model->make_p2,
+			'make_p_f'=>$model->make_p2_f,
+		]),
+	];
+}
 ?>
 <div class="toothcase-view">
 
@@ -29,30 +67,27 @@ $material = Material::find('material')->indexBy('id')->asArray()->all();
         ]) ?>
         <?= Html::a('新增病例',['create','clinic_this' => $model['clinic_id']], ['class' => 'btn btn-success']) ?>
     </p>
-
+	<div class="form-group">
+		<label>病人編號：<?= $model->id?></label>
+	</div>
+	<div class="form-group">
+		<label>工作日期：<?= $model->start_time.'~'.$model->end_time?></label>
+	</div>
+<?php if($model->try_time != ''){?>
+	<div class="form-group">
+		<label>試戴日：<?= $model->try_time?></label>
+	</div>
+<?php }?>
+	<div class="form-group">
+		<label>病人姓名：<?= $model->name?></label>
+	</div>
 	<div class="col-sm-12">
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            ['label'=>'病人編號','value'=>$model->id],
-            ['label'=>'交件日','value'=>$model->end_time],
-            ['label'=>'收件日','value'=>$model->start_time],
-            ['label'=>'試戴日','value'=>$model->try_time],
-            ['label'=>'病人姓名','value'=>$model->name],
-            ['label'=>'材料1','value'=>$material[$model->material_id]['material']],
-            ['label'=>'齒位','value'=>$model->tooth],
-            ['label'=>'齒色','value'=>$model->tooth_color],
-            ['label'=>'材料2','value'=>!empty($model->material_id_1)?$material[$model->material_id_1]['material']:'無'],
-            ['label'=>'齒位','value'=>$model->tooth_1],
-            ['label'=>'齒色','value'=>$model->tooth_color_1],
-            ['label'=>'材料3','value'=>!empty($model->material_id_2)?$material[$model->material_id_2]['material']:'無'],
-            ['label'=>'齒位','value'=>$model->tooth_2],
-            ['label'=>'齒色','value'=>$model->tooth_color_2],
-            ['label'=>'備註','value'=>$model->remark],
-            ['label'=>'金額','value'=>$model->price],
-        ],
-        'template' => '<tr><th>{label}</th><td>{value}</td></tr>',
-    ]) ?>
+
+    <?= TabsX::widget([
+		'items'=>$items,
+		'position'=>TabsX::POS_ABOVE,
+		'encodeLabels'=>false
+	]); ?>
 </div>
 
 </div>
