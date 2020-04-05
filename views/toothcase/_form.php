@@ -19,7 +19,9 @@ ksort($material_data);
 ?>
 
 <div class="toothcase-form">
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+		'options'=>['autocomplete'=>'off']
+	]); ?>
     <?php if($url == 'create'){
      $model ->clinic_id = $clinic_this;
 }?>

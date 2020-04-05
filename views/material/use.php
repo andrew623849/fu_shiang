@@ -21,7 +21,6 @@ use yii\grid\GridView;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'material',
             'price',
 			[

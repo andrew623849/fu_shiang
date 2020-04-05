@@ -46,6 +46,9 @@ class MaterialSearch extends Material
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'pagination' => [
+                'route' => 'material/index'
+            ],
         ]);
 
         $this->load($params);

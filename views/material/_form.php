@@ -1,7 +1,7 @@
 <?php
 
-	use app\models\AdminsheetSearch;
-	use yii\helpers\Html;
+use app\models\AdminSheetSearch;
+use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Material;
 use mludvik\tagsinput\TagsInputWidget;
@@ -9,7 +9,7 @@ use mludvik\tagsinput\TagsInputWidget;
 /* @var $model app\models\Material */
 /* @var $form yii\widgets\ActiveForm */
 $max = Material::find()->orderBy('id DESC')->Asarray()->one();
-$admin_data = AdminsheetSearch::GetUserData();
+$admin_data = AdminSheetSearch::GetUserData();
 
 ?>
 <style>
