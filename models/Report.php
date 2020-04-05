@@ -74,25 +74,29 @@ class Report
 		}
 		foreach($models as $k=>$v){
 			$k = (int)date('m',strtotime($v['end_time']));
+			$have_clinic[$v['clinic_id']] = 1;
 			$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $v['price'];
 			$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
 			$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
 			$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
 			$material_name[$v['material_id']][$k] = $material_name[$v['material_id']][$k] + $tooth;
+			$have_case[$v['material_id']] = 1;
 			if($tooth1 != 0){
 				$material_name[$v['material_id_1']][$k] = $material_name[$v['material_id_1']][$k] + $tooth1;
+				$have_case[$v['material_id_1']] = 1;
 			}
 			if($tooth2 != 0){
 				$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
+				$have_case[$v['material_id_2']] = 1;
 			}
 		}
-		$data = [];
-		foreach($price as $val){
-			$data[] = $val;
+		$data[] = $month;
+		foreach($have_clinic as $key => $val){
+			$data[] = $price[$key];
 		}
-		$material_data = [];
-		foreach($material_name as $val){
-			$material_data[] = $val;
+		$material_data[] = $month;
+		foreach($have_case as $key => $val){
+			$material_data[] = $material_name[$key];
 		}
 		$price_out = self::MonthOutlay($year);
 		$price[] = $price_out;
@@ -128,25 +132,29 @@ class Report
 		foreach($models as $k=>$v){
 			$k = date('w',strtotime($v['end_time']));
 			if($k == 0)$k =7;
+			$have_clinic[$v['clinic_id']] = 1;
 			$price[$v['clinic_id']][$k] = $price[$v['clinic_id']][$k] + $v['price'];
 			$tooth = $v['tooth'] != '' ? count(explode(",",$v['tooth'])):0;
 			$tooth1 = $v['tooth_1'] != '' ? count(explode(",",$v['tooth_1'])):0;
 			$tooth2 = $v['tooth_2'] != '' ? count(explode(",",$v['tooth_2'])):0;
 			$material_name[$v['material_id']][$k] = $material_name[$v['material_id']][$k] + $tooth;
+			$have_case[$v['material_id']] = 1;
 			if($tooth1 != 0){
 				$material_name[$v['material_id_1']][$k] = $material_name[$v['material_id_1']][$k] + $tooth1;
+				$have_case[$v['material_id_1']] = 1;
 			}
 			if($tooth2 != 0){
 				$material_name[$v['material_id_2']][$k] = $material_name[$v['material_id_2']][$k] + $tooth2;
+				$have_case[$v['material_id_2']] = 1;
 			}
 		}
-		$data = [];
-		foreach($price as $val){
-			$data[] = $val;
+		$data[] = $month;
+		foreach($have_clinic as $key => $val){
+			$data[] = $price[$key];
 		}
-		$material_data = [];
-		foreach($material_name as $val){
-			$material_data[] = $val;
+		$material_data[] = $month;
+		foreach($have_case as $key => $val){
+			$material_data[] = $material_name[$key];
 		}
 		$price_out = self::WeekOutlay($start_time,$end_time);
 		$data[] = $price_out;
