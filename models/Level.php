@@ -38,7 +38,7 @@ class Level extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'job_name', 'build_time', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level', 'frontend'], 'required'],
+            [['id', 'job_name', 'build_time', 'build_id', 'useable'], 'required'],
             [['id', 'build_id', 'useable', 'today_case', 'toothcase', 'outlay', 'report', 'admin_sheet', 'material', 'clinic', 'level', 'frontend'], 'integer'],
             [['build_time'], 'safe'],
             [['job_name'], 'string', 'max' => 100],
