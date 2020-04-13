@@ -71,7 +71,7 @@ class SiteController extends Controller
 			echo "<script>alert('帳號已有人使用');history.go(-1);</script>";
 		}else{
 			UserList::NewData($_POST);
-			echo "<script>location.href='http://".$_POST['admin'].".cowbtest.com/backend/index'</script>";
+			echo "<script>location.href='http://".$_POST['admin'].".cowbtool.com/backend/index'</script>";
 		}
 	}
 }
