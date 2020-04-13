@@ -72,6 +72,8 @@ class Report
 		foreach($material as $k=>$v){
 			$material_name[$k] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0,0,0,0,0,0];
 		}
+		$have_clinic = [];
+		$have_case = [];
 		foreach($models as $k=>$v){
 			$k = (int)date('m',strtotime($v['end_time']));
 			$have_clinic[$v['clinic_id']] = 1;
@@ -129,6 +131,8 @@ class Report
 		foreach($material as $k=>$v){
 			$material_name[$k] = [$v['material'].'($'.$v['price'].')',0,0,0,0,0,0,0];
 		}
+		$have_clinic = [];
+		$have_case = [];
 		foreach($models as $k=>$v){
 			$k = date('w',strtotime($v['end_time']));
 			if($k == 0)$k =7;
