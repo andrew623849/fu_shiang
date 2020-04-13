@@ -90,7 +90,6 @@ class UserList extends \yii\db\ActiveRecord
 		$admin->build_time = date('Y-m-d');
 		$admin->job = 0;
 		$admin->user_name = $_POST['companyer'];
-		$admin->user_br = '0000-00-00 00:00:00';
 		$admin->user_sale = 0;
 		$admin->user_pay = 0;
 		$admin->insert();
