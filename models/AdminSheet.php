@@ -46,7 +46,7 @@ class AdminSheet extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['admin', 'password', 'build_time', 'job', 'user_name', 'user_br', 'user_sale', 'user_phone', 'user_email', 'user_pay'], 'required'],
+            [['admin', 'password', 'build_time', 'job', 'user_name', 'user_br', 'user_sale', 'user_pay'], 'required'],
             [['build_time', 'user_br', 'deleted_time'], 'safe'],
             [['job', 'user_sale', 'user_pay', 'deleted', 'deleted_id'], 'integer'],
             [['admin', 'password', 'user_name', 'user_phone',  'user_email'], 'string', 'max' => 64],

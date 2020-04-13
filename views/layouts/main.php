@@ -21,7 +21,7 @@ foreach($clinic as $val){
 	$clinic_items .= "<li><a href='/toothcase/toothcase/".$val['id']."'>".$val['clinic']."</a></li>";
 }
 
-$job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level','frontend','userlist']];
+$job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level','frontend']];
 $nav_arr = [
 	'today_case' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
 	'toothcase' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
@@ -33,7 +33,7 @@ $nav_arr = [
 		'clinic' => ['label'=>'診所','url'=> ['/clinic/index']],
 		'level' => ['label'=>'職權','url'=> ['/level/index']],
 		'frontend' => ['label'=>'前台編輯','url'=> ['/frontend/edit']],
-		'userlist' => ['label'=>'超級管理員','url'=> ['/userlist/index']],
+
 	]
 ];
 $user_job = Yii::$app->session['user']['job'];
@@ -45,16 +45,19 @@ foreach($job['nav'] as $key => $val){
 	if(!empty($job[$val])){
 		$nav2_need = [];
 		foreach($job[$val] as $vval){
-			if(!empty($user_level[$vval])){
+			if(!empty($user_level[$vval]) || $user_job == 0){
 				$decbin = preg_split('//', decbin($user_level[$vval]), -1, PREG_SPLIT_NO_EMPTY);
 				if($decbin[0] == 1 || $user_job == 0){
 					$nav2_need[] = $nav_arr[$val][$vval];
 					$right[$vval] = 1;
 				}
-			}elseif(explode('_',Yii::$app->db->dsn)[1] == 'main'){
+			}else{
 				$nav2_need[] = $nav_arr[$val][$vval];
 				$right[$vval] = 1;
 			}
+		}
+		if(explode('_',Yii::$app->db->dsn)[1] == 'main'){
+			$nav2_need[] = ['label'=>'超級管理員','url'=> ['/userlist/index']];
 		}
 		if(!empty($nav2_need)){
 			$nav_need[] = ['label' => $val,'url' => ['#'], 'items'=> $nav2_need];
@@ -67,6 +70,7 @@ foreach($job['nav'] as $key => $val){
 		}
 	}
 }
+
 Yii::$app->session['right'] = $right;
 $nav_need[] =  ['label' => '登出', 'url' => ['/backend/index']];
 

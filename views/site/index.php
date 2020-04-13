@@ -29,11 +29,9 @@ if(!empty($file_arr)){
 }
 
 ?>
-<div class="col-md-12" style="padding-top: 30px;">
 <?php
 require_once($model->home_file.'/homepage.html');
 ?>
-</div>
 <?php
 $js = <<<JS
 	$('#w0-swiper-container').click(function() {

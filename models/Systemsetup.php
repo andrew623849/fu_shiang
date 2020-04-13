@@ -30,7 +30,6 @@ class Systemsetup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['sys_logo_pic'], 'required'],
             [['sys_logo_pic'], 'string'],
             [['sys_mny', 'clinic_name'], 'integer'],
             [['s_time', 'e_time'], 'safe'],
