@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\FrontPage;
+use app\models\frontpageSearch;
 use app\models\UploadForm;
 use Yii;
 use yii\helpers\Json;
@@ -98,10 +100,48 @@ class FrontendController extends Controller
 			}
 		}
 	}
+	public function actionUpdate($id)
+	{
+		$model = new FrontPage();
+		$models = $model->findOne($id);
+		$models->text = $model->showtext($models->file_name);
+		if ($models->load(Yii::$app->request->post()) && $models->save()) {
+			$model->updatetext($_POST['FrontPage']['text'],$models->file_name);
+			return $this->redirect(['edit', 'op' => '1']);
+		}
+		return $this->render('update', [
+			'model' => $models,
+		]);
+	}
 	public function actionPagination()
 	{
 		$this->layout = false;
-		return $this->render('pagination',[
+		$searchModel = new frontpageSearch();
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams,['deleted'=>'0']);
+		return $this->render('pagination', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+		]);
+	}
+
+	public function actionDeletePage()
+	{
+		if (Yii::$app->request->isGet){
+			$model = new FrontPage();
+			$model->updateAll(['deleted'=>'1','deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['id']],['id'=>$_GET['id']]);
+			return $this->redirect(['edit','op'=>1]);
+		}
+	}
+	public function actionCreate()
+	{
+		$model = new FrontPage();
+		$model->file_name = strtotime(date('Y-m-d H:i:s')).'.html';
+		if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			$model->create();
+			return $this->redirect(['edit', 'op' => '1']);
+		}
+		return $this->render('create', [
+			'model' => $model,
 		]);
 	}
 	public function actionFileUpload()

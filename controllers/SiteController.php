@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\UploadForm;
+use app\models\UserList;
 use Yii;
 use yii\helpers\Json;
 use yii\web\Controller;
@@ -38,7 +39,8 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    } 
+    }
+
     public function actionIndex(){
      	$this->layout = 'frontend';
      	$model = new UploadForm();
@@ -47,4 +49,29 @@ class SiteController extends Controller
 		]);
     }
 
+	public function actionPages()
+	{
+		$this->layout = 'frontend';
+
+		return $this->render('pages', [
+			'op' => $_GET['op'],
+		]);
+	}
+
+	public function actionRegistered()
+	{
+		$this->layout = 'frontend';
+
+		return $this->render('registered');
+	}
+	public function actionRegister()
+	{
+		$data = UserList::find()->where(['user_admin'=>$_POST['admin']])->asArray()->one();
+		if(!empty($data)){
+			echo "<script>alert('帳號已有人使用');history.go(-1);</script>";
+		}else{
+			UserList::NewData($_POST);
+			echo "<script>location.href='http://".$_POST['admin'].".cowbtest.com/backend/index'</script>";
+		}
+	}
 }

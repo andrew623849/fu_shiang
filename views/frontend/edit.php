@@ -1,14 +1,11 @@
 <?php
 
 use kartik\tabs\TabsX;
-if(!empty($model->errors)){
-	p_r($model->errors);
-}
+
 // Above
 	$items = [
 		[
 			'label'=>'首頁編輯',
-			'active'=>true,
 			'content'=>Yii::$app->runAction('frontend/home'),
 		],
 		[
@@ -16,6 +13,11 @@ if(!empty($model->errors)){
 			'content'=>Yii::$app->runAction('frontend/pagination'),
 		],
 	];
+if(!empty($_GET))
+	$items[$_GET['op']]['active'] = true;
+else{
+	$items[0]['active'] = true;
+}
 	echo TabsX::widget([
 		'items'=>$items,
 		'position'=>TabsX::POS_ABOVE,
