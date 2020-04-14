@@ -78,7 +78,11 @@ class LevelController extends Controller
     {
         $model = new Level();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+        	$model->build_time = date('Y-m-d H:i:s');
+        	$model->build_id = Yii::$app->session['user']['id'];
+        	$model->useable = 1;
+			$model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
