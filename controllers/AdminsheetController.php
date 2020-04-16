@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use Yii;
 use app\models\AdminSheet;
 use app\models\AdminSheetSearch;
@@ -33,14 +34,13 @@ class AdminsheetController extends Controller
 		if(Yii::$app->session['login'] == 0){
 			echo "<script>alert('請先登入');location.href='/backend/index'</script>";
 			return  false;
-
 		}
-		if(empty(Yii::$app->session['right']['admin_sheet']) && empty(Yii::$app->request->get("id"))){
+		if(Level::RightCheck('admin_sheet',0)){
+			return parent::beforeAction($action);
+		}else{
 			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
-
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
 
     /**
@@ -95,16 +95,21 @@ class AdminsheetController extends Controller
      */
     public function actionCreate()
     {
-		$model = new AdminSheet();
-		$job_info = show_level('all');
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->id]);
+		if(Level::RightCheck('admin_sheet',1)){
+			$model = new AdminSheet();
+			$job_info = show_level('all');
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('create', [
+				'model' => $model,
+				'job_info' =>$job_info[1]
+			]);
+		}else{
+			echo "<script>alert('沒有新增員工的權限');history.go(-1);</script>";
+			return  false;
 		}
 
-		return $this->render('create', [
-			'model' => $model,
-			'job_info' =>$job_info[1]
-		]);
     }
 
     /**
@@ -116,16 +121,20 @@ class AdminsheetController extends Controller
      */
     public function actionUpdate($id)
     {
-		$model = $this->findModel($id);
-		$job_info = show_level('all');
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			return $this->redirect(['view', 'id' => $model->id]);
+		if(Level::RightCheck('admin_sheet',2)){
+			$model = $this->findModel($id);
+			$job_info = show_level('all');
+			if($model->load(Yii::$app->request->post()) && $model->save()){
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('update', [
+				'model' => $model,
+				'job_info' => $job_info[1]
+			]);
+		}else{
+			echo "<script>alert('沒有編輯員工的權限');history.go(-1);</script>";
+			return  false;
 		}
-
-		return $this->render('update', [
-			'model' => $model,
-			'job_info' => $job_info[1]
-		]);
     }
 
 	public function actionPupdate($id)
@@ -150,10 +159,15 @@ class AdminsheetController extends Controller
      */
     public function actionLeave($id)
     {
-		$model = $this->findModel($id);
-		AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['id']],['id'=>$model->id]);
-		return $this->redirect(['index']);
-    }
+		if(Level::RightCheck('admin_sheet',3)){
+			$model = $this->findModel($id);
+			AdminSheet::updateAll(['deleted'=>1,'deleted_time'=>date('Y-m-d H:i:s'),'deleted_id'=>Yii::$app->session['user']['id']],['id'=>$model->id]);
+			return $this->redirect(['index']);
+		}else{
+			echo "<script>alert('沒有刪除員工的權限');history.go(-1);</script>";
+			return  false;
+		}
+	}
 
     public function actionReinstatement($id)
     {

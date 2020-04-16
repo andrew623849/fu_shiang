@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use app\models\LineNotify;
+use app\models\Toothcase;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -110,5 +112,31 @@ class BackendController extends Controller
 		}
 		$this->layout = 'logout';
 		return $this->render('index',['message'=>$message]);
+	}
+
+	public function actionTodaycase(){
+		if(Level::RightCheck('today_case',0)){
+			$model = new Toothcase;
+			if(empty($_POST['time'])){
+				$start_time = date('Y-m-d');
+				$end_time = date('Y-m-d');
+				$time = $start_time.'~'.$end_time;
+			}else{
+				$start_time = explode('~',$_POST['time'])[0];
+				$end_time = explode('~',$_POST['time'])[1];
+				$time = $_POST['time'];
+			}
+			$model = $model->find()->where(["or",["and",[">=","end_time",$start_time],["<=","end_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
+			$clinic = show_clinic('all');
+			return $this->render('todaycase', [
+				'model' => $model,
+				'clinic_info'=>$clinic['1'],
+				'time'=>$time,
+			]);
+		}else{
+			echo "<script>alert('沒有交件權限');history.go(-1);</script>";
+			return  false;
+		}
+
 	}
 }

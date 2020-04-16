@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use Yii;
 use app\models\Clinic;
 use app\models\clinicSearch;
@@ -34,12 +35,12 @@ class ClinicController extends Controller
 			return  false;
 
 		}
-		if(empty(Yii::$app->session['right']['clinic'])){
+		if(Level::RightCheck('clinic',0)){
+			return parent::beforeAction($action);
+		}else{
 			echo "<script>alert('沒有診所管理權限');history.go(-1);</script>";
-
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
 
     /**
@@ -77,16 +78,22 @@ class ClinicController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Clinic();
-        $max_id = $model->find('id')->orderBy(['id'=>SORT_DESC])->one();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+		if(Level::RightCheck('clinic',1)){
+			$model = new Clinic();
+			$max_id = $model->find('id')->orderBy(['id'=>SORT_DESC])->one();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
 
-        return $this->render('create', [
-            'model' => $model,
-            'max_id'=> $max_id,
-        ]);
+			return $this->render('create', [
+				'model' => $model,
+				'max_id'=> $max_id,
+			]);
+		}else{
+			echo "<script>alert('沒有新增診所的權限');history.go(-1);</script>";
+			return  false;
+		}
+
     }
 
     /**
@@ -98,15 +105,17 @@ class ClinicController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		if(Level::RightCheck('clinic',2)){
+			$model = $this->findModel($id);
+			if($model->load(Yii::$app->request->post()) && $model->save()){
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+			return $this->render('update', ['model' => $model,]);
+		}else{
+			echo "<script>alert('沒有修改診所的權限');history.go(-1);</script>";
+			return  false;
+		}
     }
 
     /**
@@ -118,9 +127,14 @@ class ClinicController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->updateAll(['deleted'=>'0'],['=','id',$id]);
+		if(Level::RightCheck('clinic',3)){
+			$this->updateAll(['deleted'=>'0'],['=','id',$id]);
+			return $this->redirect(['index']);
+		}else{
+			echo "<script>alert('沒有刪除診所的權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        return $this->redirect(['index']);
     }
 
     /**

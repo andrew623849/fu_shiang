@@ -23,7 +23,7 @@ foreach($clinic as $val){
 
 $job = ['nav'=>['today_case','toothcase','outlay','report','公司內部管理'],'公司內部管理' =>['admin_sheet','material','clinic','level','frontend']];
 $nav_arr = [
-	'today_case' => ['label' => '交件', 'url' => ['/toothcase/todaycase']],
+	'today_case' => ['label' => '交件', 'url' => ['/backend/todaycase']],
 	'toothcase' => ['label' => '病例', 'url' => ['#'],'items'=> [$clinic_items]],
 	'outlay' => ['label' => '支出', 'url' => ['/outlay/index']],
 	'report' => ['label' => '報表', 'url' => ['/report/index']],
@@ -45,16 +45,11 @@ foreach($job['nav'] as $key => $val){
 	if(!empty($job[$val])){
 		$nav2_need = [];
 		foreach($job[$val] as $vval){
-			if(!empty($user_level[$vval]) || $user_job == 0){
-				$decbin = preg_split('//', decbin($user_level[$vval]), -1, PREG_SPLIT_NO_EMPTY);
-				if($decbin[0] == 1 || $user_job == 0){
-					$nav2_need[] = $nav_arr[$val][$vval];
-					$right[$vval] = 1;
-				}
-			}else{
+			$decbin = preg_split('//', decbin($user_level[$vval]), -1, PREG_SPLIT_NO_EMPTY);
+			if($decbin[0] == 1 || $user_job == 0){
 				$nav2_need[] = $nav_arr[$val][$vval];
-				$right[$vval] = 1;
 			}
+			$right[$vval] = $decbin;
 		}
 		if(explode('_',Yii::$app->db->dsn)[1] == 'main'){
 			$nav2_need[] = ['label'=>'超級管理員','url'=> ['/userlist/index']];
@@ -66,8 +61,8 @@ foreach($job['nav'] as $key => $val){
 		$decbin = preg_split('//', decbin($user_level[$val]), -1, PREG_SPLIT_NO_EMPTY);
 		if($decbin[0] == 1 || $user_job == 0){
 			$nav_need[] = $nav_arr[$val];
-			$right[$val] = 1;
 		}
+		$right[$val] = $decbin;
 	}
 }
 

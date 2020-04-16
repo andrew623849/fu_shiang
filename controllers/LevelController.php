@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\AdminSheet;
 use Yii;
 use app\models\Level;
 use app\models\LevelSearch;
@@ -33,12 +34,12 @@ class LevelController extends Controller
 			$this->layout = '';
 			echo "<script>alert('請先登入');location.href=''";
 		}
-		if(empty(Yii::$app->session['right']['level'])){
-			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
-
+		if(Level::RightCheck('level',0)){
+			return parent::beforeAction($action);
+		}else{
+			echo "<script>alert('沒有職權管理權限');history.go(-1);</script>";
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
 
     /**
@@ -76,19 +77,24 @@ class LevelController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Level();
+		if(Level::RightCheck('level',1)){
+			$model = new Level();
+			if ($model->load(Yii::$app->request->post())) {
+				$model->build_time = date('Y-m-d H:i:s');
+				$model->build_id = Yii::$app->session['user']['id'];
+				$model->useable = 1;
+				$model->save();
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('create', [
+				'model' => $model,
+			]);
+		}else{
+			echo "<script>alert('沒有新增職權的權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        if ($model->load(Yii::$app->request->post())) {
-        	$model->build_time = date('Y-m-d H:i:s');
-        	$model->build_id = Yii::$app->session['user']['id'];
-        	$model->useable = 1;
-			$model->save();
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -100,15 +106,19 @@ class LevelController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		if(Level::RightCheck('level',2)){
+			$model = $this->findModel($id);
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('update', [
+				'model' => $model,
+			]);
+		}else{
+			echo "<script>alert('沒有編輯職權的權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -120,9 +130,20 @@ class LevelController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+		if(Level::RightCheck('level',3)){
+			$data = adminsheet::find()->where(['job'=>$id,'deleted'=>0])->asArray()->one();
+			if(empty($data)){
+				$this->findModel($id)->delete();
+				return $this->redirect(['index']);
+			}else{
+				echo "<script>alert('此職稱尚有人員使用，無法刪除');history.go(-1);</script>";
+			}
+		}else{
+			echo "<script>alert('沒有刪除職權的權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        return $this->redirect(['index']);
+
     }
 
     /**

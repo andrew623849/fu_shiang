@@ -20,7 +20,7 @@ $admin_sheet = AdminSheet::find('user_name')->indexBy('id')->asArray()->all();
     }
 </style>
 <?php $form = ActiveForm::begin([
-	'action' => ['toothcase/todaycase'],
+	'action' => ['backend/todaycase'],
 	'method' => 'post',
 	'options' =>['class'=>'todaycase_time']
 ]); ?>

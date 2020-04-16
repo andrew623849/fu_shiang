@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use Yii;
 use app\models\Outlay;
 use app\models\OutlaySearch;
@@ -35,12 +36,12 @@ class OutlayController extends Controller
 			return  false;
 
 		}
-		if(empty(Yii::$app->session['right']['outlay'])){
+		if(Level::RightCheck('outlay',0)){
+			return parent::beforeAction($action);
+		}else{
 			echo "<script>alert('沒有支出管理權限');history.go(-1);</script>";
-
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
 
     /**
@@ -78,15 +79,18 @@ class OutlayController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Outlay();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+		if(Level::RightCheck('outlay',1)){
+			$model = new Outlay();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('create', [
+				'model' => $model,
+			]);
+		}else{
+			echo "<script>alert('沒有新增支出權限');history.go(-1);</script>";
+			return  false;
+		}
     }
 
     /**
@@ -98,15 +102,19 @@ class OutlayController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+		if(Level::RightCheck('outlay',2)){
+			$model = $this->findModel($id);
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('update', [
+				'model' => $model,
+			]);
+		}else{
+			echo "<script>alert('沒有修改支出權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -118,10 +126,16 @@ class OutlayController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-        Yii::$app->db->createCommand('ALTER TABLE outlay DROP id')->query();
-        Yii::$app->db->createCommand('ALTER TABLE outlay ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
-        return $this->redirect(['index']);
+		if(Level::RightCheck('outlay',3)){
+			$this->findModel($id)->delete();
+			Yii::$app->db->createCommand('ALTER TABLE outlay DROP id')->query();
+			Yii::$app->db->createCommand('ALTER TABLE outlay ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
+			return $this->redirect(['index']);
+		}else{
+			echo "<script>alert('沒有刪除支出權限');history.go(-1);</script>";
+			return  false;
+		}
+
     }
 
     /**

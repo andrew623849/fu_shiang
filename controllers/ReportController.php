@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use app\models\Report;
 use Yii;
 use yii\filters\VerbFilter;
@@ -30,12 +31,12 @@ class ReportController extends Controller
 			return  false;
 
 		}
-		if(empty(Yii::$app->session['right']['report']) && empty(Yii::$app->request->get("id"))){
-			echo "<script>alert('沒有員工管理權限');history.go(-1);</script>";
-
+		if(Level::RightCheck('report',0)){
+			return parent::beforeAction($action);
+		}else{
+			echo "<script>alert('沒有報表管理權限');history.go(-1);</script>";
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
     /**
      * {@inheritdoc}

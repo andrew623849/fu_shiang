@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use app\models\LineMsg;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -34,18 +35,12 @@ class ToothcaseController extends Controller
 			return  false;
 
 		}
-		if(empty(Yii::$app->session['right']['today_case']) && empty(Yii::$app->request->get("id"))){
-			echo "<script>alert('沒有交件管理權限');history.go(-1);</script>";
-
-			return  false;
-		}
-		if(empty(Yii::$app->session['right']['toothcase']) && !empty(Yii::$app->request->get("id"))){
+		if(Level::RightCheck('toothcase',0)){
+			return parent::beforeAction($action);
+		}else{
 			echo "<script>alert('沒有病例管理權限');history.go(-1);</script>";
-
 			return  false;
 		}
-
-		return parent::beforeAction($action);
 	}
     /**
      * {@inheritdoc}
@@ -60,26 +55,6 @@ class ToothcaseController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
         ];
-    }
-
-    public function actionTodaycase(){
-		$model = new Toothcase;
-		if(empty($_POST['time'])){
-			$start_time = date('Y-m-d');
-			$end_time = date('Y-m-d');
-			$time = $start_time.'~'.$end_time;
-		}else{
-			$start_time = explode('~',$_POST['time'])[0];
-			$end_time = explode('~',$_POST['time'])[1];
-			$time = $_POST['time'];
-		}
-		$model = $model->find()->where(["or",["and",[">=","end_time",$start_time],["<=","end_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->all();
-		$clinic = show_clinic('all');
-		return $this->render('todaycase', [
-			'model' => $model,
-			'clinic_info'=>$clinic['1'],
-			'time'=>$time,
-		]);
     }
 
     /**
@@ -143,12 +118,6 @@ class ToothcaseController extends Controller
 		//根據目標設置返回pdf輸出
 		return $pdf->render();
     }
-    public function actionReport(){
-		return $this->render('report', [
-			'year'=>empty($_POST['year'])?date('Y'):$_POST['year']
-
-		]);
-    }
 
     /**
      * Displays a single toothcase model.s
@@ -179,19 +148,25 @@ class ToothcaseController extends Controller
      * @return mixed
      */
     public function actionCreate($clinic_this = 1){
-		$model = new Toothcase();
-		$clinic = show_clinic('all');
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			LineMsg::AddCase($model);
-			toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['id' => $model->id]);
-			return $this->redirect(['view', 'id' => $model->id]);
+		if(Level::RightCheck('toothcase',1)){
+			$model = new Toothcase();
+			$clinic = show_clinic('all');
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				LineMsg::AddCase($model);
+				toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['id' => $model->id]);
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('create', [
+				'model' => $model,
+				'clinic_model' => $clinic['0'],
+				'clinic_info'=>$clinic['1'],
+				'clinic_this' =>$clinic_this,
+			]);
+		}else{
+			echo "<script>alert('沒有新增病例權限');history.go(-1);</script>";
+			return  false;
 		}
-		return $this->render('create', [
-			'model' => $model,
-			'clinic_model' => $clinic['0'],
-			'clinic_info'=>$clinic['1'],
-			'clinic_this' =>$clinic_this,
-		]);
+
     }
 
     /**
@@ -202,19 +177,24 @@ class ToothcaseController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate($id){
-		$model = $this->findModel($id);
-		$clinic = show_clinic($model['clinic_id']);
-		$clinic_info = show_clinic('all');
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
-			return $this->redirect(['view', 'id' => $model->id]);
-		}
+		if(Level::RightCheck('toothcase',2)){
+			$model = $this->findModel($id);
+			$clinic = show_clinic($model['clinic_id']);
+			$clinic_info = show_clinic('all');
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				toothcase::updateAll(['price'=>price_case($_POST['Toothcase'])],['name'=>$_POST['Toothcase']['name'],'tooth'=>$_POST['Toothcase']['tooth'],'id'=>$model->id]);
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
 
-		return $this->render('update', [
-			'model' => $model,
-			'clinic_model' => $clinic,
-			'clinic_info'=>$clinic_info['1'],
-		]);
+			return $this->render('update', [
+				'model' => $model,
+				'clinic_model' => $clinic,
+				'clinic_info'=>$clinic_info['1'],
+			]);
+		}else{
+			echo "<script>alert('沒有編輯病例權限');history.go(-1);</script>";
+			return  false;
+		}
     }
 
     /**
@@ -225,10 +205,15 @@ class ToothcaseController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id){
-		$this->findModel($id)->delete();
-		Yii::$app->db->createCommand('ALTER TABLE toothcase DROP id')->query();
-		Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
-		return $this->redirect(['toothcase']);
+		if(Level::RightCheck('toothcase',3)){
+			$this->findModel($id)->delete();
+			Yii::$app->db->createCommand('ALTER TABLE toothcase DROP id')->query();
+			Yii::$app->db->createCommand('ALTER TABLE toothcase ADD id INT( 11 ) NOT NULL AUTO_INCREMENT FIRST,ADD PRIMARY KEY(id)')->query();
+			return $this->redirect(['toothcase']);
+		}else{
+			echo "<script>alert('沒有刪除病例權限');history.go(-1);</script>";
+			return  false;
+		}
     }
     /**
      * Finds the toothcase model based on its primary key value.

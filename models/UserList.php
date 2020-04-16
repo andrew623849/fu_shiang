@@ -96,13 +96,6 @@ class UserList extends \yii\db\ActiveRecord
 		$sys = New Systemsetup();
 		$sys->sys_name = $_POST['company_name'];
 		$sys->insert();
-		$level = New Level();
-		$level->id = 0;
-		$level->job_name = '老闆';
-		$level->build_time = date('Y-m-d H:i:s');
-		$level->useable = 1;
-		$level->build_id = 1;
-		$level->insert();
 		mkdir('./users/'.$new_code);
 		mkdir('./users/'.$new_code.'/pages');
 		mkdir('./users/'.$new_code.'/home_img');

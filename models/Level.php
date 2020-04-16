@@ -94,4 +94,11 @@ class Level extends \yii\db\ActiveRecord
         return $this->hasMany(AdminSheet::className(), ['id' => 'build_id']);
     }
 
+    public function RightCheck($level,$type){
+		if((!empty(Yii::$app->session['right'][$level][$type]) && Yii::$app->session['right'][$level][$type] == 1) || Yii::$app->session['user']['job'] == 0){
+			return  true;
+		}else{
+			return false;
+		}
+	}
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Level;
 use Yii;
 use app\models\Material;
 use app\models\MaterialSearch;
@@ -34,12 +35,13 @@ class MaterialController extends Controller
 			return  false;
 
 		}
-		if(empty(Yii::$app->session['right']['material'])){
-			echo "<script>alert('沒有材料管理權限');history.go(-1);</script>";
+		if(Level::RightCheck('material',0)){
+			return parent::beforeAction($action);
 
+		}else{
+			echo "<script>alert('沒有材料管理權限');history.go(-1);</script>";
 			return  false;
 		}
-		return parent::beforeAction($action);
 	}
 
     /**
@@ -94,15 +96,19 @@ class MaterialController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Material();
+		if(Level::RightCheck('material',1)){
+			$model = new Material();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('create', [
+				'model' => $model,
+			]);
+		}else{
+			echo "<script>alert('沒有新增材料權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -114,16 +120,21 @@ class MaterialController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model_1 = $this->findModel($id);
-		$model = new Material();
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			MaterialSearch::UpdateById(['deleted'=>'1'],$id);
-			return $this->redirect(['view', 'id' => $model->id]);
-        }
+		if(Level::RightCheck('material',2)){
+			$model_1 = $this->findModel($id);
+			$model = new Material();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				MaterialSearch::UpdateById(['deleted'=>'1'],$id);
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+			return $this->render('update', [
+				'model' => $model_1,
+			]);
+		}else{
+			echo "<script>alert('沒有修改材料權限');history.go(-1);</script>";
+			return  false;
+		}
 
-        return $this->render('update', [
-            'model' => $model_1,
-        ]);
     }
 
 	/**
@@ -135,10 +146,13 @@ class MaterialController extends Controller
 	 */
 	public function actionNouse($id)
 	{
-		MaterialSearch::UpdateById(['useable'=>1,'modify_time'=>date('Y-m-d H:i:s')],$id);
-
-
-		return $this->redirect(['index']);
+		if(Level::RightCheck('material',3)){
+			MaterialSearch::UpdateById(['useable' => 1, 'modify_time' => date('Y-m-d H:i:s')], $id);
+			return $this->redirect(['index']);
+		}else{
+			echo "<script>alert('沒有刪除材料權限');history.go(-1);</script>";
+			return  false;
+		}
 	}
 	/**
 	 * Deletes an existing Material model.
