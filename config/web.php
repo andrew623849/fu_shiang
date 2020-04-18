@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'charset' => 'utf-8',
-    'language' => 'zh-TW',
+    'language' => 'zh-tw',
     'timeZone' => 'Asia/Taipei',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
