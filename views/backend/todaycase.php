@@ -17,6 +17,7 @@
 	echo Fullcalendar::widget([
 	'options'       => [
 		'id'       => 'calendar',
+		'language' => 'zh-tw',
 	],
 	'clientOptions' => [
 		'defaultView' => 'agendaDay',
