@@ -21,11 +21,13 @@
 	'clientOptions' => [
 		'defaultView' => 'agendaDay',
 		'eventLimit'=>5,
+		'aspectRatio'=>1.585,
 		'minTime'=>'07:00',
 		'maxTime'=>'22:00',
 		'firstDay'=>'1',
 		'nowIndicator'=>true,
 		'selectable'=>true,
+		'handleWindowResize'=>false,
 		'eventClick'=>new JsExpression('
 			function(info){
 				$.ajax({
@@ -40,7 +42,7 @@
 					krajeeDialog.alert(data);
 				});
 			}
-		')
+		'),
 
 	],
 	'events'=> Url::to(['/backend/event']),
