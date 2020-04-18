@@ -46,8 +46,8 @@ echo $form->field($model,'imageFile[]')->label("輪番圖片(1140px*400px)")->wi
 echo '</div>';
 echo $form->field($model,'text')->label("首頁內文")->widget(CKEditor::className(),[
         'preset' => 'custom',
-		'language' => 'zh-tw',
 		'clientOptions' => [
+			'language' => 'zh-tw',
 			'height' => 800,
 			'filebrowserUploadUrl' => $url
 		],

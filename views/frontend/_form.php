@@ -27,6 +27,7 @@ use yii\widgets\ActiveForm;
 	<?= $form->field($model,'text')->label("首頁內文")->widget(CKEditor::className(),[
 		'preset' => 'custom',
 		'clientOptions' => [
+			'language' => 'zh-tw',
 			'height' => 800,
 			'filebrowserUploadUrl' => $url
 		],
