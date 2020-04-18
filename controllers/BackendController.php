@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\AdminsheetSearch;
+use app\models\AdminSheetSearch;
 use app\models\clinicSearch;
 use app\models\Level;
 use app\models\LineNotify;
@@ -11,7 +11,6 @@ use app\models\Toothcase;
 use app\models\toothcaseSearch;
 use edofre\fullcalendar\models\Event;
 use Yii;
-use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\AdminSheet;
@@ -174,7 +173,7 @@ class BackendController extends Controller
 		$models = toothcaseSearch::getData($_POST['id'])[0];
 		$clinic = clinicSearch::GetData();
 		$material = MaterialSearch::GetDataWhere();
-		$admin_sheet = AdminsheetSearch::GetUserData();
+		$admin_sheet = AdminSheetSearch::GetUserData();
 		$attributes_arr = [];
 		$attributes_arr[] = ['label'=>'診所','value'=>$clinic[$models['clinic_id']]['clinic']];
 		$attributes_arr[] = ['label'=>'工作日期','value'=>$models['start_time'].' ~ '.$models['end_time']];
