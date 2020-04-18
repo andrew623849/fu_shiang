@@ -33,8 +33,8 @@
         "softark/yii2-dual-listbox": "dev-master",
         "2amigos/yii2-ckeditor-widget" : "~2.1",
         "kartik-v/yii2-widget-fileinput": "dev-master",
-        "kartik-v/yii2-label-inplace": "dev-master"
-
+        "kartik-v/yii2-label-inplace": "dev-master",
+        "edofre/yii2-fullcalendar": "V1.0.11"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

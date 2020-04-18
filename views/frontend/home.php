@@ -36,7 +36,7 @@ if(!empty($model->file_config)){
 }
 echo Html::submitButton('完成編輯',['class' => 'btn btn-success submit_b','style'=>'margin:10px;']);
 echo '<div class="row">';
-echo $form->field($model,'imageFile[]')->label("輪番圖片")->widget(FileInput::className(),[
+echo $form->field($model,'imageFile[]')->label("輪番圖片(1140px*400px)")->widget(FileInput::className(),[
 	'options'=>[
 		'multiple'=>true,
 		'style'=>'overflow-x: scroll;'

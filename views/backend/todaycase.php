@@ -1,159 +1,48 @@
 <?php
 
-use app\models\AdminSheet;
-use app\models\Material;
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\widgets\ActiveForm;
-use kartik\daterange\DateRangePicker;
+	use edofre\fullcalendar\Fullcalendar;
+	use kartik\dialog\Dialog;
+	use yii\helpers\Url;
+	use yii\web\JsExpression;
+	echo Dialog::widget([
+		'libName' => 'krajeeDialog',
+		'options' => [
+			'title' => '事件內容',
+			'size' => Dialog::SIZE_LARGE, // large dialog text
+			'type' => Dialog::TYPE_SUCCESS, // bootstrap contextual color
+			'draggable' => true,
+			'closable' => true
+		],
+	]);
+	echo Fullcalendar::widget([
+	'options'       => [
+		'id'       => 'calendar',
+	],
+	'clientOptions' => [
+		'defaultView' => 'agendaDay',
+		'eventLimit'=>5,
+		'minTime'=>'07:00',
+		'maxTime'=>'22:00',
+		'firstDay'=>'1',
+		'nowIndicator'=>true,
+		'selectable'=>true,
+		'eventClick'=>new JsExpression('
+			function(info){
+				$.ajax({
+					url: "/backend/edetail",
+					type:"POST",
+					cache: false,
+					data: {
+						id:info.className[0]
+					}
+				}).done(function(data){
+					data = data.replace(/\r\n|\n/g,"");
+					krajeeDialog.alert(data);
+				});
+			}
+		')
 
-/* @var $this yii\web\View */
-/* @var $searchModel app\models\toothcaseSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-$material = Material::find('material')->indexBy('id')->asArray()->all();
-$admin_sheet = AdminSheet::find('user_name')->indexBy('id')->asArray()->all();
+	],
+	'events'=> Url::to(['/backend/event']),
+]);
 ?>
-<style type="text/css">
-    th{
-        width:100px;
-    }
-</style>
-<?php $form = ActiveForm::begin([
-	'action' => ['backend/todaycase'],
-	'method' => 'post',
-	'options' =>['class'=>'todaycase_time']
-]); ?>
-<div class="col-md-12">
-<?= DateRangePicker::widget([
-		'name' => 'time',
-		'value' => $time,
-		'options'=>['id'=>'todaycase_timerange','class'=>'form-control'],
-		'convertFormat' => true,
-		'pluginOptions' => [ 'locale' => [ 'format' => 'Y-m-d', 'separator' => '~', ]
-		]
-]); ?>
-</div>
-
-<?php ActiveForm::end(); ?>
-<?php 
-$clinic = -1;
-for($i = 0;$i < count($model);$i ++){
-    $models = $model[$i];
-    if($models['end_time'] == date('Y-m-d')){
-        $options = "border:3px red solid";
-    }elseif($models['end_time'] <= date('Y-m-d',strtotime('+3 day'))){
-        $options= "border:3px blue solid";
-    }else{
-        $options = "border:3px solid";
-    }
-    if($clinic != $models['clinic_id']){
-        echo '<hr><div class="col-sm-12"><h2>'.$clinic_info[($models['clinic_id']-1)]['clinic'].'</h2></div>';
-        $clinic=$models['clinic_id'];
-    }
-	$attributes_arr = [];
-	$attributes_arr[] = ['label'=>'診所','value'=>$clinic_info[($models->clinic_id-1)]['clinic']];
-	$attributes_arr[] = ['label'=>'工作日期','value'=>$models->start_time.' ~ '.$models->end_time];
-	if($models['try_time'] != 0){
-		$attributes_arr[] = ['label'=>'試戴日','value'=>$models->try_time];
-
-	}
-	$attributes_arr[] = ['label'=>'病人姓名','value'=>$models->name];
-	$attributes_arr[] = ['label'=>'材料1','value'=>$material[$models['material_id']]['material'].'('.$models->tooth.')'];
-    $attributes_arr[] = ['label'=>'齒色','value'=>$models->tooth_color];
-    if(!empty($material[$models['material_id']]['make_process'])){
-    	$make_p = explode(',', $material[$models['material_id']]['make_process']);
-		$make_p_arr = [];
-		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-		$marker_per = explode(',',$models['make_p']);
-		$marker_pf = explode(',',$models['make_p_f']);
-		foreach($make_p as $key=>$val){
-			if(!empty($marker_per[$key])){
-				if($marker_pf[$key] == 1){
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>'];
-				}else{
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>'];
-				}
-			}else{
-				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>''];
-			}
-		}
-		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
-			'model' => $models,
-			'attributes' => $make_p_arr,
-			'options'=>['class' => 'table table-striped table-bordered detail-view'],
-		])];
-	}
-	if($models['material_id_1'] != 0){
-		$attributes_arr[] = ['label'=>'材料2','value'=>($models->material_id_1==0?'':$material[($models->material_id_1)]['material']).'('.$models->tooth_1.')'];
-        $attributes_arr[] = ['label'=>'齒色','value'=>$models->tooth_color_1];
-	}
-	if(!empty($material[$models['material_id_1']]['make_process'])){
-		$make_p = explode(',', $material[$models['material_id_1']]['make_process']);
-		$make_p_arr = [];
-		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-		$marker_per = explode(',',$models['make_p1']);
-		$marker_pf = explode(',',$models['make_p1_f']);
-		foreach($make_p as $key=>$val){
-			if(!empty($marker_per[$key])){
-				if($marker_pf[$key] == 1){
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>'];
-				}else{
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>'];
-				}
-			}else{
-				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>''];
-			}
-		}
-		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
-			'model' => $models,
-			'attributes' => $make_p_arr,
-			'options'=>['class' => 'table table-striped table-bordered detail-view'],
-		])];
-	}
-	if($models['material_id_2'] != 0){
-		$attributes_arr[] = ['label'=>'材料3','value'=>($models->material_id_2==0?'':$material[($models->material_id_1)]['material']).'('.$models->tooth_2.')'];
-		$attributes_arr[] = ['label'=>'齒色','value'=>$models->tooth_color_2];
-	}
-	if(!empty($material[$models['material_id_2']]['make_process'])){
-		$make_p = explode(',', $material[$models['material_id_2']]['make_process']);
-		$make_p_arr = [];
-		$make_p_arr[] = ['label'=>'程序','value'=>'負責人'];
-		$marker_per = explode(',',$models['make_p2']);
-		$marker_pf = explode(',',$models['make_p2_f']);
-		foreach($make_p as $key=>$val){
-			if(!empty($marker_per[$key])){
-				if($marker_pf[$key] == 1){
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:green;" class="glyphicon glyphicon-ok"></i>'];
-				}else{
-					$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>$admin_sheet[$marker_per[$key]]['user_name'].'<i style="color:red;" class="glyphicon glyphicon-remove"></i>'];
-				}
-			}else{
-				$make_p_arr[] =  ['label'=>$val,'format' => 'html','value'=>''];
-			}
-		}
-		$attributes_arr[] = ['label'=>'工作流程','format' => 'html','value'=>DetailView::widget([
-			'model' => $models,
-			'attributes' => $make_p_arr,
-			'options'=>['class' => 'table table-striped table-bordered detail-view'],
-		])];
-	}
-	$attributes_arr[] = ['label'=>'備註','value'=>$models->remark];
-	$attributes_arr[] = ['label'=>'金額','value'=>$models->price];
-    ?>
-    <div class="col-sm-4">
-    <?php echo DetailView::widget([
-        'model' => $models,
-        'attributes' => $attributes_arr,
-        'options'=>['class' => 'table table-striped table-bordered detail-view','style'=>$options],
-    ]) ?>
-    </div>
-<?php
- }?>
-<?php
-	$js =<<< JS
-	$("#todaycase_timerange").change(function(){
-		$('.todaycase_time').submit();
-	});
-JS;
-	$this->registerJs($js);

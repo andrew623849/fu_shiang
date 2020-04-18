@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a8eb3c58b8ce81273e967275bfe0052b",
+    "content-hash": "0d4d598f882fb73f0085aa6a69b6457a",
     "packages": [
         {
             "name": "2amigos/yii2-ckeditor-widget",
@@ -460,6 +460,57 @@
             "time": "2017-09-13T13:09:47+00:00"
         },
         {
+            "name": "edofre/yii2-fullcalendar",
+            "version": "V1.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Edofre/yii2-fullcalendar.git",
+                "reference": "0eed44a374a95849093891f08df20b79942a0c62"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Edofre/yii2-fullcalendar/zipball/0eed44a374a95849093891f08df20b79942a0c62",
+                "reference": "0eed44a374a95849093891f08df20b79942a0c62",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/fullcalendar": "v3.8.0",
+                "php": ">=5.5.0",
+                "yiisoft/yii2": ">=2.0.9",
+                "yiisoft/yii2-jui": ">=2.0.6"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "edofre\\fullcalendar\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Edo Freriks",
+                    "email": "edofre@gmail.com"
+                }
+            ],
+            "description": "Yii2 widget for fullcalendar",
+            "homepage": "https://github.com/edofre/yii2-fullcalendar",
+            "keywords": [
+                "calendar",
+                "event",
+                "fullcalendar",
+                "javascript"
+            ],
+            "time": "2018-01-04T21:25:17+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.12.0",
             "source": {
@@ -859,12 +910,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-mpdf.git",
-                "reference": "e513d17e8b1a5e063475f332e726845dba8f32b5"
+                "reference": "7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/e513d17e8b1a5e063475f332e726845dba8f32b5",
-                "reference": "e513d17e8b1a5e063475f332e726845dba8f32b5",
+                "url": "https://api.github.com/repos/kartik-v/yii2-mpdf/zipball/7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c",
+                "reference": "7ea3a5f9bcf5bcf6d681bd82cbe843c356d1428c",
                 "shasum": ""
             },
             "require": {
@@ -903,7 +954,7 @@
                 "utf8",
                 "yii2"
             ],
-            "time": "2019-09-03T03:11:44+00:00"
+            "time": "2020-04-14T08:55:18+00:00"
         },
         {
             "name": "kartik-v/yii2-tabs-x",
@@ -1288,6 +1339,46 @@
             ]
         },
         {
+            "name": "npm-asset/fullcalendar",
+            "version": "3.8.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/fullcalendar/-/fullcalendar-3.8.0.tgz"
+            },
+            "require": {
+                "npm-asset/jquery": ">=2,<4.0",
+                "npm-asset/moment": ">=2.9.0,<3.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/jquery",
+            "version": "3.5.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/jquery/-/jquery-3.5.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/moment",
+            "version": "2.24.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/moment/-/moment-2.24.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
             "name": "npm-asset/ssr-window",
             "version": "1.0.1",
             "dist": {
@@ -1304,12 +1395,12 @@
             "version": "v4.5.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nolimits4web/swiper.git",
+                "url": "git@github.com:nolimits4web/Swiper.git",
                 "reference": "2b05891cdc2aa427f5697fa747680d1280dc4379"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nolimits4web/swiper/zipball/2b05891cdc2aa427f5697fa747680d1280dc4379",
+                "url": "https://api.github.com/repos/nolimits4web/Swiper/zipball/2b05891cdc2aa427f5697fa747680d1280dc4379",
                 "reference": "2b05891cdc2aa427f5697fa747680d1280dc4379"
             },
             "require": {
