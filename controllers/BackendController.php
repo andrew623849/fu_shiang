@@ -145,7 +145,7 @@ class BackendController extends Controller
 		$end_time = explode('T',$_GET['end'])[0];
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$model = new Toothcase;
-		$model = $model->find()->where(["or",["and",[">=","start_time",$start_time],["<=","start_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->asArray()->all();
+		$model = $model->find()->where(["or",["or",["and",[">=","start_time",$start_time],["<=","start_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]],["and",[">=","end_time",$start_time],["<=","end_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->asArray()->all();
 		$events = [];
 		$clinic = clinicSearch::GetData();
 		foreach($model as $val){
