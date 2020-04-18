@@ -145,23 +145,23 @@ class BackendController extends Controller
 		$end_time = explode('T',$_GET['end'])[0];
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		$model = new Toothcase;
-		$model = $model->find()->where(["or",["or",["and",[">=","start_time",$start_time],["<=","start_time",$end_time]],["and",[">=","try_time",$start_time],["<=","try_time",$end_time]]],["and",[">=","end_time",$start_time],["<=","end_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->asArray()->all();
+		$model = $model->find()->where(["or",["and",[">=","try_time",$start_time],["<=","try_time",$end_time]],["and",[">=","end_time",$start_time],["<=","end_time",$end_time]]])->orderBy(['clinic_id'=>SORT_ASC,'end_time'=>SORT_ASC])->asArray()->all();
 		$events = [];
-		$clinic = clinicSearch::GetData();
+		$color = ['#3366FF','#6633FF','#CC33FF','#FF33CC','#33CCFF','#003DFF','#B88A00','#F58800','#FFCC33'];
 		foreach($model as $val){
 			$events[] = new Event([
 				'id'=> uniqid(),
-				'title'=> $clinic[$val['clinic_id']]['clinic'].'_交件 '.$val['name'],
+				'title'=> $val['name'],
 				'className' => $val['id'],
 				'start'=> $val['end_time'],
-				'color'=> 'blue'
+				'color'=> $color[$val['clinic_id']]
 			]);
 			$events[] = new Event([
 				'id'=> uniqid(),
-				'title'=>  $clinic[$val['clinic_id']]['clinic'].'_收件 '.$val['name'],
+				'title'=>  $val['name'],
 				'className' => $val['id'],
-				'start'=> $val['start_time'],
-				'color'=> 'green'
+				'start'=> $val['try_time'],
+				'color'=> $color[$val['clinic_id']]
 			]);
 		}
 
