@@ -8,7 +8,6 @@ use app\models\Material;
 /* @var $this yii\web\View */
 /* @var $model app\models\toothcase */
 $clinic = clinicSearch::GetData();
-
 $this->title = $clinic[$model['clinic_id']]['clinic'].':病人資料';
 $this->params['breadcrumbs'][] = ['label' => $clinic[$model['clinic_id']]['clinic'].'病例', 'url' => ['toothcase/toothcase/'.$model['clinic_id']]];
 $this->params['breadcrumbs'][] = $model->name;
@@ -80,6 +79,9 @@ if(!empty($model->material_id_2)){
 <?php }?>
 	<div class="form-group">
 		<label>病人姓名：<?= $model->name?></label>
+	</div>
+	<div class="form-group">
+		<label>金額：<?= $model->price?></label>
 	</div>
 	<div class="col-sm-12">
 
