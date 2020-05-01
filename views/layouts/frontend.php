@@ -1,74 +1,83 @@
+
 <?php
 
-/* @var $this \yii\web\View */
-/* @var $content string */
+	use app\models\Systemsetup;
 
-use app\models\frontpageSearch;
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use app\assets\AppAsset;
-use app\models\Systemsetup;
+	$sys_name = Systemsetup::SysName();
 
-
-AppAsset::register($this);
-$sys_name = Systemsetup::SysName();
-$sys_logo = Systemsetup::SysLogo();
-$page = frontpageSearch::GetDataWhere(['deleted'=>0]);
-$page_arr = [];
-foreach($page as $val){
-	$page_arr[] = ['label' => $val['name'], 'url' => ['/site/pages','op'=>$val['file_name']]];
-}
-if(explode('_',Yii::$app->db->dsn)[1] == 'main'){
-	$page_arr[] = ['label' => '註冊','url'=>['/site/registered']];
-}
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-    <title><?= $sys_name?></title>
-    <?php $this->head() ?>
+	<title><?= $sys_name?></title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<link rel="stylesheet" href="/css/skel.css" />
+	<link rel="stylesheet" href="/css/style.css" />
+	<!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.dropotron.min.js"></script>
+	<script src="/js/skel.min.js"></script>
+	<script src="/js/skel-layers.min.js"></script>
+	<script src="/js/init.js"></script>
+	<?php $this->head() ?>
+
+	<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
 </head>
-<body>
+<body class="homepage">
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<!-- Header -->
+<div id="header">
 	<div class="container">
-	<?php
 
-		NavBar::begin([
-            'brandLabel' => !empty($sys_logo) ? Html::img($sys_logo, ['alt'=>$sys_name]):$sys_name,
-            'brandUrl' => ['/site/index'],
-            'options' => [
-                'class' => 'navbar-default navbar-fixed-top',
-            ],
-        ]);
-        echo Nav::widget([
-            'options' => [
-				'class' => 'navbar-nav navbar-right',
-			],
-            'items' => $page_arr,
-        ]);
-        NavBar::end();
-    ?>
-        <?= $content ?>
-    </div>
+		<!-- Logo -->
+		<h1><a href="#" id="logo"><?= $sys_name?></a></h1>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li><a href="/site/index">首頁</a></li>
+			</ul>
+		</nav>
+
+
+		<!-- Banner -->
+		<div id="banner">
+			<div class="container">
+				<section>
+					<header class="major">
+					</header>
+					<a href="#" class="button alt">Sign Up</a>
+				</section>
+			</div>
+		</div>
+	</div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left"></p>
+<?= $content ?>
 
-        <p class="pull-right"> 登入者: </p>
-    </div>
-</footer>
-
+<!-- Footer -->
+<div id="footer">
+	<div class="container">
+		<!-- Lists -->
+		<div class="row">
+			<div class="8u">
+				<section>
+				</section>
+			</div>
+			<div class="4u">
+				<section>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
 <?php $this->endBody() ?>
+
 </body>
 </html>
 <?php $this->endPage() ?>
