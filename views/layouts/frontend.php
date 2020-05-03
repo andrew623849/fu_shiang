@@ -2,6 +2,8 @@
 <?php
 
 	use app\models\Systemsetup;
+	use yii\helpers\Html;
+	use app\assets\AppAsset;
 
 	$sys_name = Systemsetup::SysName();
 
@@ -15,19 +17,15 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<link rel="stylesheet" href="/css/skel.css" />
-	<link rel="stylesheet" href="/css/style.css" />
-	<!--[if lte IE 8]><script src="/css/ie/html5shiv.js"></script><![endif]-->
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/jquery.dropotron.min.js"></script>
-	<script src="/js/skel.min.js"></script>
-	<script src="/js/skel-layers.min.js"></script>
-	<script src="/js/init.js"></script>
-	<?php $this->head() ?>
-
-	<!--[if lte IE 8]><link rel="stylesheet" href="/css/ie/v8.css" /><![endif]-->
+	<?php $this->head();
+		AppAsset::register(Yii::$app->view);
+	?>
+	<style>
+		#skel-layers-inactiveWrapper{
+			height:0!important;
+		}
+	</style>
 </head>
-<body class="homepage">
 <?php $this->beginBody() ?>
 
 <!-- Header -->
@@ -35,7 +33,7 @@
 	<div class="container">
 
 		<!-- Logo -->
-		<h1><a href="#" id="logo"><?= $sys_name?></a></h1>
+		<h1><a href="" id="logo"><?= $sys_name?></a></h1>
 
 		<!-- Nav -->
 		<nav id="nav">
@@ -49,9 +47,9 @@
 		<div id="banner">
 			<div class="container">
 				<section>
-					<header class="major">
-					</header>
-					<a href="#" class="button alt">Sign Up</a>
+					<?php if(explode('_',Yii::$app->db->dsn)[1] == 'main'){
+						echo Html::a('註冊', ['site/registered'],['class'=>"button alt"]);
+					}?>
 				</section>
 			</div>
 		</div>
@@ -60,7 +58,7 @@
 
 <?= $content ?>
 
-<!-- Footer -->
+<!-- Footer-->
 <div id="footer">
 	<div class="container">
 		<!-- Lists -->
@@ -78,6 +76,5 @@
 </div>
 <?php $this->endBody() ?>
 
-</body>
 </html>
 <?php $this->endPage() ?>
