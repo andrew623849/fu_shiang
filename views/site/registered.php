@@ -1,23 +1,32 @@
+<?php
+	use kartik\label\LabelInPlace;
+	use yii\helpers\Html;use yii\widgets\ActiveForm;
+?>
 <div id="main" class="wrapper style1">
 	<div class="container">
 		<section>
+			<div class="col-md-6">
+				<?php
+				$form = ActiveForm::begin([
+					'action' => ['register'],
+					'method' => 'post',
+				]); ?>
+					<h3 style="margin: 30px 0;padding-bottom: 5px;border-bottom: 1px solid #e7ecf1;">註冊資料</h3>
+					<?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
+					<?= $form->field($model, 'user_name')->textInput(['maxlength' => true]) ?>
+					<?= $form->field($model, 'user_admin')->textInput(['maxlength' => true]) ?>
+					<div class="form-group">
+						<label class="control-label" for="userlist-password"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">密碼</font></font></label>
+						<input type="password" id="userlist-password" class="form-control" name="UserList[password]" maxlength="64">
 
-		<?php
-use kartik\label\LabelInPlace;
-use yii\helpers\Html;use yii\widgets\ActiveForm;
-$form = ActiveForm::begin([
-	'action' => ['register'],
-	'method' => 'post',
-]); ?>
+						<div class="help-block"></div>
+					</div>
+					<?= Html::submitButton('送出', ['class' => 'btn btn-success']) ?>
+				<?php ActiveForm::end(); ?>
+			</div>
+			<div class="col-md-6">
 
-	<h3 style="margin: 30px 0;padding-bottom: 5px;border-bottom: 1px solid #e7ecf1;">註冊資料</h3>
-	<?= LabelInPlace::widget(['name'=>'company_name', 'label'=>'公司名稱','options' => ['style'=>'margin:15px 0','required'=>'required']]); ?>
-	<?= LabelInPlace::widget(['name'=>'companyer', 'label'=>'負責人','options' => ['style'=>'margin:15px 0','required'=>'required']]); ?>
-	<?= LabelInPlace::widget(['name'=>'admin', 'label'=>'登入帳號','options' => ['style'=>'margin:15px 0','required'=>'required']]); ?>
-	<?= LabelInPlace::widget(['name'=>'password', 'label'=>'登入密碼','options' => ['style'=>'margin:15px 0','required'=>'required']]); ?>
-	<?= Html::submitButton('送出', ['class' => 'btn btn-success']) ?>
-
-<?php ActiveForm::end(); ?>
+			</div>
 		</section>
 	</div>
 </div>

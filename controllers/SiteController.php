@@ -61,17 +61,19 @@ class SiteController extends Controller
 	public function actionRegistered()
 	{
 		$this->layout = 'frontend';
-
-		return $this->render('registered');
+		$model = new UserList();
+		return $this->render('registered',[
+			'model'=>$model,
+		]);
 	}
 	public function actionRegister()
 	{
-		$data = UserList::find()->where(['user_admin'=>$_POST['admin']])->asArray()->one();
+		$data = UserList::find()->where(['user_admin'=>$_POST["UserList"]['user_admin']])->asArray()->one();
 		if(!empty($data)){
 			echo "<script>alert('帳號已有人使用');history.go(-1);</script>";
 		}else{
-			UserList::NewData($_POST);
-			echo "<script>location.href='http://".$_POST['admin'].".cowbtool.com/backend/index'</script>";
+			UserList::NewData($_POST["UserList"]);
+			echo "<script>location.href='http://".$_POST["UserList"]['user_admin'].".cowbtool.com/backend/index'</script>";
 		}
 	}
 }

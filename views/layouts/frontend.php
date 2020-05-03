@@ -17,7 +17,10 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
-	<?php $this->head();
+	<?php $this->registerCsrfMetaTags() ?>
+
+	<?php
+		$this->head();
 		frontAsset::register(Yii::$app->view);
 	?>
 	<style>
@@ -26,6 +29,7 @@
 		}
 	</style>
 </head>
+<body>
 <?php $this->beginBody() ?>
 
 <!-- Header -->
@@ -55,7 +59,6 @@
 		</div>
 	</div>
 </div>
-
 <?= $content ?>
 
 <!-- Footer-->
@@ -75,6 +78,6 @@
 	</div>
 </div>
 <?php $this->endBody() ?>
-
+</body>
 </html>
 <?php $this->endPage() ?>

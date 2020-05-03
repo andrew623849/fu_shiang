@@ -61,15 +61,15 @@ class UserList extends \yii\db\ActiveRecord
         ];
     }
 
-    public function NewData(){
+    public function NewData($data){
 		$max_id = self::find()->orderBy('id desc')->asArray()->one();
 		$new_code = 'k'.sprintf("%03d", $max_id['id']+1);
 		$new_data = 'cowbtool_'.$new_code;
 		$model = New UserList();
 		$model->code = $new_code;
-		$model->user_admin = $_POST['admin'];
-		$model->company_name = $_POST['company_name'];
-		$model->user_name = $_POST['companyer'];
+		$model->user_admin = $data['user_admin'];
+		$model->company_name = $data['company_name'];
+		$model->user_name = $data['user_name'];
 		$model->start_time = date('Y-m-d');
 		$model->user_mny = '600';
 		$model->end_time = date('Y-m-d',strtotime('+1 years'));
@@ -85,16 +85,16 @@ class UserList extends \yii\db\ActiveRecord
 
 		}
 		$admin = New AdminSheet();
-		$admin->admin = $_POST['admin'];
-		$admin->password = $_POST['password'];
+		$admin->admin = $data['user_admin'];
+		$admin->password = $data['password'];
 		$admin->build_time = date('Y-m-d');
 		$admin->job = 0;
-		$admin->user_name = $_POST['companyer'];
+		$admin->user_name = $data['user_name'];
 		$admin->user_sale = 0;
 		$admin->user_pay = 0;
 		$admin->insert();
 		$sys = New Systemsetup();
-		$sys->sys_name = $_POST['company_name'];
+		$sys->sys_name = $data['company_name'];
 		$sys->insert();
 		mkdir('./users/'.$new_code);
 		mkdir('./users/'.$new_code.'/pages');
