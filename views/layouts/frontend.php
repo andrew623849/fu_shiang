@@ -3,7 +3,7 @@
 
 	use app\models\Systemsetup;
 	use yii\helpers\Html;
-	use app\assets\AppAsset;
+	use app\assets\frontAsset;
 
 	$sys_name = Systemsetup::SysName();
 
@@ -18,7 +18,7 @@
 	<meta name="description" content="" />
 	<meta name="keywords" content="" />
 	<?php $this->head();
-		AppAsset::register(Yii::$app->view);
+		frontAsset::register(Yii::$app->view);
 	?>
 	<style>
 		#skel-layers-inactiveWrapper{

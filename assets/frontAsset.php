@@ -15,14 +15,23 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppAsset extends AssetBundle
+class frontAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/style.css',
+		'css/skel.css',
+		'css/ie/v8.css'
     ];
     public $js = [
+    	'js/jquery.min.js',
+    	'js/jquery.dropotron.min.js',
+    	'js/skel.min.js',
+    	'js/skel-layers.min.js',
+    	'js/init.js',
+    	'css/ie/html5shiv.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
