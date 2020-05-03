@@ -10,6 +10,8 @@
 				$form = ActiveForm::begin([
 					'action' => ['register'],
 					'method' => 'post',
+					'options'=>['autocomplete'=>'off']
+
 				]); ?>
 					<h3 style="margin: 30px 0;padding-bottom: 5px;border-bottom: 1px solid #e7ecf1;">註冊資料</h3>
 					<?= $form->field($model, 'company_name')->textInput(['maxlength' => true]) ?>
