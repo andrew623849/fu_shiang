@@ -46,7 +46,7 @@
 				<li><a href="/site/index">首頁</a></li>
 				<?php
 					foreach($page as $val){
-						echo '<li><a href="/site/pages?'.$val['file_name'].'">'.$val['name'].'</a></li>';
+						echo '<li><a href="/site/pages?op='.$val['file_name'].'">'.$val['name'].'</a></li>';
 					}
 				?>
 			</ul>
