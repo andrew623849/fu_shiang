@@ -45,7 +45,7 @@ foreach($job['nav'] as $key => $val){
 	if(!empty($job[$val])){
 		$nav2_need = [];
 		foreach($job[$val] as $vval){
-			$decbin = preg_split('//', decbin($user_level[$vval]), -1, PREG_SPLIT_NO_EMPTY);
+			$decbin = preg_split('//',  sprintf("%03d",decbin($user_level[$vval])), -1, PREG_SPLIT_NO_EMPTY);
 			if($decbin[0] == 1 || $user_job == 0){
 				$nav2_need[] = $nav_arr[$val][$vval];
 			}
