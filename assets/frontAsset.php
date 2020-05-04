@@ -21,8 +21,6 @@ class frontAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
-        'css/style.css',
-		'css/skel.css',
 		'css/ie/v8.css'
     ];
     public $js = [
@@ -30,7 +28,7 @@ class frontAsset extends AssetBundle
     	'js/jquery.dropotron.min.js',
     	'js/skel.min.js',
     	'js/skel-layers.min.js',
-    	'js/init.js',
+    	'js/init.js?v=123',
     	'css/ie/html5shiv.js',
     ];
     public $depends = [

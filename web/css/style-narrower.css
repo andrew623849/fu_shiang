@@ -44,10 +44,10 @@
 
 		#titleBar .toggle {
 			height: 60px;
-			left: 0;
+			right: 0;
 			position: absolute;
 			top: 0;
-			width: 80px;
+			width: 44px;
 			z-index: 2;
 		}
 

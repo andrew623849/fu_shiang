@@ -43,18 +43,6 @@ if(!empty($file_arr)){
 	]);
 	echo '</section>
 	</div>';
-}
-
-?>
-
-<div id="main" class="wrapper style1">
-	<section class="container">
-<?php
-require_once($model->home_file.'/homepage.html');
-?>
-	</section>
-</div>
-<?php
 $js = <<<JS
 	$('#w0-swiper-container').click(function() {
 		{$swiperEl}.slideNext();
@@ -70,4 +58,15 @@ $js = <<<JS
 
 JS;
 	$this->registerJs($js);
+}
+
 ?>
+
+<div id="main" class="wrapper style1">
+	<section class="container">
+<?php
+require_once($model->home_file.'/homepage.html');
+?>
+	</section>
+</div>
+

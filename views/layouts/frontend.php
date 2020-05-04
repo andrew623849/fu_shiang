@@ -1,12 +1,13 @@
 
 <?php
 
+	use app\models\frontpageSearch;
 	use app\models\Systemsetup;
 	use yii\helpers\Html;
 	use app\assets\frontAsset;
 
 	$sys_name = Systemsetup::SysName();
-
+	$page = frontpageSearch::GetDataWhere(['deleted'=>0]);
 ?>
 <?php $this->beginPage() ?>
 
@@ -21,7 +22,7 @@
 
 	<?php
 		$this->head();
-		frontAsset::register(Yii::$app->view);
+		frontAsset::register($this);
 	?>
 	<style>
 		#skel-layers-inactiveWrapper{
@@ -43,6 +44,11 @@
 		<nav id="nav">
 			<ul>
 				<li><a href="/site/index">首頁</a></li>
+				<?php
+					foreach($page as $val){
+						echo '<li><a href="/site/pages?'.$val['file_name'].'">'.$val['name'].'</a></li>';
+					}
+				?>
 			</ul>
 		</nav>
 
