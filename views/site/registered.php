@@ -29,7 +29,7 @@
 				<h5>目前為開發階段，故無收費方式，預告明年開始收費。</h5>
 				<h5>可掃描下方QR，加入Line群組。</h5>
 				<h5>可在群組內詢問操作或是提出需求，打造最適合您的系統</h5>
-				<?= Html::img('../images/Line.jpg') ?><br>
+				<a href="https://lin.ee/1TtVk9sQ1"><img height="36" border="0" src="https://scdn.line-apps.com/n/line_add_friends/btn/zh-Hant.png"></a>
 
 			</div>
 			<?php ActiveForm::end(); ?>
