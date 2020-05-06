@@ -61,12 +61,7 @@ JS;
 }
 
 ?>
-
-<div id="main" class="wrapper style1">
-	<section class="container">
 <?php
 require_once($model->home_file.'/homepage.html');
 ?>
-	</section>
-</div>
 
