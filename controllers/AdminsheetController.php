@@ -98,7 +98,9 @@ class AdminsheetController extends Controller
 		if(Level::RightCheck('admin_sheet',1)){
 			$model = new AdminSheet();
 			$job_info = show_level('all');
-			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+			if ($model->load(Yii::$app->request->post())) {
+				$model->password = AdminSheet::Encode_pass($_POST['AdminSheet']['password']);
+				$model->save();
 				return $this->redirect(['view', 'id' => $model->id]);
 			}
 			return $this->render('create', [
