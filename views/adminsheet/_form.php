@@ -39,14 +39,16 @@ $sale[1] = '女';
 	<hr />
     <?php }?>
 	<h3>員工資料</h3>
-	<?php if($url == 'create' or $url == 'pupdate'){?>
-    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'admin')->label("*帳號")->textInput(['maxlength' => true]) ?></div>
-
-    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'password')->label("*密碼")->passwordInput(['maxlength' => true,'value'=>'xxxxxxxxxx']) ?></div>
+	<?php if($url == 'create'){ ?>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'admin')->label("*帳號")->textInput(['maxlength' => true]) ?></div>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'password')->label("*密碼")->passwordInput(['maxlength' => true]) ?></div>
+	<?php }elseif($url == 'pupdate'){?>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'admin')->label("*帳號")->textInput(['maxlength' => true]) ?></div>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'password')->label("*密碼")->passwordInput(['maxlength' => true,'value'=>'xxxxxxxxxx']) ?></div>
 	<?php }?>
     <?php if($url != 'pupdate'){?>
-    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'user_pay')->label("*員工薪資")->textInput(['maxlength' => true]) ?></div>
-    <div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model,'job')->label("*職位")->dropDownList(ArrayHelper::map($job_info,'id','job_name'),['style'=>'border:1px solid ;'])?>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model, 'user_pay')->label("*員工薪資")->textInput(['maxlength' => true]) ?></div>
+		<div class="form-group col-sm-6"  style="height:99px;"><?= $form->field($model,'job')->label("*職位")->dropDownList(ArrayHelper::map($job_info,'id','job_name'),['style'=>'border:1px solid ;'])?>
     <?php }?></div>
 
     <div class="form-group">

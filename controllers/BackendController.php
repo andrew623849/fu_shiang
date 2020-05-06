@@ -80,9 +80,9 @@ class BackendController extends Controller
 		$url = LineNotify::authorization();
 		return $this->redirect($url);
 	}
-	public function actionPupdate($id)
+	public function actionPupdate()
 	{
-		$model = AdminSheet::findOne($id);
+		$model = AdminSheet::findOne(Yii::$app->session['user']['id']);
 		$pass = $model->password;
 		if ($model->load(Yii::$app->request->post())) {
 			if($_POST['AdminSheet']['password'] == 'xxxxxxxxxx'){
@@ -112,7 +112,7 @@ class BackendController extends Controller
 		$message =  "";
 		if(isset($_POST["admin"]) && isset($_POST["password"])){
 			$model = new AdminSheet();
-			$model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>$_POST["password"]],["password"=>$_POST["password"]]])->asArray()->one();
+			$model = $model->find()->where(['and',["admin"=>$_POST["admin"]],["password"=>AdminSheet::Encode_pass($_POST["password"])]])->asArray()->one();
 			if($model != null){
 				if($model['deleted'] == 1){
 					$message =  '登入失敗!!<br>您已於'.$model['deleted_time'].'離職';
