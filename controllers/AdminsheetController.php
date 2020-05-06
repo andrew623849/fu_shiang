@@ -137,19 +137,6 @@ class AdminsheetController extends Controller
 		}
     }
 
-	public function actionPupdate($id)
-    {
-		$model = $this->findModel($id);
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session['login'] = 0;
-			$this->layout = 'logout';
-			return $this->render('/backend/index', ['message'=>"修改個人資料成功，請重新登入"]);
-		}
-		return $this->render('pupdate', [
-			'model' => $model,
-		]);
-    }
-
     /**
      * Deletes an existing AdminSheet model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

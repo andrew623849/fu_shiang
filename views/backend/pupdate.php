@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = '更新資料';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
+    <?= $this->render('/adminsheet/_form', [
     	'url' =>'pupdate',
         'model' => $model,
     ]) ?>

@@ -91,4 +91,8 @@ class AdminSheet extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Level::className(), ['id' => 'job']);
     }
+
+    public function Encode_pass($pass){
+		return md5(substr(md5($pass),30));
+	}
 }

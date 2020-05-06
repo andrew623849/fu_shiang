@@ -11,7 +11,7 @@ $this->title = $user_arr['user_name'];
 ?>
 <div>
     <h1><?= Html::encode($this->title) ?>
-		<?= Html::a('個資修改', ['adminsheet/pupdate', 'id' => $user_arr['id']], ['class' => 'btn btn-primary']) ?>
+		<?= Html::a('個資修改', ['pupdate', 'id' => $user_arr['id']], ['class' => 'btn btn-primary']) ?>
 
 <?php if(empty($user_arr['line_token'])){
 			echo Html::a('LINE連動', ['backend/join-line'], ['class' => 'btn btn-success']);

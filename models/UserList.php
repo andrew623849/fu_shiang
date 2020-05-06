@@ -86,7 +86,7 @@ class UserList extends \yii\db\ActiveRecord
 		}
 		$admin = New AdminSheet();
 		$admin->admin = $data['user_admin'];
-		$admin->password = $data['password'];
+		$admin->password = AdminSheet::Encode_pass($data['password']);
 		$admin->build_time = date('Y-m-d');
 		$admin->job = 0;
 		$admin->user_name = $data['user_name'];

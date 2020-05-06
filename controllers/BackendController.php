@@ -80,7 +80,23 @@ class BackendController extends Controller
 		$url = LineNotify::authorization();
 		return $this->redirect($url);
 	}
-
+	public function actionPupdate($id)
+	{
+		$model = AdminSheet::findOne($id);
+		$pass = $model->password;
+		if ($model->load(Yii::$app->request->post())) {
+			if($_POST['AdminSheet']['password'] == 'xxxxxxxxxx'){
+				$model->password = $pass;
+			}else{
+				$model->password = AdminSheet::Encode_pass($_POST['AdminSheet']['password']);
+			}
+			$model->save();
+			return $this->render('person');
+		}
+		return $this->render('pupdate', [
+			'model' => $model,
+		]);
+	}
 	public function actionPerson(){
 		if(Yii::$app->session['login']){
 			if(!empty($_POST['code']) && $_POST['state'] == 'csrf_token'){
