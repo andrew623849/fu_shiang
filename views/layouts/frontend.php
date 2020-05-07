@@ -22,7 +22,7 @@
 
 	<?php
 		$this->head();
-		frontAsset::register($this);
+		frontAsset::register(Yii::$app->view);
 	?>
 	<style>
 		#skel-layers-inactiveWrapper{
