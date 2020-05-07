@@ -1,6 +1,6 @@
 <?php
 
-use app\models\AdminsheetSearch;
+use app\models\AdminSheetSearch;
 use app\models\MaterialSearch;
 use app\models\Tool;
 use app\models\toothcaseSearch;
@@ -58,7 +58,7 @@ foreach($case as $val){
 			$arr[] = ['label' => '操作', 'format' => 'raw', 'value' => Html::Button('完成', ['class' => 'btn btn-primary', 'onclick' => 'finishcase('.$val['id'].')'])];
 		}else{
 			$make_p_list = $make_p_f0.','.$make_p1_f0.','.$make_p2_f0;
-			$admin_sheet = AdminsheetSearch::GetUserData($make_p_list);
+			$admin_sheet = AdminSheetSearch::GetUserData($make_p_list);
 			$button_str = '';
 			foreach($admin_sheet as $aval){
 				$button_str .= Html::Button('通知('.$aval['user_name'].')', ['class' => 'btn btn-success', 'onclick' => 'finishcase('.$val['id'].')']);
