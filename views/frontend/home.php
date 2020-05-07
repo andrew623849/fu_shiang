@@ -7,7 +7,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 
-$url=Yii::$app->urlManager->createAbsoluteUrl(['frontend/file-upload']);
+$url=Yii::$app->urlManager->createAbsoluteUrl(['frontend/file-upload'],'https');
 
 $form = ActiveForm::begin([
 	'action' => ['frontend/edit'],
