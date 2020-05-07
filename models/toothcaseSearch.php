@@ -83,7 +83,7 @@ class toothcaseSearch extends Toothcase
 	 */
     function getWeekCase()
 	{
-		return Toothcase::find()->where(['>=','start_time',date('Y-m-d')])->asArray()->all();
+		return Toothcase::find()->where(['>=','end_time',date('Y-m-d')])->orderBy('end_time')->asArray()->all();
 	}
 
 	function getData($id = '')
