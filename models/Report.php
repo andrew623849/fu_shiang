@@ -64,7 +64,7 @@ class Report
 		$material_name[0] = $month;
 		$price[0] = $month;
 		$clinic = clinicSearch::GetDataWhere(['=','deleted',1]);
-		$material = MaterialSearch::GetDataWhere(['useable'=>0,'deleted'=>0]);
+		$material = MaterialSearch::GetDataWhere();
 		$models = Toothcase::find()->where(['like','end_time',$year])->asArray()->all();
 		foreach($clinic as $k=>$v){
 			$price[$k] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
@@ -123,7 +123,7 @@ class Report
 		$material_name[0] = $month;
 		$price[0] = $month;
 		$clinic = clinicSearch::GetDataWhere(['=','deleted',1]);
-		$material = MaterialSearch::GetDataWhere(['useable'=>0,'deleted'=>0]);
+		$material = MaterialSearch::GetDataWhere();
 		$models = Toothcase::find()->where(['and',['>=','end_time',$start_time],['<=','end_time',$end_time]])->asArray()->all();
 		foreach($clinic as $k=>$v){
 			$price[$k] = [$v['clinic'],0,0,0,0,0,0,0];

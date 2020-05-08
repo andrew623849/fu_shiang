@@ -158,7 +158,7 @@ class FrontendController extends Controller
 			//把暫存檔案搬到目錄中
 			move_uploaded_file($_FILES["upload"]["tmp_name"], $uploadPath . $upload_filename);
 			//要回傳給 CKeditor 的檔案 URL
-			$url = Yii::$app->urlManager->createAbsoluteUrl($uploadPath.$upload_filename);
+			$url = Yii::$app->urlManager->createAbsoluteUrl($uploadPath.$upload_filename,'https');
 			//如果有什麼額外的回饋訊息，要打在這裡
 			$message="";
 			$funcNum = $_GET['CKEditorFuncNum'] ;
