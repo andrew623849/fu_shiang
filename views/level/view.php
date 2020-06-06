@@ -25,7 +25,39 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+	<?php
+		function LevelRight($data){
+			$decbin = preg_split('//', decbin($data), -1, PREG_SPLIT_NO_EMPTY);
+			$text = [];
+			if($decbin[0] == 1){
+				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-eye-open"></span> ';
+			}
+			if($decbin[1] == 1){
+				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-plus"></span> ';
+			}
+			if($decbin[2] == 1){
+				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-pencil"></span> ';
+			}
+			if($decbin[3] == 1){
+				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-trash"></span> ';
+			}
+			return implode('、',$text);
+		}
+		$level_right = DetailView::widget([
+			'model' => $model,
+			'attributes' => [
+				['label'=>'交件權限','format' => 'html','value'=>LevelRight($model['today_case'])],
+				['label'=>'病例權限','format' => 'html','value'=>LevelRight($model['toothcase'])],
+				['label'=>'支出權限','format' => 'html','value'=>LevelRight($model['outlay'])],
+				['label'=>'報表權限','format' => 'html','value'=>LevelRight($model['report'])],
+				['label'=>'員工權限','format' => 'html','value'=>LevelRight($model['admin_sheet'])],
+				['label'=>'材料權限','format' => 'html','value'=>LevelRight($model['material'])],
+				['label'=>'診所權限','format' => 'html','value'=>LevelRight($model['clinic'])],
+				['label'=>'職位權限','format' => 'html','value'=>LevelRight($model['level'])],
+				['label'=>'前台權限','format' => 'html','value'=>LevelRight($model['frontend'])],
+			],
+		]);
+	?>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -33,6 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'job_name',
             'build_time',
 			['label'=>'建立人','value'=>$model['adminSheets'][0]['user_name']],
+			['label'=>'職權','format' => 'html','value'=>$level_right]
         ],
     ]) ?>
 
