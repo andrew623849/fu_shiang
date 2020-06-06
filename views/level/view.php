@@ -29,16 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
 		function LevelRight($data){
 			$decbin = preg_split('//', decbin($data), -1, PREG_SPLIT_NO_EMPTY);
 			$text = [];
-			if($decbin[0] == 1){
+			if(!empty($decbin[0]) && $decbin[0] == 1){
 				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-eye-open"></span> ';
 			}
-			if($decbin[1] == 1){
+			if(!empty($decbin[0]) && $decbin[1] == 1){
 				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-plus"></span> ';
 			}
-			if($decbin[2] == 1){
+			if(!empty($decbin[0]) && $decbin[2] == 1){
 				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-pencil"></span> ';
 			}
-			if($decbin[3] == 1){
+			if(!empty($decbin[0]) && $decbin[3] == 1){
 				$text[] = '<span style="color:#337ab7" class="glyphicon glyphicon-trash"></span> ';
 			}
 			return implode('、',$text);
