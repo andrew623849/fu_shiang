@@ -38,7 +38,7 @@ ksort($select_data);
             <div  style="margin-left: -15px;display:none" >
                 <input id='pdf_case' name='keys'>
                <input name='clinic_id' value="<?= $clinic_id?>">
-               <input type = "date" name = "end_date" value = <?= date('Y-m-d',strtotime('-7 days')) ?>>
+               <input type = "date" name = "end_date" value = <?= date('Y-m-d',strtotime('-15 days')) ?>>
             </div>
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
