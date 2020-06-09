@@ -22,12 +22,6 @@ class frontAsset extends AssetBundle
     public $css = [
         'css/site.css',
 		'css/ie/v8.css',
-		'css/style.css',
-		'css/style-wide.css',
-		'css/style-normal.css',
-		'css/style-narrow.css',
-		'css/style-narrower.css',
-		'css/style-mobile.css',
     ];
     public $js = [
     	'js/jquery.min.js',
