@@ -28,7 +28,7 @@ class frontAsset extends AssetBundle
     	'js/jquery.dropotron.min.js',
     	'js/skel.min.js',
     	'js/skel-layers.min.js',
-    	'js/init.js?v=123',
+    	'js/init.js?v=1234',
     	'css/ie/html5shiv.js',
     ];
     public $depends = [
