@@ -24,11 +24,11 @@ class frontAsset extends AssetBundle
 		'css/ie/v8.css'
     ];
     public $js = [
-		'js/init.js',
-		'js/jquery.min.js',
+    	'js/jquery.min.js',
     	'js/jquery.dropotron.min.js',
     	'js/skel.min.js',
     	'js/skel-layers.min.js',
+    	'js/init.js',
     	'css/ie/html5shiv.js',
     ];
     public $depends = [
