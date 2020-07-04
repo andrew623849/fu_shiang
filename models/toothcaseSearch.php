@@ -54,13 +54,23 @@ class toothcaseSearch extends Toothcase
             return $dataProvider;
         }
         if (!empty(Yii::$app->request->get('end_time'))){
-            $query->andFilterCompare('end_time', explode('~', Yii::$app->request->get('end_time'))[0], '>=');//起始時間
-            $query->andFilterCompare('end_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('end_time'))[1]) + 86400), '<');//結束時間}
+        	$end_time = explode('~', Yii::$app->request->get('end_time'));
+        	if(strtotime($end_time[0])){
+				$query->andFilterCompare('end_time', $end_time[0], '>=');//起始時間
+			}
+			if(!empty($end_time[1]) &&strtotime($end_time[1])){
+				$query->andFilterCompare('end_time', date('Y-m-d',strtotime($end_time[1]) + 86400), '<');//結束時間}
+			}
         }
 		if (!empty(Yii::$app->request->get('start_time'))){
-			$query->andFilterCompare('start_time', explode('~', Yii::$app->request->get('start_time'))[0], '>=');//起始時間
-			$query->andFilterCompare('start_time', date('Y-m-d',strtotime(explode('~', Yii::$app->request->get('start_time'))[1]) + 86400), '<');//結束時間}
-		}
+			$start_time = explode('~', Yii::$app->request->get('start_time'));
+			if(strtotime($start_time[0])){
+				$query->andFilterCompare('start_time', $start_time[0], '>=');//起始時間
+			}
+			if(!empty($start_time[1]) &&strtotime($start_time[1])){
+				$query->andFilterCompare('start_time', date('Y-m-d',strtotime($start_time[1]) + 86400), '<');//結束時間}
+			}
+        }
 		if(!empty(Yii::$app->request->get('material'))){
         	if(in_array(0,Yii::$app->request->get('material'))){
         		$_GET['material'] = '';

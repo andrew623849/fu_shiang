@@ -5,7 +5,6 @@ use dosamigos\multiselect\MultiSelect;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
-use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
 use yii\widgets\Pjax;
@@ -50,8 +49,7 @@ ksort($select_data);
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\CheckboxColumn',
-
-            'name' => 'id',
+			 'name' => 'id',
             ],
             ['class' => 'yii\grid\SerialColumn',
 			],
@@ -92,7 +90,7 @@ ksort($select_data);
 				'value' => Yii::$app->request->get('material')?Yii::$app->request->get('material'):[],
 				'name' => 'material', // name for the form
 				'clientOptions' => [
-					'nSelectedText'=> '123',
+					'nSelectedText'=> '個項目',
     				'nonSelectedText'=> '請選擇',
 					'maxHeight' => 180,
 					'buttonWidth'=> '180',
@@ -109,63 +107,38 @@ ksort($select_data);
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php
-$js =<<< JS
-if(typeof(keys) == 'undefined'){
-    var keys =[];
-}else{
-    var type = 1; 
-    $('input:checkbox[name="id[]"]').each(function(i) {
-        if($.inArray(this.value, keys) != '-1'){
-            $(this).prop("checked", true);
-        }else{
-            type = 0;
-        }
-        if(type){
-            $('.select-on-check-all').prop("checked", true);
-        }
-    }); 
-}
-$('.select-on-check-all').click(function(){
-    if($('.select-on-check-all').prop("checked")){
-        $('input:checkbox[name="id[]"]').each(function() { 
-            if($.inArray(this.value, keys) == '-1'){
-                $(this).prop("checked", true);
-                keys.push($(this).val());
-            }
-        });
-    }else{
-        $('input:checkbox[name="id[]"]').each(function() { 
-            if($.inArray(this.value, keys) != '-1'){
-                removeByValue(keys, this.value);
-            }
-        });
-    }
-});
+	</div>
+</div>
+<?php Pjax::end(); ?>
 
-$('input:checkbox[name="id[]"]').click(function(){
-    if($.inArray(this.value, keys) != '-1'){
-        removeByValue(keys, this.value);
-    }else{
-        keys.push(this.value);
-    }
+<?php
+$js =<<< JS
+var keys = [];
+$(document).on('pjax:start', function(data){
+	keys = $.merge(keys, $('#toothcase_grid').yiiGridView('getSelectedRows')).filter(function(value, index, self) {
+		return self.indexOf(value) === index;
+	});
+});
+$(document).on('pjax:end', function(data){
+	var all_key = 1;
+    $('input:checkbox[name="id[]"]').each(function(){
+    	if($.inArray(parseFloat(this.value), keys) != '-1'){
+			$(this).prop("checked", true);
+		}else{
+			all_key = 0;
+		}
+	});
+	if(all_key){
+		$('.select-on-check-all').prop("checked", true);
+	}
 });
 
 $('.pdf_case').click(function() {
     keys.join(",");
     $("#pdf_case").val(keys);
 });
-function removeByValue(arr, val) {
-  for(var i=0; i<arr.length; i++) {
-    if(arr[i] == val) {
-      arr.splice(i, 1);
-      break;
-    }
-  }
-}
+
 JS;
 $this->registerJs($js);?>
-<?php Pjax::end(); ?>
-	</div>
-</div>
+
 
