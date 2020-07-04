@@ -22,7 +22,7 @@
 
 	<?php
 		$this->head();
-		frontAsset::register(Yii::$app->view, \yii\web\View::POS_READY);
+		frontAsset::register(Yii::$app->view, \yii\web\View::POS_HEAD);
 	?>
 	<style>
 		#skel-layers-inactiveWrapper{
