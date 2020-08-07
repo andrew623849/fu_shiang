@@ -1,25 +1,26 @@
 
 <?php
 
-	use app\models\frontpageSearch;
-	use app\models\Systemsetup;
-	use yii\helpers\Html;
-	use app\assets\frontAsset;
-	use yii\web\View;
+use app\models\frontpageSearch;
+use app\models\Systemsetup;
+use yii\helpers\Html;
+use app\assets\frontAsset;
+use yii\web\View;
 
-	$sys_name = Systemsetup::SysName();
-	$page = frontpageSearch::GetDataWhere(['deleted'=>0]);
-	$dir = './users/'.explode('_',Yii::$app->db->dsn)[1].'/home_img';
+$sys_name = Systemsetup::SysName();
+$page = frontpageSearch::GetDataWhere(['deleted'=>0]);
+$dir = './users/'.explode('_',Yii::$app->db->dsn)[1].'/home_img';
 
-	$handle = @opendir($dir) or die("Cannot open " . $dir);
-	// 用 readdir 讀取檔案內容
-	while($file = readdir($handle)){
-		if($file != "." && $file != ".."){
-			$file_arr[] =  '../'.$dir.'/'.$file;
-		}
+$handle = @opendir($dir) or die("Cannot open " . $dir);
+// 用 readdir 讀取檔案內容
+while($file = readdir($handle)){
+	if($file != "." && $file != ".."){
+		$file_arr[] =  '../'.$dir.'/'.$file;
 	}
+}
+frontAsset::register(Yii::$app->view);
+$this->beginPage()
 ?>
-<?php $this->beginPage() ?>
 
 <!DOCTYPE HTML>
 <html>
@@ -32,7 +33,6 @@
 
 	<?php
 		$this->head();
-		frontAsset::register(Yii::$app->view, \yii\web\View::POS_HEAD);
 	?>
 	<style>
 		#skel-layers-inactiveWrapper{
