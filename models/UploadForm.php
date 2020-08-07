@@ -47,8 +47,8 @@ class UploadForm extends Model
 	}
 	public function deleted()
 	{
-		$file= $this->file_config[$_POST['key']]['filename'];
-		unlink($this->home_file.'/home_img/'.$file);
+		$file= explode('../',$_POST['pic_link'])[1];
+		unlink($file);
 		return true;
 	}
 
