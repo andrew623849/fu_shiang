@@ -39,6 +39,7 @@
 			height:0!important;
 		#header{
 			background: #ddff73 url(<?php echo $file_arr[0]??''?>) no-repeat;
+			padding: 1em 0 20em 0!important;
 
 		}
 	</style>
