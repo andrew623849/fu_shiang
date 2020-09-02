@@ -28,7 +28,6 @@ ksort($select_data);
     <h1><?= Html::encode($this->title) ?></h1>
     <?= Html::a('新增病例',['create','clinic_this' => $clinic_id], ['class' => 'btn btn-success']) ?>
 
-    <?php Pjax::begin(); ?>
     <?php $form = ActiveForm::begin([
             'action' => ['/toothcase/pdf'],
             'method' => 'post',
@@ -42,7 +41,7 @@ ksort($select_data);
             <?= Html::submitButton('輸出PDF帳單', ['class' => 'btn btn-warning pdf_case']) ?>
         <?php ActiveForm::end(); ?>
 	<div class="table-responsive" style="min-height: 500px;">
-
+	<?php Pjax::begin(); ?>
     <?= GridView::widget([
         'options'=>['id'=>'toothcase_grid'],
         'dataProvider' => $dataProvider,
@@ -134,8 +133,7 @@ $(document).on('pjax:end', function(data){
 });
 
 $('.pdf_case').click(function() {
-    keys.join(",");
-    $("#pdf_case").val(keys);
+    $("#pdf_case").val(keys.join(","));
 });
 
 JS;

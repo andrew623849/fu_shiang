@@ -14,7 +14,7 @@ class Report
 		$price[0] = $month;
 		$clinic = clinicSearch::GetData();
 		$material = MaterialSearch::GetMaterialData();
-		$models = Toothcase::find()->where(['like','start_time',$year])->asArray()->all();
+		$models = Toothcase::find()->where(['like','end_time',$year])->asArray()->all();
 		foreach($clinic as $k=>$v){
 			$price[$k] = [$v['clinic'],0,0,0,0,0,0,0,0,0,0,0,0];
 		}
